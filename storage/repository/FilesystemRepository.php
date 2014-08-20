@@ -12,6 +12,7 @@ use trntv\filekit\storage\File;
 use trntv\filekit\storage\models\FileStorageItem;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
+use yii\helpers\FileHelper;
 
 /**
  * Class FilesystemRepository
@@ -152,28 +153,8 @@ class FilesystemRepository extends BaseRepository{
      */
     public function reset()
     {
-        $dirs = [];
-        $itertor = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($this->basePath)
-        );
-        foreach($itertor as $v){
-            if($v->isDir()){
-                $dirs[realpath($v->getPathname())] = realpath($v->getPathname());
-            } else {
-                if(@unlink($v->getPathname())){
-                    FileStorageItem::deleteAll(['path'=>$v->getPathname(), 'repository'=>$this->name]);
-                };
-            }
-        }
-        array_unique($dirs);
-        usort($dirs, function($a, $b) {
-            return strlen($b) - strlen($a);
-        });
-        foreach($dirs as $dir){
-            if(strlen($dir) >= strlen($this->basePath)) {
-                rmdir($dir);
-            }
-        }
+        FileHelper::removeDirectory($this->basePath);
+        FileStorageItem::deleteAll(['repository'=>$this->name]);
         mkdir($this->basePath);
     }
 }

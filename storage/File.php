@@ -9,6 +9,7 @@ namespace trntv\filekit\storage;
 
 use yii\base\InvalidCallException;
 use yii\base\Object;
+use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
 
 /**
@@ -64,7 +65,9 @@ class File extends Object
         if(!$this->name){
             $this->name = pathinfo($this->path, PATHINFO_FILENAME);
         }
-        if(!$this->path){
+        if($this->path){
+            $this->path = FileHelper::normalizePath($this->path);
+        } else {
             throw new InvalidCallException;
         }
     }
@@ -81,7 +84,7 @@ class File extends Object
 
     public function getMimeType(){
         if(!$this->_mimeType){
-            $this->_mimeType = @mime_content_type($this->path);
+            $this->_mimeType = FileHelper::getMimeType($this->path);
         }
         return $this->_mimeType;
     }
