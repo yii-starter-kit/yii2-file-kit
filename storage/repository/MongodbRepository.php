@@ -5,7 +5,13 @@
 
 namespace trntv\filekit\storage\repository;
 
+class MongodbRepository extends BaseRepository{
 
-class MongodbRepository {
-
-} 
+    /**
+     * @return mixed
+     */
+    public function reset()
+    {
+        // TODO: Implement reset() method.
+    }
+}

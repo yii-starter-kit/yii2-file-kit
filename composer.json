@@ -1,0 +1,19 @@
+{
+    "name": "trntv/yii2-file-kit",
+    "description": "Yii2 file upload and storage kit",
+    "type": "yii2-extension",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Eugine Terentev",
+            "email": "eugine@terentev.net"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": { "trntv\\filekit\\": "" }
+    }
+}
