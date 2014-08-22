@@ -29,9 +29,10 @@ class File extends Object
      */
     public $name;
 
-    public $dirname;
-    public $basename;
-    public $extension;
+    private $_dirname;
+    private $_basename;
+    private $_extension;
+    private $_path;
 
     /**
      * @var file web accessible address
@@ -52,11 +53,6 @@ class File extends Object
      * @var file mimeType
      */
     private $_mimeType;
-
-    /**
-     * @var file path
-     */
-    private $_path;
 
     /**
      * Init file
@@ -84,7 +80,7 @@ class File extends Object
 
     public function getMimeType(){
         if(!$this->_mimeType){
-            $this->_mimeType = FileHelper::getMimeType($this->path);
+            $this->_mimeType = FileHelper::getMimeType($this->_path);
         }
         return $this->_mimeType;
     }
@@ -145,11 +141,26 @@ class File extends Object
         return $this->_path;
     }
 
+    public function getDirname()
+    {
+        return $this->_dirname;
+    }
+
+    public function getBasename()
+    {
+        return $this->_basename;
+    }
+
+    public function getExtension()
+    {
+        return $this->_extension;
+    }
+
     public function setPath($path)
     {
         $this->_path = $path;
-        $this->basename = pathinfo($path, PATHINFO_BASENAME);
-        $this->dirname = pathinfo($path, PATHINFO_DIRNAME);
+        $this->_basename = pathinfo($path, PATHINFO_BASENAME);
+        $this->_dirname = pathinfo($path, PATHINFO_DIRNAME);
         return $path;
     }
 }
