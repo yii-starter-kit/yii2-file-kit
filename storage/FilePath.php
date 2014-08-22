@@ -60,4 +60,9 @@ class FilePath extends Object{
         return $this->_extension;
     }
 
+    public function __toString()
+    {
+        return $this->getPath();
+    }
+
 } 
