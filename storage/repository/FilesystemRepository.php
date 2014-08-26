@@ -20,6 +20,9 @@ use yii\helpers\FileHelper;
  */
 class FilesystemRepository extends BaseRepository{
 
+    /**
+     * @var string
+     */
     public $name = 'filesystem';
     /**
      * Storage path
@@ -118,7 +121,10 @@ class FilesystemRepository extends BaseRepository{
         }
         $i = 0;
         do{
-            $name = sprintf('%s.%s', \Yii::$app->security->generateRandomString(), $file->extension);
+            $name = sprintf('%s.%s',
+                \Yii::$app->security->generateRandomString(),
+                $file->extension
+            );
             $basename = $this->getDirIndex().'/'.$name;
             $path = $this->basePath . '/' . $basename;
             $url = $this->baseUrl . '/' . $basename;

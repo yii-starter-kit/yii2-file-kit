@@ -3,6 +3,7 @@ namespace trntv\filekit\actions;
 
 use trntv\filekit\storage\File;
 use yii\base\Action;
+use yii\base\Exception;
 use yii\helpers\Html;
 use yii\web\Response;
 use yii\web\UploadedFile;
@@ -39,7 +40,7 @@ class UploadAction extends Action
     // todo: Check types, max size, max count, etc;
 
     public $responseFormat = Response::FORMAT_JSON;
-    public $responsePathParam = 'path';
+    public $responsePathParam = false;
     public $responseUrlParam = 'url';
     public $responseExtensionParam = 'extension';
     public $responseMimeTypeParam = 'mimeType';
@@ -76,28 +77,24 @@ class UploadAction extends Action
         $result = [];
         $files = UploadedFile::getInstancesByName($this->fileparam);
         foreach ($files as $file) {
-            if(!$file->error){
-                $file = \Yii::$app->{$this->fileStorage}->save(File::load($file), $this->fileCategory, $this->repository);
-                if (!$file->error) {
-                    if ($this->fileProcessing instanceof \Closure) {
-                        call_user_func($this->fileProcessing, $file, $this);
-                    }
-                    $result[] = [
-                        $this->responsePathParam => $file->path,
-                        $this->responseUrlParam => $file->url,
-                        $this->responseExtensionParam => $file->extension,
-                        $this->responseMimeTypeParam => $file->mimeType,
-                        $this->responseSizeParam => $file->size,
-                    ];
-                } else {
-                    $result['error'][] = [
-                        $file->name => $file->error
-                    ];
+            $file = File::load($file);
+            $file = \Yii::$app->{$this->fileStorage}->save($file, $this->fileCategory, $this->repository);
+            if (!$file->error) {
+                if ($this->fileProcessing instanceof \Closure) {
+                    call_user_func($this->fileProcessing, $file, $this);
                 }
-            } else {
-                $result['error'][] = [
-                    $file->name => $file->error
+                $output = [
+                    $this->responseUrlParam => $file->url,
+                    $this->responseExtensionParam => $file->path->extension,
+                    $this->responseMimeTypeParam => $file->mimeType,
+                    $this->responseSizeParam => $file->size,
                 ];
+                if($this->responsePathParam){
+                    $output[$this->responsePathParam] = (string) $file->path;
+                }
+                $result[] = $output;
+            } else {
+                throw new Exception($file->error);
             }
         }
         return $result;

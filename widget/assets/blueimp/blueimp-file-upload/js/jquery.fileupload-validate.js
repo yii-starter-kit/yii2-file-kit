@@ -87,6 +87,8 @@
                 if (options.minFileSize || options.maxFileSize) {
                     fileSize = file.size;
                 }
+
+                console.log((settings.getNumberOfFiles() || 0) + data.files.length)
                 if ($.type(options.maxNumberOfFiles) === 'number' &&
                         (settings.getNumberOfFiles() || 0) + data.files.length >
                             options.maxNumberOfFiles) {

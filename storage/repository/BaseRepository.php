@@ -44,7 +44,7 @@ abstract class BaseRepository extends Component{
             $model->repository = $this->name;
             $model->category = $category;
             $model->url = $file->url;
-            $model->path = $file->path;
+            $model->path = $file->path->getPath();
             $model->size = $file->size;
             $model->mimeType = $file->mimeType;
             $model->status = FileStorageItem::STATUS_UPLOADED;

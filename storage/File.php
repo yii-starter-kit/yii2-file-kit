@@ -8,63 +8,37 @@
 namespace trntv\filekit\storage;
 
 use yii\base\InvalidCallException;
+use yii\base\InvalidParamException;
 use yii\base\Object;
 use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
 
 /**
  * Class File
- * @package common\components\storage
+ * @package trntv\filekit\storage
+ * @property \trntv\filekit\storage\FilePath $path
  */
-
 class File extends Object
 {
-    /**
-     * @var bool is file stored flag
-     */
+    public $extension;
     public $is_stored = false;
-
-    /**
-     * @var filename
-     */
-    public $name;
-
-    private $_dirname;
-    private $_basename;
-    private $_extension;
-    private $_path;
-
-    /**
-     * @var file web accessible address
-     */
     public $url;
-
-    /**
-     * @var error
-     */
     public $error;
 
-    /**
-     * @var filesize
-     */
-    private $_size;
 
-    /**
-     * @var file mimeType
-     */
+    private $_path;
+    private $_size;
     private $_mimeType;
 
     /**
      * Init file
      */
     public function init(){
-        if(!$this->name){
-            $this->name = pathinfo($this->path, PATHINFO_FILENAME);
-        }
-        if($this->path){
-            $this->path = FileHelper::normalizePath($this->path);
-        } else {
+        if(!$this->path){
             throw new InvalidCallException;
+        }
+        if(!$this->extension){
+            $this->extension = $this->_path->extension;
         }
     }
 
@@ -85,6 +59,27 @@ class File extends Object
         return $this->_mimeType;
     }
 
+    public function getExtensionByMimeType()
+    {
+        $extensions = FileHelper::getExtensionsByMimeType($this->getMimeType());
+        return array_shift($extensions);
+    }
+
+    public function setPath($path){
+        $this->_path = \Yii::createObject([
+            'class'=>'trntv\filekit\storage\FilePath',
+            'path'=>$path
+        ]);
+    }
+
+
+    /**
+     * @return \trntv\filekit\storage\FilePath
+     */
+    public function getPath(){
+        return $this->_path;
+    }
+
     /**
      * @param $file
      * @return object
@@ -98,6 +93,9 @@ class File extends Object
 
         // UploadedFile
         if(is_a($file, UploadedFile::className())){
+            if($file->error){
+                throw new InvalidParamException("File upload error \"{$file->error}\"");
+            }
             return \Yii::createObject([
                 'class'=>self::className(),
                 'path'=>$file->tempName,
@@ -109,8 +107,7 @@ class File extends Object
         elseif(strpos($file, 'http://') === 0 || strpos($file, 'https://') === 0){
             return \Yii::createObject([
                 'class'=>self::className(),
-                'path'=>\Yii::$app->storage->download($file),
-                'extension'=>pathinfo($file, PATHINFO_EXTENSION)
+                'path'=>\Yii::$app->storage->download($file)
             ]);
         }
 
@@ -118,8 +115,7 @@ class File extends Object
         elseif(realpath($file)) {
             return \Yii::createObject([
                 'class' => self::className(),
-                'path' => realpath($file),
-                'extension' => pathinfo($file, PATHINFO_EXTENSION)
+                'path' => realpath($file)
             ]);
         }
     }
@@ -134,33 +130,5 @@ class File extends Object
             $result[] = self::load($file);
         }
         return $result;
-    }
-
-    public function getPath()
-    {
-        return $this->_path;
-    }
-
-    public function getDirname()
-    {
-        return $this->_dirname;
-    }
-
-    public function getBasename()
-    {
-        return $this->_basename;
-    }
-
-    public function getExtension()
-    {
-        return $this->_extension;
-    }
-
-    public function setPath($path)
-    {
-        $this->_path = $path;
-        $this->_basename = pathinfo($path, PATHINFO_BASENAME);
-        $this->_dirname = pathinfo($path, PATHINFO_DIRNAME);
-        return $path;
     }
 }
