@@ -17,7 +17,6 @@ class Upload extends InputWidget{
     public $clientOptions = [];
     public $fileuploadOptions = [];
 
-
     public function init(){
         parent::init();
         if(!isset($this->url['fileparam'])){
