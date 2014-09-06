@@ -10,7 +10,6 @@ class SingleFileUpload extends Upload{
     public function init()
     {
         $this->fileuploadOptions['maxNumberOfFiles'] = 1;
-        if($this->value)
         parent::init();
     }
 } 
