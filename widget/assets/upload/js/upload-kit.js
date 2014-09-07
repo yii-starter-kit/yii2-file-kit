@@ -124,7 +124,7 @@
                 var ext = file.url.split('.').pop().toLowerCase();
                 var isImage = ['png', 'jpg', 'jpeg', 'jpe', 'gif', 'webp', 'svg'].indexOf(ext) !== -1
                 var item = $('<div>', {"class": "upload-kit-item"})
-                    .append($('<input/>', {"type":"hidden", "value": file.url}))
+                    .append($('<input/>', {"type":"hidden", "value": file.url, "name": input.attr('name')}))
                     .append($('<span class="extension"></span>'))
                     .append($('<span class="glyphicon glyphicon-remove-circle remove"></span>'))
                 item.addClass('done')
