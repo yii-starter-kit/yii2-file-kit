@@ -25,10 +25,10 @@
                     .after($('<span class="glyphicon glyphicon-plus-sign add"></span>'))
                     .after($('<span/>', {"data-toggle":"popover", "class":"glyphicon glyphicon-exclamation-sign error-popover"}))
                     .after(
-                        '<div class="progress" style="display: none">'+
-                        '<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>'+
-                        '</div>'
-                     )
+                    '<div class="progress" style="display: none">'+
+                    '<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>'+
+                    '</div>'
+                )
                 if(settings.fileuploadOptions && settings.fileuploadOptions.maxNumberOfFiles && settings.fileuploadOptions.maxNumberOfFiles > 1){
                     var name = input.attr('name');
                     if(name.indexOf('[]') !== name.length - 2){
@@ -36,10 +36,11 @@
                     }
                     input.attr('multiple', true);
                 }
-                container.find('input[type=hidden]').each(function(i, file){
+                container.find('input[type=hidden]').appendTo(files).each(function(i, file){
                     $(this).replaceWith(methods.createItem({
                         url: $(this).val()
                     }))
+                    methods.checkInputVisibility();
                 })
                 methods.fileuploadInit();
                 methods.dragInit()
@@ -82,10 +83,7 @@
                                 var file = data.result[i];
                                 var item = methods.createItem(file);
                                 files.append(item);
-                                if(data.getNumberOfFiles() >= data.maxNumberOfFiles){
-                                    console.log('hide')
-                                    container.find('.upload-kit-input').hide();
-                                };
+                                methods.checkInputVisibility();
                             }
                         }
                     },
@@ -116,9 +114,7 @@
             },
             removeItem: function(){
                 this.remove();
-                if(settings.fileuploadOptions.getNumberOfFiles() < settings.fileuploadOptions.maxNumberOfFiles){
-                    container.find('.upload-kit-input').show();
-                }
+                methods.checkInputVisibility();
             },
             createItem: function(file){
                 var ext = file.url.split('.').pop().toLowerCase();
@@ -141,11 +137,19 @@
                     item.find('span.extension').text(ext);
                 }
                 return item;
+            },
+            checkInputVisibility: function(){
+                var inputContainer = container.find('.upload-kit-input');
+                if(settings.fileuploadOptions.getNumberOfFiles() < settings.fileuploadOptions.maxNumberOfFiles){
+                    inputContainer.show();
+                } else {
+                    inputContainer.hide();
+                }
             }
         }
 
         methods.init.apply(this);
         return this;
     };
-    
+
 })(jQuery)
