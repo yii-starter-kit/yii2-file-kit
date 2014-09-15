@@ -22,6 +22,7 @@ abstract class BaseRepository extends Component{
      */
     const EVENT_AFTER_SAVE = 'afterSave';
 
+    public $createDbRecord = true;
     /**
      * @throws \yii\base\InvalidConfigException
      */
@@ -39,7 +40,7 @@ abstract class BaseRepository extends Component{
      * @throws \Exception
      */
     public function afterSave($file, $category = null){
-        if(!$file->error) {
+        if(!$file->error && $this->createDbRecord) {
             $model = new FileStorageItem();
             $model->repository = $this->name;
             $model->category = $category;
@@ -59,10 +60,12 @@ abstract class BaseRepository extends Component{
      * @param $file
      */
     public function afterDelete($file){
-        $model = FileStorageItem::findOne(['path'=>$file->path, 'repository'=>$this->name]);
-        if($model){
-            $model->status = FileStorageItem::STATUS_DELETED;
-            $model->save(false);
+        if($this->createDbRecord) {
+            $model = FileStorageItem::findOne(['path' => $file->path, 'repository' => $this->name]);
+            if ($model) {
+                $model->status = FileStorageItem::STATUS_DELETED;
+                $model->save(false);
+            }
         }
         $this->trigger(self::EVENT_AFTER_DELETE);
     }
