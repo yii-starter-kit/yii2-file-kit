@@ -29,7 +29,7 @@ class Upload extends InputWidget{
         $this->clientOptions['url'] = $this->url !== null && is_array($this->url) ? Url::to($this->url) : '';
         if($this->hasModel()){
             $this->name = $this->name ?: Html::getInputName($this->model, $this->attribute);
-            $this->value = $this->value ?: $this->model->{$this->attribute};
+            $this->value = $this->value ?: Html::getAttributeValue($this->model, $this->attribute);
         }
         $this->clientOptions = ArrayHelper::merge(
             [

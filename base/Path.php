@@ -2,23 +2,22 @@
 /**
  * Author: Eugine Terentev <eugine@terentev.net>
  */
-namespace trntv\filekit\storage;
+namespace trntv\filekit\base;
 
 use yii\base\Object;
 use yii\helpers\FileHelper;
 
-class FilePath extends Object{
+class Path extends Object{
 
     private $_dirname;
     private $_filename;
     private $_extension;
-    private $_safePath;
-    
+    private $_originalPath;
 
     public function setPath($path)
     {
         $path = FileHelper::normalizePath($path);
-        $this->_safePath = $path;
+        $this->_originalPath = $path;
         $this->_dirname = pathinfo($path, PATHINFO_DIRNAME);
         $this->_filename = pathinfo($path, PATHINFO_FILENAME);
         $this->_extension = pathinfo($path, PATHINFO_EXTENSION );
@@ -30,8 +29,9 @@ class FilePath extends Object{
         return sprintf("%s".DIRECTORY_SEPARATOR."%s", $this->_dirname, $this->getBasename());
     }
 
-    public function getSafePath(){
-        
+    public function getOriginalPath()
+    {
+        return $this->_originalPath;
     }
 
     public function setDirname($dirname)
@@ -68,6 +68,18 @@ class FilePath extends Object{
         }
     }
 
+    public function addFilenamePrefix($prefix)
+    {
+        $this->setFilename($this->_filename.$prefix);
+        return $this;
+    }
+
+    public function addFilenameSuffix($suffix)
+    {
+        $this->setFilename($suffix.$this->_filename);
+        return $this;
+    }
+
     public function getExtension()
     {
         return $this->_extension;
@@ -78,4 +90,4 @@ class FilePath extends Object{
         return $this->getPath();
     }
 
-} 
+}
