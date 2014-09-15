@@ -43,7 +43,16 @@ class Url extends Object{
      */
     public function getUrl()
     {
-        return http_build_url($this->_url);
+        return http_build_url([
+            'scheme'=>$this->_scheme,
+            'host'=>$this->_host,
+            'port'=>$this->_port,
+            'user'=>$this->_user,
+            'pass'=>$this->_pass,
+            'path'=>$this->_path,
+            'query'=>$this->_query,
+            'fragment'=>$this->_fragment
+        ]);
     }
 
     /**
