@@ -18,16 +18,15 @@ use yii\web\UploadedFile;
  * Class File
  * @package trntv\filekit\storage
  * @property \trntv\filekit\base\Path $path
- * @property \trntv\filekit\base\Url $url
  */
 class File extends Object
 {
     public $extension;
     public $is_stored = false;
+    public $url;
     public $error;
 
     private $_path;
-    private $_url;
     private $_size;
     private $_mimeType;
 
@@ -58,25 +57,6 @@ class File extends Object
             $this->_mimeType = FileHelper::getMimeType($this->_path);
         }
         return $this->_mimeType;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUrl()
-    {
-        return $this->_url;
-    }
-
-    /**
-     * @param mixed $url
-     */
-    public function setUrl($url)
-    {
-        $this->_url = \Yii::createObject([
-            'class'=>Url::className(),
-            'url'=>$url
-        ]);
     }
 
     public function getExtensionByMimeType()

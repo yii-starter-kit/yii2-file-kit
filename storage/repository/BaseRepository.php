@@ -50,7 +50,7 @@ abstract class BaseRepository extends Component{
             $model->mimeType = $file->mimeType;
             $model->status = FileStorageItem::STATUS_UPLOADED;
             if(!$model->save()){
-                throw new Exception;
+                throw new Exception($model->errors);
             };
         }
         $this->trigger(self::EVENT_AFTER_SAVE);

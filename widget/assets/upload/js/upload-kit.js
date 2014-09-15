@@ -25,7 +25,7 @@
                     .after($('<span class="glyphicon glyphicon-plus-sign add"></span>'))
                     .after($('<span/>', {"data-toggle":"popover", "class":"glyphicon glyphicon-exclamation-sign error-popover"}))
                     .after(
-                    '<div class="progress" style="display: none">'+
+                    '<div class="progress">'+
                     '<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>'+
                     '</div>'
                 )
@@ -68,11 +68,13 @@
                         });
                     },
                     start: function (e) {
-                        input.removeClass('error').addClass('in-progress')
+                        container.find('.upload-kit-input')
+                            .removeClass('error')
+                            .addClass('in-progress')
                     },
                     progressall: function (e, data) {
                         var progress = parseInt(data.loaded / data.total * 100, 10);
-                        input.siblings('.progress-bar').attr('aria-valuenow', progress).css(
+                        container.find('.progress-bar').attr('aria-valuenow', progress).css(
                             'width',
                             progress + '%'
                         ).text(progress + '%');
@@ -91,7 +93,7 @@
                         methods.showError(data.errorThrown)
                     },
                     always: function(e){
-                        $(e.target).parents('.upload-kit-item')
+                        $(e.target).parents('.upload-kit-input')
                             .removeClass('in-progress')
                             .find('.progress-bar').attr('aria-valuenow', 0)
                             .css('width', 0)
