@@ -127,7 +127,7 @@ class FilesystemRepository extends BaseRepository{
             if(++$i > 50) throw new Exception(\Yii::t('extensions/filekit', 'FileStorage: cannot generate file name'));
         } while(file_exists($path) || FileStorageItem::find()->select('url')->where(['url'=>$url])->count());
 
-        if(rename($file->path, $this->basePath.'/'.$basename)){
+        if(@rename($file->path, $this->basePath.'/'.$basename)){
             $file->is_stored = true;
             $file->path = $path;
             $file->url = $url;
@@ -143,7 +143,7 @@ class FilesystemRepository extends BaseRepository{
      * @return bool
      */
     public function delete(File $file){
-        if(unlink($file->path)){
+        if(@unlink($file->path)){
             $this->afterDelete($file);
             return true;
         };
