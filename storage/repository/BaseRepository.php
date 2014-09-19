@@ -13,6 +13,7 @@ use yii\base\InvalidConfigException;
  */
 abstract class BaseRepository extends Component{
 
+    public $name;
     /**
      * Event triggered after delete
      */

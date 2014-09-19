@@ -21,10 +21,6 @@ use yii\helpers\FileHelper;
 class FilesystemRepository extends BaseRepository{
 
     /**
-     * @var string
-     */
-    public $name = 'filesystem';
-    /**
      * Storage path
      * @var
      */

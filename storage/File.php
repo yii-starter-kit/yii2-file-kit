@@ -7,6 +7,7 @@
  */
 namespace trntv\filekit\storage;
 
+use trntv\filekit\base\Path;
 use trntv\filekit\base\Url;
 use yii\base\InvalidCallException;
 use yii\base\InvalidParamException;
@@ -66,10 +67,13 @@ class File extends Object
     }
 
     public function setPath($path){
-        $this->_path = \Yii::createObject([
-            'class'=>'trntv\filekit\base\Path',
-            'path'=>$path
-        ]);
+        if(!is_a($path, Path::className())){
+            $path = \Yii::createObject([
+                'class'=>'trntv\filekit\base\Path',
+                'path'=>$path
+            ]);
+        }
+        $this->_path = $path;
     }
 
 
