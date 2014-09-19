@@ -22,10 +22,10 @@ use yii\web\UploadedFile;
  */
 class File extends Object
 {
-    public $extension;
     public $is_stored = false;
+    public $error = false;
+    public $extension;
     public $url;
-    public $error;
 
     private $_path;
     private $_size;
@@ -134,5 +134,9 @@ class File extends Object
             $result[] = self::load($file);
         }
         return $result;
+    }
+
+    public function hasErrors(){
+        return $this->error === false;
     }
 }
