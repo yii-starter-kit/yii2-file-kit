@@ -96,7 +96,7 @@ class FileStorage extends \yii\base\Component{
             $name = ArrayHelper::getValue(array_keys($this->repositories), 0);
         }
         if(!$name || count($this->_initiatedRepositories) == 0 || !isset($this->_initiatedRepositories[$name])){
-            throw new InvalidCallException;
+            throw new InvalidCallException("No such repository {$name}");
         }
         return ArrayHelper::getValue($this->_initiatedRepositories, $name);
     }

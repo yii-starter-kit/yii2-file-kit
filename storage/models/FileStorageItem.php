@@ -48,7 +48,7 @@ class FileStorageItem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['repository', 'url', 'path', 'size', 'created_at'], 'required'],
+            [['repository', 'path', 'size', 'created_at'], 'required'],
             [['url'], 'unique'],
             [['size'], 'integer'],
             [['repository'], 'string', 'max' => 32],
