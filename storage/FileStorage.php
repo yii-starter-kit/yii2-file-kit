@@ -102,6 +102,13 @@ class FileStorage extends \yii\base\Component{
     }
 
     /**
+     * @return array
+     */
+    public function getRepositoriesList(){
+        return array_keys($this->_initiatedRepositories);
+    }
+
+    /**
      * @param $link
      * @param bool $path
      * @return bool|string Downloaded file path
