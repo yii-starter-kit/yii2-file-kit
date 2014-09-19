@@ -19,7 +19,7 @@ class m140805_084737_file_storage_item extends Migration
             'url' => Schema::TYPE_STRING . '(2048) NOT NULL',
             'path' => Schema::TYPE_STRING . '(2048) NOT NULL',
             'mimeType' => Schema::TYPE_STRING . '(128) NOT NULL',
-            'upload_ip' => Schema::TYPE_STRING . '(15) NOT NULL',
+            'upload_ip' => Schema::TYPE_STRING . '(15)',
             'size' => Schema::TYPE_INTEGER . ' NOT NULL',
             'status' => Schema::TYPE_SMALLINT . ' NOT NULL DEFAULT 10',
             'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
