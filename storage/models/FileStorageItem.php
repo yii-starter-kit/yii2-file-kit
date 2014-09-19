@@ -79,16 +79,16 @@ class FileStorageItem extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('common', 'ID'),
-            'repository' => Yii::t('common', 'Repository'),
-            'category' => Yii::t('common', 'Category'),
-            'url' => Yii::t('common', 'Url'),
-            'path' => Yii::t('common', 'Path'),
-            'size' => Yii::t('common', 'Size'),
-            'mime' => Yii::t('common', 'Mime Type'),
-            'upload_ip' => Yii::t('common', 'Upload IP Adress'),
-            'stauts' => Yii::t('common', 'Status'),
-            'created_at' => Yii::t('common', 'Upload Time'),
+            'id' => Yii::t('app', 'ID'),
+            'repository' => Yii::t('app', 'Repository'),
+            'category' => Yii::t('app', 'Category'),
+            'url' => Yii::t('app', 'Url'),
+            'path' => Yii::t('app', 'Path'),
+            'size' => Yii::t('app', 'Size'),
+            'mime' => Yii::t('app', 'Mime Type'),
+            'upload_ip' => Yii::t('app', 'Upload IP Adress'),
+            'stauts' => Yii::t('app', 'Status'),
+            'created_at' => Yii::t('app', 'Upload Time'),
         ];
     }
 }
