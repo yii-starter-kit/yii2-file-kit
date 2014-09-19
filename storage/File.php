@@ -137,6 +137,6 @@ class File extends Object
     }
 
     public function hasErrors(){
-        return $this->error === false;
+        return $this->error !== false;
     }
 }
