@@ -70,13 +70,13 @@ class Path extends Object{
 
     public function addFilenamePrefix($prefix)
     {
-        $this->setFilename($this->_filename.$prefix);
+        $this->setFilename($prefix.$this->_filename);
         return $this;
     }
 
     public function addFilenameSuffix($suffix)
     {
-        $this->setFilename($suffix.$this->_filename);
+        $this->setFilename($this->_filename.$suffix);
         return $this;
     }
 
