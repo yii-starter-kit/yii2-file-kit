@@ -116,10 +116,10 @@ class File extends Object
         }
 
         // Path
-        elseif(realpath($file)) {
+        else {
             return \Yii::createObject([
                 'class' => self::className(),
-                'path' => realpath($file)
+                'path' => FileHelper::normalizePath($file)
             ]);
         }
     }
