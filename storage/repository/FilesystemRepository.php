@@ -132,7 +132,7 @@ class FilesystemRepository extends BaseRepository{
             $file->path = $path;
             $file->url = $url;
         } else {
-            $file->error = true;
+            $file->error = sprintf('Can`t rename "%s" to "%s"', $file->path->getPath(), $this->basePath.'/'.$basename);
         };
         $this->afterSave($file, $category);
         return $file;
