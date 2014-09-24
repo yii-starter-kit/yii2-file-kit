@@ -57,6 +57,11 @@ class Upload extends InputWidget{
                 $content .= Html::hiddenInput($this->name, $this->value);
             }
         }
+        if($this->multiple){
+            $content .= Html::hiddenInput(sprintf('%s[]', $this->name), null, $this->options);
+        }else{
+            $content .= Html::hiddenInput($this->name, null, $this->options);
+        }
         $content .= Html::fileInput($this->name, null, $this->options);
         $content .= Html::endTag('div');
         return $content;
