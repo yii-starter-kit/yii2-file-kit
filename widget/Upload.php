@@ -12,14 +12,38 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\helpers\Url;
+use yii\jui\JuiAsset;
 use yii\widgets\InputWidget;
 
+/**
+ * Class Upload
+ * @package trntv\filekit\widget
+ */
 class Upload extends InputWidget{
+    /**
+     * @var Upload url
+     */
     public $url;
-    public $clientOptions = [];
-    public $fileuploadOptions = [];
+    /**
+     * @var array
+     */
+    public $clientOptions;
+    /**
+     * @var array
+     */
+    public $fileuploadOptions;
+    /**
+     * @var bool
+     */
     public $multiple = true;
+    /**
+     * @var bool
+     */
+    public $sortable = false;
 
+    /**
+     * @throws \yii\base\InvalidConfigException
+     */
     public function init(){
         parent::init();
         if($this->hasModel()){
@@ -27,7 +51,7 @@ class Upload extends InputWidget{
             $this->value = $this->value ?: Html::getAttributeValue($this->model, $this->attribute);
         }
         if($this->multiple && $this->value && !is_array($this->value)){
-            throw new InvalidParamException('In "multiple" mode, value must be an array. Use SingleUpload widget instead or set Upload::multiple to "false"');
+            throw new InvalidParamException('In "multiple" mode, value must be an array. Use SingleUpload widget or set Upload::multiple to "false"');
         }
         if(!isset($this->url['fileparam'])){
             if($this->name) {
@@ -41,9 +65,16 @@ class Upload extends InputWidget{
             [
                 'fileuploadOptions'=>$this->fileuploadOptions
             ],
-            $this->clientOptions);
+            $this->clientOptions,
+            [
+                'multiple'=>$this->multiple,
+                'sortable'=>$this->sortable
+            ]);
     }
 
+    /**
+     * @return string
+     */
     public function run()
     {
         $this->registerClientScript();
@@ -72,6 +103,9 @@ class Upload extends InputWidget{
         UploadAsset::register($this->getView());
         $options = Json::encode($this->clientOptions);
         $id = $this->options['id'];
+        if(!$this->sortable){
+            JuiAsset::register($this->getView());
+        }
         $this->getView()->registerJs("jQuery('#{$id}').yiiUploadKit({$options});");
     }
 } 

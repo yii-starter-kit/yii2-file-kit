@@ -1,5 +1,9 @@
 @color: #999;
 .upload-kit{
+  float: left;
+  .files{
+    position: relative;
+  }
   .upload-kit-input,
   .upload-kit-item{
     position: relative;
@@ -8,11 +12,12 @@
     color: @color;
     border: 2px dashed @color;
     border-radius: 7px;
-    float: left;
+    display: inline-block;
     margin-right: 10px;
     background-size: cover;
     background-position: center center;
     background-origin: border-box;
+    list-style: none;
 
     .progress,
     .add,
@@ -29,6 +34,7 @@
       right: 0;
       z-index: 999;
       display: none;
+      cursor: default;
     }
 
     input[type=file]{
@@ -77,6 +83,10 @@
 
   // File
   .upload-kit-item{
+    &.ui-sortable-helper .remove
+    {
+      display: none !important;
+    }
     .remove{
       display: none;
       cursor: pointer;

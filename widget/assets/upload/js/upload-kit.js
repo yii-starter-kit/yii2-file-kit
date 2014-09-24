@@ -2,7 +2,7 @@
     jQuery.fn.yiiUploadKit = function(options) {
         var input = this;
         var container = input.parent('div')
-        var files = $('<div>', {"class":"files"}).prependTo(container);
+        var files = $('<ul>', {"class":"files"}).prependTo(container);
         var settings = $.extend(true, {}, {
                 multiple: true
             },
@@ -37,6 +37,14 @@
                     var name = input.attr('name');
                     input.attr('name', name + '[]');
                     input.attr('multiple', true);
+                }
+                if(settings.sortable){
+                    files.sortable({
+                        containment: "parent",
+                        axis: "x",
+                        placeholder: "upload-kit-item sortable-placeholder",
+                        tolerance: "pointer"
+                    })
                 }
                 container.find('input[type=hidden]').not('.empty-value').appendTo(files).each(function(i, file){
                     $(this).replaceWith(methods.createItem({
@@ -123,7 +131,7 @@
             createItem: function(file){
                 var ext = file.url.split('.').pop().toLowerCase();
                 var isImage = ['png', 'jpg', 'jpeg', 'jpe', 'gif', 'webp', 'svg'].indexOf(ext) !== -1
-                var item = $('<div>', {"class": "upload-kit-item"})
+                var item = $('<li>', {"class": "upload-kit-item"})
                     .append($('<input/>', {"type":"hidden", "value": file.url, "name": input.attr('name')}))
                     .append($('<span class="extension"></span>'))
                     .append($('<span class="glyphicon glyphicon-remove-circle remove"></span>'))

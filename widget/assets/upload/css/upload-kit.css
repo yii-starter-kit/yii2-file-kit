@@ -1,3 +1,9 @@
+.upload-kit {
+  float: left;
+}
+.upload-kit .files {
+  position: relative;
+}
 .upload-kit .upload-kit-input,
 .upload-kit .upload-kit-item {
   position: relative;
@@ -6,11 +12,12 @@
   color: #999999;
   border: 2px dashed #999999;
   border-radius: 7px;
-  float: left;
+  display: inline-block;
   margin-right: 10px;
   background-size: cover;
   background-position: center center;
   background-origin: border-box;
+  list-style: none;
 }
 .upload-kit .upload-kit-input .progress,
 .upload-kit .upload-kit-item .progress,
@@ -29,6 +36,7 @@
   right: 0;
   z-index: 999;
   display: none;
+  cursor: default;
 }
 .upload-kit .upload-kit-input input[type=file],
 .upload-kit .upload-kit-item input[type=file] {
@@ -64,6 +72,9 @@
 }
 .upload-kit .upload-kit-input.error .error-popover {
   display: inline-block;
+}
+.upload-kit .upload-kit-item.ui-sortable-helper .remove {
+  display: none !important;
 }
 .upload-kit .upload-kit-item .remove {
   display: none;

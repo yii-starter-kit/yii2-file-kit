@@ -12,9 +12,16 @@
     "minimum-stability": "dev",
     "require": {
         "yiisoft/yii2": "*",
+        "yiisoft/yii2-jui": "*",
         "jakeasmith/http_build_url": "*"
     },
     "autoload": {
         "psr-4": { "trntv\\filekit\\": "" }
+    },
+    "extra":{
+        "asset-installer-paths": {
+            "npm-asset-library": "vendor/npm",
+            "bower-asset-library": "vendor/bower"
+        }
     }
 }
