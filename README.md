@@ -32,6 +32,7 @@ echo \trntv\filekit\widget\Upload::widget([
     'model'=>$model,
     'attribute'=>'files',
     'url'=>['upload'],
+    'sortable'=>true,
     'fileuploadOptions'=>[
         'maxFileSize'=>10000000, // 10 MiB
         'maxNumberOfFiles'=>3
