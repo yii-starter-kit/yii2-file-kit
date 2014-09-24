@@ -38,7 +38,7 @@
                     input.attr('name', name + '[]');
                     input.attr('multiple', true);
                 }
-                container.find('input[type=hidden]').appendTo(files).each(function(i, file){
+                container.find('input[type=hidden]').not('.empty-value').appendTo(files).each(function(i, file){
                     $(this).replaceWith(methods.createItem({
                         url: $(this).val()
                     }))
