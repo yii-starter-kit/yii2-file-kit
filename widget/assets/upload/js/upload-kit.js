@@ -4,7 +4,7 @@
         var container = input.parent('div')
         var files = $('<div>', {"class":"files"}).prependTo(container);
         var settings = $.extend(true, {}, {
-                // defaults
+                multiple: true
             },
             options
         );
@@ -12,7 +12,7 @@
                 dataType: 'json',
                 autoUpload: true,
                 singleFileUploads: false,
-                maxNumberOfFile: 50,
+                maxNumberOfFiles: 50,
                 getNumberOfFiles: function(){
                     return container.find('.files .upload-kit-item').length;
                 }
@@ -33,11 +33,9 @@
                     '<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>'+
                     '</div>'
                 )
-                if(settings.fileuploadOptions && settings.fileuploadOptions.maxNumberOfFiles && settings.fileuploadOptions.maxNumberOfFiles > 1){
+                if(settings.multiple){
                     var name = input.attr('name');
-                    if(name.indexOf('[]') !== name.length - 2){
-                        input.attr('name', name + '[]');
-                    }
+                    input.attr('name', name + '[]');
                     input.attr('multiple', true);
                 }
                 container.find('input[type=hidden]').appendTo(files).each(function(i, file){
