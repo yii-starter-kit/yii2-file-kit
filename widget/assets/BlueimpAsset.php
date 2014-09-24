@@ -6,7 +6,7 @@ use yii\web\AssetBundle;
 class BlueimpAsset extends AssetBundle
 {
     public function init(){
-        $this->sourcePath = __DIR__ . '/blueimp';
+        $this->sourcePath = __DIR__ . '/static';
         parent::init();
     }
 

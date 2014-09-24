@@ -3,8 +3,12 @@
         var input = this;
         var container = input.parent('div')
         var files = $('<div>', {"class":"files"}).prependTo(container);
-        var defaults =  {
-            fileuploadOptions: {
+        var settings = $.extend(true, {}, {
+                // defaults
+            },
+            options
+        );
+        settings.fileuploadOptions = $.extend(true, {}, {
                 dataType: 'json',
                 autoUpload: true,
                 singleFileUploads: false,
@@ -14,9 +18,9 @@
                 }
                 //acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
                 //maxFileSize: 5000000 // 5 MB
-            }
-        }
-        var settings = $.extend(true, defaults, options);
+            },
+            options.fileuploadOptions || {}
+        );
 
         var methods = {
             init: function(){
