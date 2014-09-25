@@ -1,8 +1,7 @@
-.upload-kit {
-  float: left;
-}
 .upload-kit .files {
   position: relative;
+  padding: 0;
+  margin: 0;
 }
 .upload-kit .upload-kit-input,
 .upload-kit .upload-kit-item {
