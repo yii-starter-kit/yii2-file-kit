@@ -1,4 +1,4 @@
-Yii2 File Kit Changelog
+Yii2 File Kit Change Log
 ==========================
 
 0.3
