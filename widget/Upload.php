@@ -60,6 +60,7 @@ class Upload extends InputWidget{
                 $this->url['fileparam'] = Html::getInputName($this->model, $this->attribute);
             }
         }
+        $this->options['multiple']=$this->multiple;
         $this->clientOptions['url'] = $this->url !== null && is_array($this->url) ? Url::to($this->url) : '';
         $this->clientOptions = ArrayHelper::merge(
             [
