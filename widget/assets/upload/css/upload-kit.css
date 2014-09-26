@@ -1,4 +1,5 @@
 .upload-kit .files {
+  float: left;
   position: relative;
   padding: 0;
   margin: 0;
