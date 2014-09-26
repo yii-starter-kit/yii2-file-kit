@@ -16,6 +16,7 @@ nbproject
 
 # composer
 composer.phar
+composer.lock
 /vendor
 
 # mac deployment helpers
