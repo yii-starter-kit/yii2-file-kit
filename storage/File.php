@@ -109,10 +109,14 @@ class File extends Object
 
         // Url
         elseif(strpos($file, 'http://') === 0 || strpos($file, 'https://') === 0){
-            return \Yii::createObject([
-                'class'=>self::className(),
-                'path'=>self::download($file)
-            ]);
+            $path = self::download($file);
+            if($path){
+                return \Yii::createObject([
+                    'class'=>self::className(),
+                    'path'=>self::download($file)
+                ]);
+            }
+
         }
 
         // Path
@@ -122,6 +126,8 @@ class File extends Object
                 'path' => FileHelper::normalizePath($file)
             ]);
         }
+
+        return false;
     }
 
     /**
@@ -149,8 +155,8 @@ class File extends Object
     {
         if(!$path){
             $path = tempnam(sys_get_temp_dir(), 'yii');
-        }
-        ;
+        };
+        // todo: rewrite using stream
         if(!($file = file_get_contents($url)) || file_put_contents($path, $file) === false){
             return false;
         }
