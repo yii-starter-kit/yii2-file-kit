@@ -110,22 +110,6 @@ class FileStorage extends \yii\base\Component{
     }
 
     /**
-     * @param $link
-     * @param bool $path
-     * @return bool|string Downloaded file path
-     */
-    public function download($link, $path = false){
-        if(!$path){
-            $path = tempnam(sys_get_temp_dir(), 'yii');
-        }
-        ;
-        if(!($file = file_get_contents($link)) || file_put_contents($path, $file) === false){
-            return false;
-        }
-        return $path;
-    }
-
-    /**
      * @return array
      */
     public function getAvailableRepositories(){

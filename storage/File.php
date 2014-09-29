@@ -111,7 +111,7 @@ class File extends Object
         elseif(strpos($file, 'http://') === 0 || strpos($file, 'https://') === 0){
             return \Yii::createObject([
                 'class'=>self::className(),
-                'path'=>\Yii::$app->storage->download($file)
+                'path'=>self::download($file)
             ]);
         }
 
@@ -138,5 +138,22 @@ class File extends Object
 
     public function hasErrors(){
         return $this->error !== false;
+    }
+
+    /**
+     * @param $url
+     * @param $path
+     * @return bool|string Downloaded file path
+     */
+    public static function download($url, $path = false)
+    {
+        if(!$path){
+            $path = tempnam(sys_get_temp_dir(), 'yii');
+        }
+        ;
+        if(!($file = file_get_contents($url)) || file_put_contents($path, $file) === false){
+            return false;
+        }
+        return $path;
     }
 }
