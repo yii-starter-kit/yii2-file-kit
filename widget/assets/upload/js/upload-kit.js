@@ -52,6 +52,13 @@
                     }))
                     methods.checkInputVisibility();
                 })
+                // fix to prevent sending empty string when enctype is not multipart/form-data
+                container.parents('form').on('submit', function(e){
+                    input.prop('disabled', true);
+                    setTimeout(function(){
+                        input.prop('disabled', false);
+                    },500)
+                })
                 methods.fileuploadInit();
                 methods.dragInit()
 
