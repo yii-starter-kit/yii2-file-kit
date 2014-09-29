@@ -107,18 +107,6 @@ class File extends Object
             ]);
         }
 
-        // Url
-        elseif(strpos($file, 'http://') === 0 || strpos($file, 'https://') === 0){
-            $path = self::download($file);
-            if($path){
-                return \Yii::createObject([
-                    'class'=>self::className(),
-                    'path'=>self::download($file)
-                ]);
-            }
-
-        }
-
         // Path
         else {
             return \Yii::createObject([
