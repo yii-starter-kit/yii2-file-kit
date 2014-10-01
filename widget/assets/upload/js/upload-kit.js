@@ -2,7 +2,7 @@
     jQuery.fn.yiiUploadKit = function(options) {
         var input = this;
         var container = input.parent('div')
-        var files = $('<ul>', {"class":"files"}).prependTo(container);
+        var files = $('<ul>', {"class":"files"}).insertAfter(input);
         var settings = $.extend(true, {}, {
                 multiple: true
             },
@@ -32,7 +32,7 @@
                     '<div class="progress">'+
                     '<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>'+
                     '</div>'
-                )
+                );
                 if(settings.multiple){
                     var name = input.attr('name');
                     input.attr('name', name + '[]');
@@ -46,7 +46,7 @@
                         tolerance: "pointer"
                     })
                 }
-                container.find('input[type=hidden]').appendTo(files).each(function(i, file){
+                container.find('input[type=hidden]').not('.empty-value').appendTo(files).each(function(i, file){
                     $(this).replaceWith(methods.createItem({
                         url: $(this).val()
                     }))
@@ -77,8 +77,7 @@
                                 data.submit();
                             }
                         }).fail(function () {
-                            var errors = [];
-                            for(var i = 0; i < data.files.length; i++){
+                            var errors = [];for(var i = 0; i < data.files.length; i++){
                                 errors.push(data.files[i].name + ': ' + data.files[i].error);
                             }
                             methods.showError(errors.join('<br/>'))

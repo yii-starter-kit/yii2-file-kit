@@ -114,8 +114,6 @@ class File extends Object
                 'path' => FileHelper::normalizePath($file)
             ]);
         }
-
-        return false;
     }
 
     /**

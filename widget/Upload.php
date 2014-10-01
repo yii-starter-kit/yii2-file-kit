@@ -80,6 +80,7 @@ class Upload extends InputWidget{
     {
         $this->registerClientScript();
         $content = Html::beginTag('div');
+        $content .= Html::hiddenInput($this->name, '', ['class'=>'empty-value']);
         if($this->value){
             if($this->multiple){
                 foreach($this->value as $v){
