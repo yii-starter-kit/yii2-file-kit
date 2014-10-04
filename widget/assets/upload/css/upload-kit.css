@@ -48,6 +48,7 @@
   cursor: pointer;
   z-index: 2;
 }
+.upload-kit .upload-kit-input .drag,
 .upload-kit .upload-kit-input .add {
   font-size: 3em;
   text-align: center;
@@ -63,6 +64,15 @@
   margin-right: 5%;
   width: 90%;
   display: none;
+}
+.upload-kit .upload-kit-input .drag {
+  display: none;
+}
+.upload-kit .upload-kit-input.drag-highlight .add {
+  display: none;
+}
+.upload-kit .upload-kit-input.drag-highlight .drag {
+  display: block;
 }
 .upload-kit .upload-kit-input.in-progress .progress {
   display: block;

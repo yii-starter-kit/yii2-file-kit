@@ -52,6 +52,7 @@
 
   // Input
   .upload-kit-input{
+    .drag,
     .add{
       font-size: 3em;
       text-align: center;
@@ -67,6 +68,17 @@
       margin-right: 5%;
       width: 90%;
       display: none;
+    }
+    .drag{
+      display: none;
+    }
+    &.drag-highlight{
+      .add{
+        display: none;
+      }
+      .drag{
+        display: block;
+      }
     }
   }
   .upload-kit-input.in-progress{

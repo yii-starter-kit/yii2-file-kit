@@ -1,3 +1,11 @@
+/*!
+ * Yii2 File Kit library
+ * http://github.com/trntv/yii2-file-kit
+ *
+ * Author: Eugine Terentev <eugine@terentev.net>
+ *
+ * Date: 2014-05-01T17:11Z
+ */
 (function( $ ) {
     jQuery.fn.yiiUploadKit = function(options) {
         var input = this;
@@ -27,6 +35,7 @@
                 container.addClass('upload-kit');
                 input.wrapAll($('<div class="upload-kit-input"></div>'))
                     .after($('<span class="glyphicon glyphicon-plus-sign add"></span>'))
+                    .after($('<span class="glyphicon glyphicon-circle-arrow-down drag"></span>'))
                     .after($('<span/>', {"data-toggle":"popover", "class":"glyphicon glyphicon-exclamation-sign error-popover"}))
                     .after(
                     '<div class="progress">'+
@@ -66,7 +75,7 @@
             fileuploadInit: function(){
                 var fileuploadOptions = $.extend({}, {
                     url: settings.url,
-                    dropZone: input.parents('div'),
+                    dropZone: input.parents('.upload-kit-input'),
                     add: function(e,data){
                         var $this = $(this);
                         container.find('.upload-kit-input').removeClass('error');
@@ -120,10 +129,13 @@
                 input.fileupload(fileuploadOptions)
             },
             dragInit: function(){
-                $(document).bind('dragover', function (e)
+                $(document).on('dragover', function ()
                 {
-                    $(e.target).parents('.upload-kit-item').addClass('drag-hover');
-                    e.preventDefault();
+                    $('.upload-kit-input').addClass('drag-highlight');
+                });
+                $(document).on('dragleave drop', function ()
+                {
+                    $('.upload-kit-input').removeClass('drag-highlight');
                 });
             },
             showError: function(error){

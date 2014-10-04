@@ -13,9 +13,6 @@ class Url extends Object{
     private $_port;
     private $_user;
     private $_pass;
-    /**
-     * @var Path
-     */
     private $_path;
     private $_query;
     private $_fragment;
@@ -111,7 +108,7 @@ class Url extends Object{
      */
     public function getPath()
     {
-        return $this->_path->__toString();
+        return $this->_path;
     }
 
     /**
@@ -120,7 +117,7 @@ class Url extends Object{
      */
     public function setPath($path)
     {
-        return $this->_path = new Path(['path'=>$path]);
+        return $this->_path;
     }
 
     /**
