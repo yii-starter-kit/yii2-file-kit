@@ -139,7 +139,9 @@
                 });
             },
             showError: function(error){
-                container.find('.error-popover').attr('data-content', error).popover({html:true,trigger:"hover"});
+                if($.fn.popover){
+                    container.find('.error-popover').attr('data-content', error).popover({html:true,trigger:"hover"});
+                }
                 container.find('.upload-kit-input').addClass('error');
             },
             removeItem: function(){
