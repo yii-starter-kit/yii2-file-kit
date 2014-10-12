@@ -117,7 +117,7 @@ class Url extends Object{
      */
     public function setPath($path)
     {
-        return $this->_path;
+        return $this->_path = $path;
     }
 
     /**
