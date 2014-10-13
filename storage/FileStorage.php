@@ -38,6 +38,9 @@ class FileStorage extends \yii\base\Component implements BootstrapInterface{
                 'class' => 'yii\i18n\PhpMessageSource',
                 'sourceLanguage' => 'en-US',
                 'basePath' => '@trntv/filekit/messages',
+                'fileMap'=>[
+                    'extensions/trntv/filekit'=>'filekit.php'
+                ]
             ];
         }
     }
