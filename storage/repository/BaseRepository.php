@@ -29,7 +29,7 @@ abstract class BaseRepository extends Component{
      */
     public function init(){
         if(!$this->name){
-            throw new InvalidConfigException(\Yii::t('extensions/filekit', 'Name cannot be empty'));
+            throw new InvalidConfigException('Name cannot be empty');
         }
     }
 

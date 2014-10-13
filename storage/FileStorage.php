@@ -8,6 +8,7 @@
 
 namespace trntv\filekit\storage;
 
+use yii\base\BootstrapInterface;
 use yii\base\InvalidCallException;
 use yii\helpers\ArrayHelper;
 
@@ -15,7 +16,7 @@ use yii\helpers\ArrayHelper;
  * Class FileStorage
  * @package common\components\fileStorage
  */
-class FileStorage extends \yii\base\Component{
+class FileStorage extends \yii\base\Component implements BootstrapInterface{
 
     /**
      * @var array
@@ -26,6 +27,20 @@ class FileStorage extends \yii\base\Component{
      * @var array
      */
     public $_initiatedRepositories = [];
+
+    /**
+     * @param \yii\base\Application $app
+     */
+    public function bootstrap($app)
+    {
+        if (!isset($app->getI18n()->translations['extensions/trntv/filekit'])) {
+            $app->getI18n()->translations['extensions/trntv/filekit'] = [
+                'class' => 'yii\i18n\PhpMessageSource',
+                'sourceLanguage' => 'en-US',
+                'basePath' => '@trntv/filekit/messages',
+            ];
+        }
+    }
 
     /**
      * @throws \yii\base\InvalidConfigException

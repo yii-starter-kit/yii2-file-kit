@@ -79,16 +79,16 @@ class FileStorageItem extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'repository' => Yii::t('app', 'Repository'),
-            'category' => Yii::t('app', 'Category'),
-            'url' => Yii::t('app', 'Url'),
-            'path' => Yii::t('app', 'Path'),
-            'size' => Yii::t('app', 'Size'),
-            'mime' => Yii::t('app', 'Mime Type'),
-            'upload_ip' => Yii::t('app', 'Upload IP Adress'),
-            'stauts' => Yii::t('app', 'Status'),
-            'created_at' => Yii::t('app', 'Upload Time'),
+            'id' => Yii::t('extensions/trntv/filekit', 'ID'),
+            'repository' => Yii::t('extensions/trntv/filekit', 'Repository'),
+            'category' => Yii::t('extensions/trntv/filekit', 'Category'),
+            'url' => Yii::t('extensions/trntv/filekit', 'Url'),
+            'path' => Yii::t('extensions/trntv/filekit', 'Path'),
+            'size' => Yii::t('extensions/trntv/filekit', 'Size'),
+            'mime' => Yii::t('extensions/trntv/filekit', 'Mime Type'),
+            'upload_ip' => Yii::t('extensions/trntv/filekit', 'Upload IP Adress'),
+            'stauts' => Yii::t('extensions/trntv/filekit', 'Status'),
+            'created_at' => Yii::t('extensions/trntv/filekit', 'Upload Time'),
         ];
     }
 }
