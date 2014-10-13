@@ -85,9 +85,9 @@ class FileStorageItem extends \yii\db\ActiveRecord
             'url' => Yii::t('extensions/trntv/filekit', 'Url'),
             'path' => Yii::t('extensions/trntv/filekit', 'Path'),
             'size' => Yii::t('extensions/trntv/filekit', 'Size'),
-            'mime' => Yii::t('extensions/trntv/filekit', 'Mime Type'),
+            'mimeType' => Yii::t('extensions/trntv/filekit', 'Mime Type'),
             'upload_ip' => Yii::t('extensions/trntv/filekit', 'Upload IP Adress'),
-            'stauts' => Yii::t('extensions/trntv/filekit', 'Status'),
+            'status' => Yii::t('extensions/trntv/filekit', 'Status'),
             'created_at' => Yii::t('extensions/trntv/filekit', 'Upload Time'),
         ];
     }
