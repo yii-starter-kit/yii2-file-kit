@@ -35,7 +35,6 @@ class FilesystemRepository extends BaseRepository{
      * @var int
      */
     public $maxFiles = 65535; // Default: Fat32 limit
-
     /**
      * @var int
      */
@@ -77,16 +76,16 @@ class FilesystemRepository extends BaseRepository{
      * @return int
      */
     public function getDirIndex(){
-        if(!file_exists($this->basePath.'/index')){
-            file_put_contents($this->basePath.'/index', $this->_dirindex);
+        if(!file_exists($this->basePath.'/.dirindex')){
+            file_put_contents($this->basePath.'/.dirindex', $this->_dirindex);
         } else {
-            $this->_dirindex = intval(file_get_contents($this->basePath.'/index'));
+            $this->_dirindex = intval(file_get_contents($this->basePath.'/.dirindex'));
         }
 
         if(file_exists($this->basePath.'/'.$this->_dirindex)){
             if((count(scandir($this->basePath.'/'.$this->_dirindex)) - 2) > $this->maxFiles){
                 $this->_dirindex++;
-                file_put_contents($this->basePath.'/index', $this->_dirindex);
+                file_put_contents($this->basePath.'/.dirindex', $this->_dirindex);
             }
         }
         return $this->_dirindex;
