@@ -18,6 +18,9 @@
     "autoload": {
         "psr-4": { "trntv\\filekit\\": "" }
     },
+    "suggest": {
+        "ext-http": "HTTP PHP Extension"
+    },
     "extra":{
         "asset-installer-paths": {
             "npm-asset-library": "vendor/npm",

@@ -50,15 +50,14 @@ class Upload extends InputWidget{
             $this->name = $this->name ?: Html::getInputName($this->model, $this->attribute);
             $this->value = $this->value ?: Html::getAttributeValue($this->model, $this->attribute);
         }
+        if(!isset($this->clientOptions['name'])){
+            $this->clientOptions['name'] = $this->name;
+        }
         if($this->multiple && $this->value && !is_array($this->value)){
             throw new InvalidParamException('In "multiple" mode, value must be an array. Use SingleUpload widget or set Upload::multiple to "false"');
         }
         if(!isset($this->url['fileparam'])){
-            if($this->name) {
-                $this->url['fileparam'] = $this->name;
-            } else {
-                $this->url['fileparam'] = Html::getInputName($this->model, $this->attribute);
-            }
+            $this->url['fileparam'] = $this->getFileInputName();
         }
         $this->options['multiple']=$this->multiple;
         $this->clientOptions['url'] = $this->url !== null && is_array($this->url) ? Url::to($this->url) : '';
@@ -73,6 +72,11 @@ class Upload extends InputWidget{
             ]);
     }
 
+    public function getFileInputName()
+    {
+        return sprintf('_fileinput_%s', $this->id);
+    }
+
     /**
      * @return string
      */
@@ -80,7 +84,7 @@ class Upload extends InputWidget{
     {
         $this->registerClientScript();
         $content = Html::beginTag('div');
-        $content .= Html::hiddenInput($this->name, '', ['class'=>'empty-value']);
+        $content .= Html::hiddenInput($this->name, null, ['class'=>'empty-value']);
         if($this->value){
             if($this->multiple){
                 foreach($this->value as $v){
@@ -90,10 +94,9 @@ class Upload extends InputWidget{
                 $content .= Html::hiddenInput($this->name, $this->value);
             }
         }
-        $content .= Html::fileInput($this->name, null, $this->options);
+        $content .= Html::fileInput($this->getFileInputName(), null, $this->options);
         $content .= Html::endTag('div');
         return $content;
-
     }
 
     /**

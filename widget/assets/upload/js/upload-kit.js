@@ -12,6 +12,7 @@
         var container = input.parent('div')
         var files = $('<ul>', {"class":"files"}).insertAfter(input);
         var settings = $.extend(true, {}, {
+                name: 'file',
                 multiple: true
             },
             options
@@ -43,8 +44,7 @@
                     '</div>'
                 );
                 if(settings.multiple){
-                    var name = input.attr('name');
-                    input.attr('name', name + '[]');
+                    input.attr('name', settings.name + '[]');
                     input.attr('multiple', true);
                 }
                 if(settings.sortable){
@@ -152,7 +152,7 @@
                 var ext = file.url.split('.').pop().toLowerCase();
                 var isImage = ['png', 'jpg', 'jpeg', 'jpe', 'gif', 'webp', 'svg'].indexOf(ext) !== -1
                 var item = $('<li>', {"class": "upload-kit-item"})
-                    .append($('<input/>', {"type":"hidden", "value": file.url, "name": input.attr('name')}))
+                    .append($('<input/>', {"type":"hidden", "value": file.url, "name": settings.name}))
                     .append($('<span class="extension"></span>'))
                     .append($('<span class="glyphicon glyphicon-remove-circle remove"></span>'))
                 item.addClass('done')
