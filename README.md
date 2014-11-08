@@ -77,7 +77,7 @@ PATH HELPER
 -----------
 ```
 $path = new \trntv\filekit\base\Path(['path'=>'/var/www/images/product.jpg'])
-echo $path->filename; // product.js
+echo $path->filename; // product.jpg
 $path->filename = 'service.jpg';
 echo $path; // /var/www/images/service.jpg
 $path->addFilenamePrefix('_thumb');
