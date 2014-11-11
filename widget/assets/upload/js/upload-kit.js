@@ -35,7 +35,6 @@
             init: function(){
                 if(settings.multiple){
                     settings.name = settings.name + '[]'
-                    input.attr('name', settings.name + '[]');
                     input.attr('multiple', true);
                 }
                 container.addClass('upload-kit');
