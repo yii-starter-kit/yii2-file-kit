@@ -4,10 +4,12 @@
   padding: 0;
   margin: 0;
 }
+.upload-kit .upload-kit-input {
+  width: 150px;
+}
 .upload-kit .upload-kit-input,
 .upload-kit .upload-kit-item {
   position: relative;
-  width: 150px;
   height: 150px;
   color: #999999;
   border: 2px dashed #999999;
@@ -103,6 +105,10 @@
 .upload-kit .upload-kit-item.image {
   border-color: transparent;
   box-shadow: 0 0 2px #D4D4D4;
+}
+.upload-kit .upload-kit-item.image > img {
+  height: 100%;
+  width: auto;
 }
 .upload-kit .upload-kit-item.not-image {
   background-image: url('../img/file.png');

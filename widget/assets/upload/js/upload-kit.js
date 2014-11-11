@@ -161,7 +161,7 @@
                 })
                 if(isImage){
                     item.removeClass('not-image').addClass('image');
-                    item.css('backgroundImage', 'url(' + file.url +')');
+                    item.prepend($('<img/>', {src:file.url}))
                     item.find('span.extension').text('');
                 } else {
                     item.removeClass('image').addClass('not-image');
