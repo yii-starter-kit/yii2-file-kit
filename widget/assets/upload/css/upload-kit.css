@@ -102,13 +102,10 @@
   color: #FFF;
   margin-top: -0.5em;
 }
-.upload-kit .upload-kit-item.image {
-  border-color: transparent;
-  box-shadow: 0 0 2px #D4D4D4;
-}
 .upload-kit .upload-kit-item.image > img {
   height: 100%;
   width: auto;
+  border-radius: 7px;
 }
 .upload-kit .upload-kit-item.not-image {
   background-image: url('../img/file.png');
