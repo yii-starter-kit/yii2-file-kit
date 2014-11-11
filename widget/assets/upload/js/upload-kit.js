@@ -33,6 +33,11 @@
 
         var methods = {
             init: function(){
+                if(settings.multiple){
+                    settings.name = settings.name + '[]'
+                    input.attr('name', settings.name + '[]');
+                    input.attr('multiple', true);
+                }
                 container.addClass('upload-kit');
                 input.wrapAll($('<div class="upload-kit-input"></div>'))
                     .after($('<span class="glyphicon glyphicon-plus-sign add"></span>'))
@@ -43,10 +48,6 @@
                     '<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>'+
                     '</div>'
                 );
-                if(settings.multiple){
-                    input.attr('name', settings.name + '[]');
-                    input.attr('multiple', true);
-                }
                 if(settings.sortable){
                     files.sortable({
                         containment: "parent",
