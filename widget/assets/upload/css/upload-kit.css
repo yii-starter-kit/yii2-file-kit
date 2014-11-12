@@ -16,6 +16,7 @@
   border-radius: 7px;
   display: inline-block;
   margin-right: 10px;
+  margin-bottom: 10px;
   background-size: cover;
   background-position: center center;
   background-origin: border-box;
@@ -101,6 +102,9 @@
   border-radius: 5px;
   color: #FFF;
   margin-top: -0.5em;
+}
+.upload-kit .upload-kit-item.ui-sortable-placeholder {
+  width: 150px;
 }
 .upload-kit .upload-kit-item.image > img {
   height: 100%;
