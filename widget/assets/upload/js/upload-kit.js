@@ -50,7 +50,6 @@
                 if(settings.sortable){
                     files.sortable({
                         containment: "parent",
-                        axis: "x",
                         placeholder: "upload-kit-item sortable-placeholder",
                         tolerance: "pointer"
                     })
