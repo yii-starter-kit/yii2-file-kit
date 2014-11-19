@@ -10,7 +10,7 @@
     jQuery.fn.yiiUploadKit = function(options) {
         var input = this;
         var container = input.parent('div')
-        var files = $('<ul>', {"class":"files"}).insertAfter(input);
+        var files = $('<ul>', {"class":"files"}).appendTo(container);
         var settings = $.extend(true, {}, {
                 name: 'file',
                 multiple: true
@@ -38,15 +38,16 @@
                     input.attr('multiple', true);
                 }
                 container.addClass('upload-kit');
-                input.wrapAll($('<div class="upload-kit-input"></div>'))
+                input.wrapAll($('<li class="upload-kit-input"></div>'))
                     .after($('<span class="glyphicon glyphicon-plus-sign add"></span>'))
                     .after($('<span class="glyphicon glyphicon-circle-arrow-down drag"></span>'))
                     .after($('<span/>', {"data-toggle":"popover", "class":"glyphicon glyphicon-exclamation-sign error-popover"}))
                     .after(
                     '<div class="progress">'+
                     '<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>'+
-                    '</div>'
+                    '</li>'
                 );
+                container.append(input)
                 if(settings.sortable){
                     files.sortable({
                         containment: "parent",
