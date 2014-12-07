@@ -69,7 +69,9 @@ class Upload extends InputWidget{
             [
                 'multiple'=>$this->multiple,
                 'sortable'=>$this->sortable
-            ]);
+            ]
+        );
+        Html::addCssClass($this->options, 'empty-value');
     }
 
     public function getFileInputName()
@@ -84,7 +86,7 @@ class Upload extends InputWidget{
     {
         $this->registerClientScript();
         $content = Html::beginTag('div');
-        $content .= Html::hiddenInput($this->name, null, ['class'=>'empty-value']);
+        $content .= Html::hiddenInput($this->name, null, $this->options);
         if($this->value){
             if($this->multiple){
                 foreach($this->value as $v){
@@ -94,7 +96,7 @@ class Upload extends InputWidget{
                 $content .= Html::hiddenInput($this->name, $this->value);
             }
         }
-        $content .= Html::fileInput($this->getFileInputName(), null, $this->options);
+        $content .= Html::fileInput($this->getFileInputName(), null, ['id'=>$this->getId()]);
         $content .= Html::endTag('div');
         return $content;
     }
@@ -106,10 +108,9 @@ class Upload extends InputWidget{
     {
         UploadAsset::register($this->getView());
         $options = Json::encode($this->clientOptions);
-        $id = $this->options['id'];
         if(!$this->sortable){
             JuiAsset::register($this->getView());
         }
-        $this->getView()->registerJs("jQuery('#{$id}').yiiUploadKit({$options});");
+        $this->getView()->registerJs("jQuery('#{$this->getId()}').yiiUploadKit({$options});");
     }
 } 

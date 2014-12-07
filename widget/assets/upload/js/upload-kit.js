@@ -8,9 +8,10 @@
  */
 (function( $ ) {
     jQuery.fn.yiiUploadKit = function(options) {
-        var input = this;
-        var container = input.parent('div');
-        var files = $('<ul>', {"class":"files"}).insertBefore(input);
+        var $input = this;
+        var $container = $input.parent('div');
+        var $files = $('<ul>', {"class":"files"}).insertBefore($input);
+        var $emptyInput = $container.find('.empty-value');
         var settings = $.extend(true, {}, {
                 name: 'file',
                 multiple: true
@@ -23,7 +24,7 @@
                 singleFileUploads: false,
                 maxNumberOfFiles: 50,
                 getNumberOfFiles: function(){
-                    return container.find('.files .upload-kit-item').length;
+                    return $container.find('.files .upload-kit-item').length;
                 }
                 //acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
                 //maxFileSize: 5000000 // 5 MB
@@ -35,24 +36,26 @@
             init: function(){
                 if(settings.multiple){
                     settings.name = settings.name + '[]'
-                    input.attr('multiple', true);
-                    input.attr('name', input.attr('name') + '[]');
+                    $input.attr('multiple', true);
+                    $input.attr('name', $input.attr('name') + '[]');
                 }
-                container.addClass('upload-kit');
+                $container.addClass('upload-kit');
                 if(settings.sortable){
-                    files.sortable({
+                    $files.sortable({
                         containment: "parent",
                         placeholder: "upload-kit-item sortable-placeholder",
                         tolerance: "pointer"
                     })
                 }
-                container.find('input[type=hidden]').not('.empty-value').appendTo(files).each(function(i, file){
+                $container.find('input[type=hidden]').not('.empty-value').appendTo($files).each(function(i, file){
+                    console.log($(this))
                     $(this).replaceWith(methods.createItem({
                         url: $(this).val()
                     }))
+                    methods.handleEmptyValue();
                     methods.checkInputVisibility();
                 })
-                input.wrapAll($('<li class="upload-kit-input"></div>'))
+                $input.wrapAll($('<li class="upload-kit-input"></div>'))
                     .after($('<span class="glyphicon glyphicon-plus-sign add"></span>'))
                     .after($('<span class="glyphicon glyphicon-circle-arrow-down drag"></span>'))
                     .after($('<span/>', {"data-toggle":"popover", "class":"glyphicon glyphicon-exclamation-sign error-popover"}))
@@ -70,10 +73,10 @@
             fileuploadInit: function(){
                 var fileuploadOptions = $.extend({}, {
                     url: settings.url,
-                    dropZone: input.parents('.upload-kit-input'),
+                    dropZone: $input.parents('.upload-kit-input'),
                     add: function(e,data){
                         var $this = $(this);
-                        container.find('.upload-kit-input').removeClass('error');
+                        $container.find('.upload-kit-input').removeClass('error');
                         data.process(function () {
                             return $this.fileupload('process', data);
                         }).done(function(){
@@ -88,13 +91,13 @@
                         });
                     },
                     start: function (e) {
-                        container.find('.upload-kit-input')
+                        $container.find('.upload-kit-input')
                             .removeClass('error')
                             .addClass('in-progress')
                     },
                     progressall: function (e, data) {
                         var progress = parseInt(data.loaded / data.total * 100, 10);
-                        container.find('.progress-bar').attr('aria-valuenow', progress).css(
+                        $container.find('.progress-bar').attr('aria-valuenow', progress).css(
                             'width',
                             progress + '%'
                         ).text(progress + '%');
@@ -104,7 +107,8 @@
                             for (var i = 0; i < data.result.length; i++) {
                                 var file = data.result[i];
                                 var item = methods.createItem(file);
-                                item.appendTo(files);
+                                item.appendTo($files);
+                                methods.handleEmptyValue();
                                 methods.checkInputVisibility();
                             }
                         }
@@ -121,7 +125,7 @@
                     }
 
                 }, settings.fileuploadOptions)
-                input.fileupload(fileuploadOptions)
+                $input.fileupload(fileuploadOptions)
             },
             dragInit: function(){
                 $(document).on('dragover', function ()
@@ -135,12 +139,13 @@
             },
             showError: function(error){
                 if($.fn.popover){
-                    container.find('.error-popover').attr('data-content', error).popover({html:true,trigger:"hover"});
+                    $container.find('.error-popover').attr('data-content', error).popover({html:true,trigger:"hover"});
                 }
-                container.find('.upload-kit-input').addClass('error');
+                $container.find('.upload-kit-input').addClass('error');
             },
             removeItem: function(){
                 this.remove();
+                methods.handleEmptyValue();
                 methods.checkInputVisibility();
             },
             createItem: function(file){
@@ -166,11 +171,18 @@
                 return item;
             },
             checkInputVisibility: function(){
-                var inputContainer = container.find('.upload-kit-input');
+                var inputContainer = $container.find('.upload-kit-input');
                 if(settings.fileuploadOptions.getNumberOfFiles() < settings.fileuploadOptions.maxNumberOfFiles){
                     inputContainer.show();
                 } else {
                     inputContainer.hide();
+                }
+            },
+            handleEmptyValue: function(){
+                if(settings.fileuploadOptions.getNumberOfFiles() > 0){
+                    $emptyInput.val(settings.fileuploadOptions.getNumberOfFiles())
+                } else {
+                    $emptyInput.removeAttr('value');
                 }
             }
         }
