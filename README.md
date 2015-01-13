@@ -20,6 +20,9 @@ STORAGE
 ],
 ```
 Don`t forget to apply included migration - m140805_084737_file_storage_item.php
+```
+php yii migrate --migrationPath=@trntv/filekit/migrations
+```
 
 `` \Yii::$app->fileStorage->getRepository('uploads')->save(UploadedFile::getInstanceByName('image')); ``
 `` \Yii::$app->fileStorage->saveAll(UploadedFile::getInstancesByName('files')); ``

@@ -1,6 +1,6 @@
 <?php
 
-namespace trntv\filekit\storage\models;
+namespace trntv\filekit\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;

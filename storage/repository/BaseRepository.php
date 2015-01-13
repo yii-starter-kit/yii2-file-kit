@@ -1,9 +1,7 @@
 <?php
 namespace trntv\filekit\storage\repository;
 
-use Exception;
 use trntv\filekit\storage\File;
-use trntv\filekit\storage\models\FileStorageItem;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
 
@@ -23,7 +21,9 @@ abstract class BaseRepository extends Component{
      */
     const EVENT_AFTER_SAVE = 'afterSave';
 
-    public $createDbRecord = true;
+    public $recordClass;
+    public $createRecord = true;
+
     /**
      * @throws \yii\base\InvalidConfigException
      */
@@ -31,27 +31,29 @@ abstract class BaseRepository extends Component{
         if(!$this->name){
             throw new InvalidConfigException('Name cannot be empty');
         }
+        if($this->recordClass && !class_implements($this->recordClass, 'trntv\filekit\base\FileRecordInterface')){
+            throw new InvalidConfigException('BaseRepository::recordClass must implement trntv\filekit\base\FileRecordInterface');
+        }
     }
 
     /**
      * This method is called at the end saving a file.
      * Method creates a record about saved file to db
-     * @param $file
+     * @param \trntv\filekit\base\File $file
      * @param null $category
      * @throws \Exception
      */
     public function afterSave($file, $category = null){
-        if(!$file->error && $this->createDbRecord) {
-            $model = new FileStorageItem();
-            $model->repository = $this->name;
-            $model->category = $category;
-            $model->url = $file->url;
-            $model->path = $file->path->getPath();
-            $model->size = $file->size;
-            $model->mimeType = $file->mimeType;
-            $model->status = FileStorageItem::STATUS_UPLOADED;
-            if(!$model->save()){
-                throw new Exception($model->errors);
+        if($this->createRecord && $this->recordClass && !$file->error) {
+            $path = \Yii::createObject([
+                'class'=>$this->recordClass,
+                'repository'=>$this->name,
+                'size' => $file->size,
+                'mimeType' => $file->mimeType,
+                'basename' => $file->path->get
+            ]);
+            if(!$record->save()){
+                throw new Exception($record->errors);
             };
         }
         $this->trigger(self::EVENT_AFTER_SAVE);

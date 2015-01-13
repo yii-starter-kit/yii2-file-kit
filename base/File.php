@@ -5,7 +5,7 @@
  * Date: 7/13/14
  * Time: 2:00 PM
  */
-namespace trntv\filekit\storage;
+namespace trntv\filekit\base;
 
 use trntv\filekit\base\Path;
 use trntv\filekit\base\Url;
@@ -18,7 +18,7 @@ use yii\web\UploadedFile;
 /**
  * Class File
  * @package trntv\filekit\storage
- * @property \trntv\filekit\base\Path $path
+ * @property \League\Url\Path $path
  */
 class File extends Object
 {
@@ -67,9 +67,9 @@ class File extends Object
     }
 
     public function setPath($path){
-        if(!is_a($path, Path::className())){
+        if(!is_a($path, '\League\Url\Path')){
             $path = \Yii::createObject([
-                'class'=>'trntv\filekit\base\Path',
+                'class'=>'\League\Url\Path',
                 'path'=>$path
             ]);
         }
@@ -78,7 +78,7 @@ class File extends Object
 
 
     /**
-     * @return \trntv\filekit\base\Path
+     * @return \League\Url\Path
      */
     public function getPath(){
         return $this->_path;
