@@ -37,9 +37,27 @@ echo \trntv\filekit\widget\Upload::widget([
         'maxFileSize'=>10000000, // 10 MiB
         'maxNumberOfFiles'=>3
     ]
-])
+]);
+
+echo $form->field($model, 'files')->widget(
+    '\trntv\filekit\widget\Upload',
+    [
+        'url'=>['upload'],
+        'sortable'=>true,
+        'fileuploadOptions'=>[
+            'maxFileSize'=>10000000, // 10 MiB
+            'maxNumberOfFiles'=>3
+        ]
+    ]
+);
 ```
-ACTIONS
+
+SomeModel.php
+```
+public $files = [];
+```
+
+ACTION
 -------
 ```
 public function actions(){
