@@ -50,11 +50,31 @@ class UploadAction extends Action
      * @var \Closure
      * ```php
      * function($file, $uploadAction) {
+     *     // do some stuff before file saved
+     * }
+     * ```
+     */
+    public $beforeFileSaved;
+
+    /**
+     * @var \Closure
+     * ```php
+     * function($file, $uploadAction) {
      *     // process file value
      * }
      * ```
      */
     public $fileProcessing;
+
+    /**
+     * @var \Closure
+     * ```php
+     * function($response, $uploadAction) {
+     *     // process $response
+     * }
+     * ```
+     */
+    public $beforeResponse;
 
     public function init(){
         \Yii::$app->response->format = $this->responseFormat;
@@ -74,10 +94,27 @@ class UploadAction extends Action
 
     public function run()
     {
-        $result = [];
         $files = UploadedFile::getInstancesByName($this->fileparam);
+
+        //collect files to save
+        $filesToSave = [];
         foreach ($files as $file) {
             $file = File::load($file);
+
+            //with custom user function defined under $this->beforeFileSaved you can skip some files from saving or throw an error to stop the process of uploading
+            $allowToSave = true;
+            if ($this->beforeFileSaved instanceof \Closure) {
+                $allowToSave = call_user_func($this->beforeFileSaved, $file, $this);
+            }
+
+            //if ($allowToSave === false), then skip the file
+            if ($allowToSave !== false) {
+                $filesToSave[] = $file;
+            }
+        }
+
+        $result = [];
+        foreach ($filesToSave as $file) {
             $file = \Yii::$app->{$this->fileStorage}->save($file, $this->fileCategory, $this->repository);
             if (!$file->error) {
                 if ($this->fileProcessing instanceof \Closure) {
@@ -97,6 +134,15 @@ class UploadAction extends Action
                 throw new Exception($file->error);
             }
         }
+
+        //process final response if needed
+        if ($this->beforeResponse instanceof \Closure) {
+            $userResponse = call_user_func($this->beforeResponse, $result, $this);
+            if ($userResponse) {
+                $result = $userResponse;
+            }
+        }
+
         return $result;
     }
 
