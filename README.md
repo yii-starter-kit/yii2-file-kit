@@ -20,6 +20,9 @@ STORAGE
 ],
 ```
 Don`t forget to apply included migration - m140805_084737_file_storage_item.php
+```
+php yii migrate --migrationPath=@trntv/filekit/migrations
+```
 
 `` \Yii::$app->fileStorage->getRepository('uploads')->save(UploadedFile::getInstanceByName('image')); ``
 `` \Yii::$app->fileStorage->saveAll(UploadedFile::getInstancesByName('files')); ``
@@ -90,29 +93,6 @@ BEHAVIOR
           ],
       ];
  }
-```
-PATH HELPER
------------
-```
-$path = new \trntv\filekit\base\Path(['path'=>'/var/www/images/product.jpg'])
-echo $path->filename; // product.jpg
-$path->filename = 'service.jpg';
-echo $path; // /var/www/images/service.jpg
-$path->addFilenamePrefix('_thumb');
-echo $path->filename; // service_thumb.jpg
-echo $path; // /var/www/images/service_thumb.jpg
-```
-URL HELPER
------------
-```
-$url = new \trntv\filekit\base\Url(['url'=>'http://example.com/1/test.php'])
-echo $url->host; // example.com
-echo $url->path->filename; // test.php;
-$url->port = 88;
-$url->path->filename = 'product.jpg';
-echo $url; // http://example.com:88/1/product.jpg
-$url->path->addFilenamePrefix('_thumb');
-echo $url; // http://example.com:88/1/product_thumb.jpg
 ```
 
 TODO

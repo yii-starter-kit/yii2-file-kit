@@ -6,7 +6,6 @@
 namespace trntv\filekit\widget;
 
 use trntv\filekit\widget\assets\UploadAsset;
-use yii\base\Exception;
 use yii\base\InvalidParamException;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;

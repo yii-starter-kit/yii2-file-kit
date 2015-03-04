@@ -5,21 +5,18 @@
     "license": "BSD-3-Clause",
     "authors": [
         {
-            "name": "Eugine Terentev",
-            "email": "eugine@terentev.net"
+            "name": "Eugene Terentev",
+            "email": "eugene@terentev.net"
         }
     ],
     "minimum-stability": "dev",
     "require": {
         "yiisoft/yii2": "*",
         "yiisoft/yii2-jui": "*",
-        "jakeasmith/http_build_url": "*"
+        "league/url": "~3.0"
     },
     "autoload": {
         "psr-4": { "trntv\\filekit\\": "" }
-    },
-    "suggest": {
-        "ext-http": "HTTP PHP Extension"
     },
     "extra":{
         "asset-installer-paths": {
