@@ -8,6 +8,7 @@
 
 namespace trntv\filekit\storage;
 
+use trntv\filekit\base\File;
 use yii\base\BootstrapInterface;
 use yii\base\InvalidCallException;
 use yii\helpers\ArrayHelper;

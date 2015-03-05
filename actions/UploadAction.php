@@ -1,7 +1,7 @@
 <?php
 namespace trntv\filekit\actions;
 
-use trntv\filekit\storage\File;
+use trntv\filekit\base\File;
 use yii\base\Action;
 use yii\base\Exception;
 use yii\helpers\Html;
