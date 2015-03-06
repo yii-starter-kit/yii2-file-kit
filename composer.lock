@@ -4,27 +4,228 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "65f099647820b5b402406753ca80f98c",
+    "hash": "c3c6a8bae01d4067cda12c4f95052cde",
     "packages": [
         {
-            "name": "bower-asset/jquery",
-            "version": "2.1.1",
+            "name": "bower-asset/blueimp-canvas-to-blob",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jquery/jquery.git",
-                "reference": "4dec426aa2a6cbabb1b064319ba7c272d594a688"
+                "url": "https://github.com/blueimp/JavaScript-Canvas-to-Blob.git",
+                "reference": "88b88aa06fe7fa5a49f8205ed7402a684db7b8a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jquery/jquery/zipball/4dec426aa2a6cbabb1b064319ba7c272d594a688",
-                "reference": "4dec426aa2a6cbabb1b064319ba7c272d594a688",
+                "url": "https://api.github.com/repos/blueimp/JavaScript-Canvas-to-Blob/zipball/88b88aa06fe7fa5a49f8205ed7402a684db7b8a4",
+                "reference": "88b88aa06fe7fa5a49f8205ed7402a684db7b8a4",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "js/canvas-to-blob.js",
+                "bower-asset-ignore": [
+                    "/*.*",
+                    "test"
+                ],
+                "branch-alias": {
+                    "dev-master": "2.1.1-dev"
+                }
+            },
+            "description": "JavaScript Canvas to Blob is a function to convert canvas elements into Blob objects.",
+            "keywords": [
+                "blob",
+                "canvas",
+                "conversion",
+                "convert",
+                "javascript"
+            ],
+            "time": "2014-09-15 20:20:20"
+        },
+        {
+            "name": "bower-asset/blueimp-file-upload",
+            "version": "9.7.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/blueimp/jQuery-File-Upload.git",
+                "reference": "c1392e08b47e3d658a8cfdda6d490bf4c71a9da8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/blueimp/jQuery-File-Upload/zipball/c1392e08b47e3d658a8cfdda6d490bf4c71a9da8",
+                "reference": "c1392e08b47e3d658a8cfdda6d490bf4c71a9da8",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/blueimp-canvas-to-blob": ">=2.1.0",
+                "bower-asset/blueimp-load-image": ">=1.11.0",
+                "bower-asset/blueimp-tmpl": ">=2.5.3",
+                "bower-asset/jquery": ">=1.6"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "css/jquery.fileupload.css",
+                    "css/jquery.fileupload-ui.css",
+                    "css/jquery.fileupload-noscript.css",
+                    "css/jquery.fileupload-ui-noscript.css",
+                    "js/cors/jquery.postmessage-transport.js",
+                    "js/cors/jquery.xdr-transport.js",
+                    "js/vendor/jquery.ui.widget.js",
+                    "js/jquery.fileupload.js",
+                    "js/jquery.fileupload-process.js",
+                    "js/jquery.fileupload-validate.js",
+                    "js/jquery.fileupload-image.js",
+                    "js/jquery.fileupload-audio.js",
+                    "js/jquery.fileupload-video.js",
+                    "js/jquery.fileupload-ui.js",
+                    "js/jquery.fileupload-jquery-ui.js",
+                    "js/jquery.fileupload-angular.js",
+                    "js/jquery.iframe-transport.js"
+                ],
+                "bower-asset-ignore": [
+                    "/*.*",
+                    "/cors",
+                    "css/demo-ie8.css",
+                    "css/demo.css",
+                    "css/style.css",
+                    "js/app.js",
+                    "js/main.js",
+                    "server",
+                    "test"
+                ]
+            },
+            "description": "File Upload widget with multiple file selection, drag&amp;drop support, progress bar, validation and preview images, audio and video for jQuery. Supports cross-domain, chunked and resumable file uploads. Works with any server-side platform (Google App Engine, PHP, Python, Ruby on Rails, Java, etc.) that supports standard HTML form file uploads.",
+            "keywords": [
+                "bootstrap",
+                "chunk",
+                "cross-domain",
+                "cross-site",
+                "drag",
+                "drop",
+                "file",
+                "gae",
+                "go",
+                "jquery",
+                "multiple",
+                "php",
+                "preview",
+                "progress",
+                "python",
+                "resume",
+                "selection",
+                "upload",
+                "widget"
+            ]
+        },
+        {
+            "name": "bower-asset/blueimp-load-image",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/blueimp/JavaScript-Load-Image.git",
+                "reference": "3ddac4fd7e69fa2651bc37658e4fe6c826af5157"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/blueimp/JavaScript-Load-Image/zipball/3ddac4fd7e69fa2651bc37658e4fe6c826af5157",
+                "reference": "3ddac4fd7e69fa2651bc37658e4fe6c826af5157",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "js/load-image.js",
+                    "js/load-image-ios.js",
+                    "js/load-image-orientation.js",
+                    "js/load-image-meta.js",
+                    "js/load-image-exif.js",
+                    "js/load-image-exif-map.js"
+                ],
+                "bower-asset-ignore": [
+                    "/*.*",
+                    "css",
+                    "js/vendor",
+                    "js/demo.js",
+                    "test"
+                ],
+                "branch-alias": {
+                    "dev-master": "1.13.0-dev"
+                }
+            },
+            "description": "JavaScript Load Image is a library to load images provided as File or Blob objects or via URL. It returns an optionally scaled and/or cropped HTML img or canvas element. It also provides a method to parse image meta data to extract Exif tags and thumbnails and to restore the complete image header after resizing.",
+            "keywords": [
+                "blob",
+                "canvas",
+                "crop",
+                "exif",
+                "file",
+                "image",
+                "img",
+                "javascript",
+                "load",
+                "loading",
+                "meta",
+                "resizing",
+                "scale",
+                "thumbnail",
+                "url"
+            ],
+            "time": "2014-09-14 21:21:32"
+        },
+        {
+            "name": "bower-asset/blueimp-tmpl",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/blueimp/JavaScript-Templates.git",
+                "reference": "587fd7c683e5df40597a19bf162abd8081abdcb4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/blueimp/JavaScript-Templates/zipball/587fd7c683e5df40597a19bf162abd8081abdcb4",
+                "reference": "587fd7c683e5df40597a19bf162abd8081abdcb4",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "js/tmpl.js",
+                "bower-asset-ignore": [
+                    "/*.*",
+                    "css",
+                    "js/demo.js",
+                    "test"
+                ],
+                "branch-alias": {
+                    "dev-master": "2.5.4-dev"
+                }
+            },
+            "description": "< 1KB lightweight, fast & powerful JavaScript templating engine with zero dependencies. Compatible with server-side environments like node.js, module loaders like RequireJS and all web browsers.",
+            "keywords": [
+                "javascript",
+                "templates",
+                "templating"
+            ],
+            "time": "2014-09-14 21:58:41"
+        },
+        {
+            "name": "bower-asset/jquery",
+            "version": "2.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jquery/jquery.git",
+                "reference": "8f2a9d9272d6ed7f32d3a484740ab342c02541e0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jquery/jquery/zipball/8f2a9d9272d6ed7f32d3a484740ab342c02541e0",
+                "reference": "8f2a9d9272d6ed7f32d3a484740ab342c02541e0",
                 "shasum": ""
             },
             "require-dev": {
                 "bower-asset/qunit": "1.14.0",
                 "bower-asset/requirejs": "2.1.10",
                 "bower-asset/sinon": "1.8.1",
-                "bower-asset/sizzle": "1.10.19"
+                "bower-asset/sizzle": "2.1.1-patch2"
             },
             "type": "bower-asset-library",
             "extra": {
@@ -51,16 +252,16 @@
         },
         {
             "name": "bower-asset/jquery-ui",
-            "version": "1.11.1",
+            "version": "1.11.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/jqueryui.git",
-                "reference": "39890e8599bdd79c423ea21b967195106800b87d"
+                "reference": "7e2d6bec1c729925d9ad7c0c9ab4b561174efa99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/components/jqueryui/zipball/39890e8599bdd79c423ea21b967195106800b87d",
-                "reference": "39890e8599bdd79c423ea21b967195106800b87d",
+                "url": "https://api.github.com/repos/components/jqueryui/zipball/7e2d6bec1c729925d9ad7c0c9ab4b561174efa99",
+                "reference": "7e2d6bec1c729925d9ad7c0c9ab4b561174efa99",
                 "shasum": ""
             },
             "require": {
@@ -76,16 +277,16 @@
         },
         {
             "name": "bower-asset/jquery.inputmask",
-            "version": "3.x-dev",
+            "version": "3.1.61",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RobinHerbots/jquery.inputmask.git",
-                "reference": "e603505cf5d1004ae7d677053518682472319c9c"
+                "reference": "f2c086411d2557fc485c47afb3cecfa6c1de9ee2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RobinHerbots/jquery.inputmask/zipball/e603505cf5d1004ae7d677053518682472319c9c",
-                "reference": "e603505cf5d1004ae7d677053518682472319c9c",
+                "url": "https://api.github.com/repos/RobinHerbots/jquery.inputmask/zipball/f2c086411d2557fc485c47afb3cecfa6c1de9ee2",
+                "reference": "f2c086411d2557fc485c47afb3cecfa6c1de9ee2",
                 "shasum": ""
             },
             "require": {
@@ -121,24 +322,23 @@
                 "form",
                 "input",
                 "inputmask",
-                "jQuery",
+                "jquery",
                 "mask",
                 "plugins"
-            ],
-            "time": "2014-09-24 10:14:07"
+            ]
         },
         {
             "name": "bower-asset/punycode",
-            "version": "v1.3.1",
+            "version": "v1.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bestiejs/punycode.js.git",
-                "reference": "de452f89aea23f126f7b219f576abda1c0823825"
+                "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bestiejs/punycode.js/zipball/de452f89aea23f126f7b219f576abda1c0823825",
-                "reference": "de452f89aea23f126f7b219f576abda1c0823825",
+                "url": "https://api.github.com/repos/bestiejs/punycode.js/zipball/38c8d3131a82567bfef18da09f7f4db68c84f8a3",
+                "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3",
                 "shasum": ""
             },
             "type": "bower-asset-library",
@@ -157,16 +357,16 @@
         },
         {
             "name": "bower-asset/yii2-pjax",
-            "version": "v2.0.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/jquery-pjax.git",
-                "reference": "520f8c12b5a417e21d2cd0df499fa2a4e4e9a9d6"
+                "reference": "3f20897307cca046fca5323b318475ae9dac0ca0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/jquery-pjax/zipball/520f8c12b5a417e21d2cd0df499fa2a4e4e9a9d6",
-                "reference": "520f8c12b5a417e21d2cd0df499fa2a4e4e9a9d6",
+                "url": "https://api.github.com/repos/yiisoft/jquery-pjax/zipball/3f20897307cca046fca5323b318475ae9dac0ca0",
+                "reference": "3f20897307cca046fca5323b318475ae9dac0ca0",
                 "shasum": ""
             },
             "require": {
@@ -177,22 +377,33 @@
                 "bower-asset-main": "./jquery.pjax.js",
                 "bower-asset-ignore": [
                     ".travis.yml",
+                    "Gemfile",
+                    "Gemfile.lock",
+                    "vendor/",
+                    "script/",
                     "test/"
-                ]
-            }
+                ],
+                "branch-alias": {
+                    "dev-master": "2.0.3-dev"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "time": "2015-03-08 21:03:11"
         },
         {
             "name": "cebe/markdown",
-            "version": "0.9.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cebe/markdown.git",
-                "reference": "6a3c3737e9c1f4670f39a771f77b536126788ad2"
+                "reference": "54a2c49de31cc44e864ebf0500a35ef21d0010b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cebe/markdown/zipball/6a3c3737e9c1f4670f39a771f77b536126788ad2",
-                "reference": "6a3c3737e9c1f4670f39a771f77b536126788ad2",
+                "url": "https://api.github.com/repos/cebe/markdown/zipball/54a2c49de31cc44e864ebf0500a35ef21d0010b2",
+                "reference": "54a2c49de31cc44e864ebf0500a35ef21d0010b2",
                 "shasum": ""
             },
             "require": {
@@ -200,7 +411,9 @@
                 "php": ">=5.4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "3.7.*"
+                "cebe/indent": "*",
+                "facebook/xhprof": "*@dev",
+                "phpunit/phpunit": "4.1.*"
             },
             "bin": [
                 "bin/markdown"
@@ -208,8 +421,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev",
-                    "dev-0.9.x-dev": "0.9.x-dev"
+                    "dev-master": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -226,10 +438,10 @@
                     "name": "Carsten Brandt",
                     "email": "mail@cebe.cc",
                     "homepage": "http://cebe.cc/",
-                    "role": "Core framework development"
+                    "role": "Creator"
                 }
             ],
-            "description": "A super fast highly extensible markdown parser for PHP",
+            "description": "A super fast, highly extensible markdown parser for PHP",
             "homepage": "https://github.com/cebe/markdown#readme",
             "keywords": [
                 "extensible",
@@ -238,7 +450,7 @@
                 "markdown",
                 "markdown-extra"
             ],
-            "time": "2014-03-05 16:30:51"
+            "time": "2015-03-06 05:28:07"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -274,8 +486,7 @@
                 {
                     "name": "Edward Z. Yang",
                     "email": "admin@htmlpurifier.org",
-                    "homepage": "http://ezyang.com",
-                    "role": "Developer"
+                    "homepage": "http://ezyang.com"
                 }
             ],
             "description": "Standards compliant HTML filter written in PHP",
@@ -286,27 +497,57 @@
             "time": "2013-11-30 08:25:19"
         },
         {
-            "name": "jakeasmith/http_build_url",
+            "name": "league/flysystem",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jakeasmith/http_build_url.git",
-                "reference": "fa7da464442d65feacb5d185e360200af4cd22b5"
+                "url": "https://github.com/thephpleague/flysystem.git",
+                "reference": "51cd7cd7ee0defbaafc6ec0d3620110a5d71e11a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jakeasmith/http_build_url/zipball/fa7da464442d65feacb5d185e360200af4cd22b5",
-                "reference": "fa7da464442d65feacb5d185e360200af4cd22b5",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/51cd7cd7ee0defbaafc6ec0d3620110a5d71e11a",
+                "reference": "51cd7cd7ee0defbaafc6ec0d3620110a5d71e11a",
                 "shasum": ""
             },
+            "require": {
+                "php": ">=5.4.0"
+            },
             "require-dev": {
-                "phpunit/phpunit": "~3.7"
+                "ext-fileinfo": "*",
+                "league/phpunit-coverage-listener": "~1.1",
+                "mockery/mockery": "~0.9",
+                "phpspec/phpspec": "~2.0.0",
+                "phpspec/prophecy-phpunit": "~1.0",
+                "phpunit/phpunit": "~4.1",
+                "predis/predis": "~1.0",
+                "tedivm/stash": "~0.12.0"
+            },
+            "suggest": {
+                "ext-fileinfo": "Required for MimeType",
+                "league/flysystem-aws-s3-v2": "Allows you to use S3 storage with AWS SDK v2",
+                "league/flysystem-aws-s3-v3": "Allows you to use S3 storage with AWS SDK v3",
+                "league/flysystem-azure": "Allows you to use Windows Azure Blob storage",
+                "league/flysystem-cached-adapter": "Flysystem adapter decorator for metadata caching",
+                "league/flysystem-copy": "Allows you to use Copy.com storage",
+                "league/flysystem-dropbox": "Allows you to use Dropbox storage",
+                "league/flysystem-eventable-filesystem": "Allows you to use EventableFilesystem",
+                "league/flysystem-rackspace": "Allows you to use Rackspace Cloud Files",
+                "league/flysystem-sftp": "Allows you to use SFTP server storage via phpseclib",
+                "league/flysystem-webdav": "Allows you to use WebDAV storage",
+                "league/flysystem-ziparchive": "Allows you to use ZipArchive adapter",
+                "predis/predis": "Allows you to use Predis for caching"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
             "autoload": {
-                "files": [
-                    "src/http_build_url.php"
-                ]
+                "psr-4": {
+                    "League\\Flysystem\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -314,30 +555,47 @@
             ],
             "authors": [
                 {
-                    "name": "Jake A. Smith",
-                    "email": "theman@jakeasmith.com"
+                    "name": "Frank de Jonge",
+                    "email": "info@frenky.net"
                 }
             ],
-            "description": "Provides functionality for http_build_url() to environments without pecl_http.",
-            "time": "2014-07-01 17:50:40"
+            "description": "Many filesystems, one API.",
+            "keywords": [
+                "Cloud Files",
+                "WebDAV",
+                "aws",
+                "cloud",
+                "copy.com",
+                "dropbox",
+                "file systems",
+                "files",
+                "filesystem",
+                "ftp",
+                "rackspace",
+                "remote",
+                "s3",
+                "sftp",
+                "storage"
+            ],
+            "time": "2015-03-10 11:04:14"
         },
         {
             "name": "league/url",
-            "version": "dev-master",
+            "version": "3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/url.git",
-                "reference": "fbf11b9257e7c53f802674f033b090f8bfc3b1dd"
+                "reference": "74ae626949e967fd20511d074835ae6ff67d97ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/url/zipball/fbf11b9257e7c53f802674f033b090f8bfc3b1dd",
-                "reference": "fbf11b9257e7c53f802674f033b090f8bfc3b1dd",
+                "url": "https://api.github.com/repos/thephpleague/url/zipball/74ae626949e967fd20511d074835ae6ff67d97ae",
+                "reference": "74ae626949e967fd20511d074835ae6ff67d97ae",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
-                "php": ">=5.4.7",
+                "php": ">=5.3.0",
                 "true/punycode": "~1.0"
             },
             "require-dev": {
@@ -346,7 +604,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.0-dev"
+                    "dev-master": "3.3-dev"
                 }
             },
             "autoload": {
@@ -372,7 +630,7 @@
                 "php",
                 "url"
             ],
-            "time": "2015-01-05 09:28:14"
+            "time": "2014-11-27 10:14:00"
         },
         {
             "name": "true/punycode",
@@ -427,20 +685,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "90a505ece78a8046d84b48fc7223270658217b02"
+                "reference": "352d63d27b34594e476cff7e774259c3bf9f16c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/90a505ece78a8046d84b48fc7223270658217b02",
-                "reference": "90a505ece78a8046d84b48fc7223270658217b02",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/352d63d27b34594e476cff7e774259c3bf9f16c2",
+                "reference": "352d63d27b34594e476cff7e774259c3bf9f16c2",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/jquery": "2.1.*@stable | ~2.1@stable | ~1.11@stable",
-                "bower-asset/jquery.inputmask": "3.1.* | ~3.1",
-                "bower-asset/punycode": "1.3.* | ~1.3",
-                "bower-asset/yii2-pjax": "2.0.* | ~2.0",
-                "cebe/markdown": "0.9.*",
+                "bower-asset/jquery": "2.1.*@stable | 1.11.*@stable",
+                "bower-asset/jquery.inputmask": "3.1.*",
+                "bower-asset/punycode": "1.3.*",
+                "bower-asset/yii2-pjax": ">=2.0.1",
+                "cebe/markdown": "~1.0.0 | ~1.1.0",
                 "ext-mbstring": "*",
                 "ezyang/htmlpurifier": "4.6.*",
                 "lib-pcre": "*",
@@ -507,7 +765,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2014-09-24 15:18:23"
+            "time": "2015-03-11 16:04:27"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -515,12 +773,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-composer.git",
-                "reference": "0128e4a4bfd2647dc70c487da8c6c7d1ecc354fa"
+                "reference": "ad3df6e918cada0369bd4f831a976b1f8c97ad70"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-composer/zipball/0128e4a4bfd2647dc70c487da8c6c7d1ecc354fa",
-                "reference": "0128e4a4bfd2647dc70c487da8c6c7d1ecc354fa",
+                "url": "https://api.github.com/repos/yiisoft/yii2-composer/zipball/ad3df6e918cada0369bd4f831a976b1f8c97ad70",
+                "reference": "ad3df6e918cada0369bd4f831a976b1f8c97ad70",
                 "shasum": ""
             },
             "require": {
@@ -554,7 +812,7 @@
                 "extension installer",
                 "yii2"
             ],
-            "time": "2014-09-22 15:37:19"
+            "time": "2015-03-01 06:24:14"
         },
         {
             "name": "yiisoft/yii2-jui",
@@ -562,16 +820,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-jui.git",
-                "reference": "b6ec81df5b000e00bd532c080a1a87e2347fc0eb"
+                "reference": "26d4dbf60e3ea44669355f0bcc7189db92aa0270"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-jui/zipball/b6ec81df5b000e00bd532c080a1a87e2347fc0eb",
-                "reference": "b6ec81df5b000e00bd532c080a1a87e2347fc0eb",
+                "url": "https://api.github.com/repos/yiisoft/yii2-jui/zipball/26d4dbf60e3ea44669355f0bcc7189db92aa0270",
+                "reference": "26d4dbf60e3ea44669355f0bcc7189db92aa0270",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/jquery-ui": "1.11.*@stable | ~1.11@stable",
+                "bower-asset/jquery-ui": "1.11.*@stable",
                 "yiisoft/yii2": "*"
             },
             "type": "yii2-extension",
@@ -600,15 +858,13 @@
                 "jQuery UI",
                 "yii2"
             ],
-            "time": "2014-09-24 11:19:35"
+            "time": "2015-03-03 23:14:05"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "league/url": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
