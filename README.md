@@ -1,15 +1,13 @@
-README will be translated in english soon. Sorry.
----
-Этот набор предназначен для автоматизации рутинных процессов загрузки файлов их сохранения и хранения.
-Он включает в себя:
-- Виджет для загрузки файлов
-- Компонент для сохранения файлов (построен поверх flysystem)
-- Действия для загрузки, удаления и просмотра (скачивания файлов)
-- Поведение для сохранения файлов в модели и удаления файлов при удалении модели
+This kit is designed to automate routine processes of uploading files, their saving and storage.
+It includes:
+- File upload widget
+- Component for storing files (built on top of flysystem)
+- Actions to download, delete, and view (download) files
+- Behavior for saving files in the model and delete files when you delete a model
 
 # File Storage
-Для работы с File Kit вам надо сконфигурировать FileStorage. Этот компонент представляет собой слой абстракции над файловой системой 
-- его основная задача брать на себя генерацию уникального имени для каждого файла и создавать события записи, удаления и тд.
+To work with the File Kit you need to configure FileStorage first. This component is a layer of abstraction over the filesystem
+- Its main task to take on the generation of a unique name for each file and trigger corresponding events.
 ```
 'fileStorage'=>[
     'class' => 'trntv\filekit\Storage',
@@ -19,10 +17,11 @@ README will be translated in english soon. Sorry.
     'filesystemComponent' => ...    
 ],
 ```
-Есть несколько возможностей настроить Storage для работы с `flysystem`.
-1. Создать класс построитель, реализующий `trntv\filekit\filesystem\FilesystemBuilderInterface` и реализовать в нем метод `build`
-который возвращает объект файловой системы.
-Exmaple:
+There are several ways to configure `Storage` to work with `flysystem`.
+
+1. Create a builder class that implements `trntv\filekit\filesystem\FilesystemBuilderInterface` and implement method` build`
+which returns filesystem object
+Example:
 ```php
 namespace app\components;
 
@@ -42,7 +41,7 @@ class LocalFlysystemBuilder implements FilesystemBuilderInterface
     }
 }
 ```
-Конфиг в таком случае будет выглядеть следующим образом:
+Configuration:
 ```
 'fileStorage'=>[
     ...
@@ -51,13 +50,12 @@ class LocalFlysystemBuilder implements FilesystemBuilderInterface
         'foo' => 'bar'
         ...
     ]
-],
+]
 ```
-Подробнее о том что должен представлять из себя метод `build` вы можете посмотреть в документации http://flysystem.thephpleague.com/
+Read more about flysystem at http://flysystem.thephpleague.com/
 
-2. Использовать сторонее расширение, например `creocoder/yii2-flysystem`, и в параметр `filesystemComponent` передать именя сконфегурированого компонента
-файловой системы
-Конфиг в таком случае будет выглядеть следующим образом:
+2. Use third-party extensions, `creocoder/yii2-flysystem` for example, and provide a name of the filesystem component in `filesystemComponent`
+Configuration:
 ```
 'fs' => [
     'class' => 'creocoder\flysystem\LocalFilesystem',
@@ -70,10 +68,10 @@ class LocalFlysystemBuilder implements FilesystemBuilderInterface
 ],
 ```
 # Actions
-File Kit содержит несколько заготовленных Actions для реализации работы с файлами.
+File Kit contains several Actions to work with uploads.
 
 ### Upload Action
-Предназначен для сохранение загруженных с помощью виджета файлов
+Designed to save the file uploaded by the widget
 ```
 public function actions(){
     return [
@@ -83,7 +81,7 @@ public function actions(){
        ];
 }
 ```
-Описание параметров смотрите в corresponding class
+See additional settings in the corresponding class
 
 ### Delete Action
 ```
@@ -95,8 +93,7 @@ public function actions(){
     ];
 }
 ```
-Описание параметров смотрите в corresponding class
-**NOTE: Не забудьте сконфигурировать Access Rules для этого action
+See additional settings in the corresponding class
 
 ### View (Donwload) Action
 ```
@@ -108,10 +105,10 @@ public function actions(){
     ];
 }
 ```
-Описание параметров смотрите в corresponding class
+See additional settings in the corresponding class
 
 # Upload Widget
-Отдельное использование
+Standalone usage
 ```
 echo \trntv\filekit\widget\Upload::widget([
     'model'=>$model,
@@ -123,7 +120,7 @@ echo \trntv\filekit\widget\Upload::widget([
 ]);
 ```
 
-В сочетании с ActiveForm
+With ActiveForm
 ```
 echo $form->field($model, 'files')->widget(
     '\trntv\filekit\widget\Upload',
@@ -137,7 +134,7 @@ echo $form->field($model, 'files')->widget(
 ```
 
 # FilesBehavior
-Это поведение предназначено для сохранения загруженных файлов в соответствующем relation.
+This behavior is designed to save uploaded files in the corresponding relation
 
 ```php
  public function behaviors()
@@ -152,4 +149,4 @@ echo $form->field($model, 'files')->widget(
       ];
  }
 ```
-Описание остальных параметров и пример схемы таблицы смотрите в corresponding class
+See additional settings in the corresponding class
