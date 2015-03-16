@@ -3,7 +3,7 @@ namespace trntv\filekit\actions;
 
 use trntv\filekit\events\UploadEvent;
 use trntv\filekit\File;
-use League\flysystem\File as FlysystemFile;
+use League\Flysystem\File as FlysystemFile;
 use yii\base\DynamicModel;
 use yii\helpers\Url;
 use yii\web\Response;

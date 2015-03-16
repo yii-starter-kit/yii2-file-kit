@@ -52,12 +52,17 @@ class Upload extends InputWidget
      */
     public $acceptFileTypes;
 
+    public $fileStorage = 'fileStorage';
+
     /**
      * @throws \yii\base\InvalidConfigException
      */
     public function init()
     {
         parent::init();
+        if ($this->maxNumberOfFiles > 1) {
+            $this->multiple = true;
+        }
         if ($this->hasModel()) {
             $this->name = $this->name ?: Html::getInputName($this->model, $this->attribute);
             $this->value = $this->value ?: Html::getAttributeValue($this->model, $this->attribute);
@@ -66,16 +71,13 @@ class Upload extends InputWidget
             $this->clientOptions['name'] = $this->name;
         }
         if ($this->multiple && $this->value && !is_array($this->value)) {
-            throw new InvalidParamException(
-                'In "multiple" mode, value must be an array.
-                Use SingleUpload widget or set Upload::multiple to "false"'
-            );
+            throw new InvalidParamException('In "multiple" mode, value must be an array.');
         }
         if (!array_key_exists('fileparam', $this->url)) {
             $this->url['fileparam'] = $this->getFileInputName();
         }
         if (!$this->files && $this->value) {
-            $this->files = $this->value;
+            $this->files = $this->multiple ? $this->value : [$this->value];
         }
 
         $this->clientOptions = ArrayHelper::merge(

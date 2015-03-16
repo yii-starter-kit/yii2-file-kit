@@ -142,7 +142,7 @@ echo $form->field($model, 'files')->widget(
 ```
 
 # FilesBehavior
-This behavior is designed to save uploaded files in the corresponding relation
+This behavior is designed to save uploaded files in the corresponding relation.
 
 ```php
  public function behaviors()
@@ -150,11 +150,12 @@ This behavior is designed to save uploaded files in the corresponding relation
      return [
           'file' => [
               'class' => 'trntv\filekit\behaviors\FilesBehavior',
-              'filesAttribute' => 'files',
+              'multiple' => true,
+              'attribute' => 'files',
               'filesRelation' => 'uploadedFiles',
               
           ],
       ];
  }
 ```
-See additional settings in the corresponding class
+See additional settings in the corresponding class.

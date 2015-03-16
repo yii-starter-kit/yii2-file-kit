@@ -1,0 +1,348 @@
+<?php
+namespace trntv\filekit\behaviors;
+
+use Yii;
+use yii\base\Behavior;
+use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
+
+/**
+ * Class UploadBehavior
+ * @author Eugene Terentev <eugene@terentev.net>
+ */
+class UploadBehavior extends Behavior
+{
+    /**
+     * @var ActiveRecord
+     */
+    public $owner;
+
+    /**
+     * @var string Model attribute that contain uploaded file information
+     * or array of files information
+     */
+    public $attribute = 'file';
+
+    /**
+     * @var bool
+     */
+    public $multiple = false;
+
+    /**
+     * @var
+     */
+    public $attributePrefix;
+    /**
+     * @var string
+     */
+    public $pathAttribute = 'path';
+    /**
+     * @var string
+     */
+    public $baseUrlAttribute = 'baseUrl';
+    /**
+     * @var string
+     */
+    public $typeAttribute = 'type';
+    /**
+     * @var string
+     */
+    public $sizeAttribute = 'size';
+    /**
+     * @var string
+     */
+    public $nameAttribute = 'name';
+    /**
+     * @var string
+     */
+    public $orderAttribute = 'order';
+
+    /**
+     * @var string name of the relation
+     */
+    public $uploadRelation;
+    /**
+     * @var $uploadModel
+     * Schema example:
+     *      `id` INT NOT NULL AUTO_INCREMENT,
+     *      `path` VARCHAR(1024) NOT NULL,
+     *      `baseUrl` VARCHAR(255) NULL,
+     *      `type` VARCHAR(255) NULL,
+     *      `size` INT NULL,
+     *      `name` VARCHAR(255) NULL,
+     *      `order` INT NULL,
+     *      `foreign_key_id` INT NOT NULL,
+     */
+    public $uploadModel;
+    /**
+     * @var string
+     */
+    public $uploadModelScenario = 'default';
+
+    /**
+     * @var string
+     */
+    public $filesStorage = 'fileStorage';
+
+    /**
+     * @var array
+     */
+    protected $deletePaths;
+    /**
+     * @var \trntv\filekit\Storage
+     */
+    protected $storage;
+    /**
+     * @return array
+     */
+    public function events()
+    {
+        $multipleEvents = [
+            ActiveRecord::EVENT_AFTER_FIND => 'afterFindMultiple',
+            ActiveRecord::EVENT_AFTER_INSERT => 'afterInsertMultiple',
+            ActiveRecord::EVENT_AFTER_UPDATE => 'afterUpdateMultiple',
+            ActiveRecord::EVENT_BEFORE_DELETE => 'beforeDeleteMultiple',
+            ActiveRecord::EVENT_AFTER_DELETE => 'afterDelete'
+        ];
+
+        $singleEvents = [
+            ActiveRecord::EVENT_AFTER_FIND => 'afterFindSingle',
+            ActiveRecord::EVENT_AFTER_VALIDATE => 'afterValidateSingle',
+            ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeUpdateSingle',
+            ActiveRecord::EVENT_AFTER_UPDATE => 'afterUpdateSingle',
+            ActiveRecord::EVENT_BEFORE_DELETE => 'beforeDeleteSingle',
+            ActiveRecord::EVENT_AFTER_DELETE => 'afterDelete'
+        ];
+
+        return $this->multiple ? $multipleEvents : $singleEvents;
+    }
+
+    /**
+     *
+     */
+    public function afterValidateSingle()
+    {
+        $this->prepareModel($this->owner, $this->owner->{$this->attribute});
+    }
+
+    /**
+     *
+     */
+    public function afterInsertMultiple()
+    {
+        if ($this->owner->{$this->attribute}) {
+            $this->saveFilesToRelation($this->owner->{$this->attribute});
+        }
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function afterUpdateMultiple()
+    {
+        $filesPaths = ArrayHelper::getColumn($this->getUploaded(), 'path');
+        $models = $this->owner->getRelation($this->uploadRelation)->all();
+        $modelsPaths = ArrayHelper::getColumn($models, $this->getAttributeField('path'));
+        $newFiles = [];
+        foreach ($models as $model) {
+            $path = $model->getAttribute($this->getAttributeField('path'));
+            if (!in_array($path, $filesPaths, true) && $model->delete()) {
+                $this->getStorage()->delete($path);
+            }
+        }
+        foreach ($this->getUploaded() as $file) {
+            if (!in_array($file['path'], $modelsPaths, true)) {
+                $newFiles[] = $file;
+            }
+        }
+        $this->saveFilesToRelation($newFiles);
+    }
+
+    /**
+     *
+     */
+    public function beforeUpdateSingle()
+    {
+        $this->deletePaths = $this->owner->{$this->getAttributeField('path')};
+    }
+
+    /**
+     *
+     */
+    public function afterUpdateSingle()
+    {
+        $path = $this->owner->{$this->getAttributeField('path')};
+        if ($this->deletePaths !== $path) {
+            $this->deleteFiles();
+        }
+    }
+
+    /**
+     *
+     */
+    public function beforeDeleteMultiple()
+    {
+        $this->deletePaths = ArrayHelper::getColumn($this->getUploaded(), 'path');
+    }
+
+    /**
+     *
+     */
+    public function beforeDeleteSingle()
+    {
+        $this->deletePaths = $this->owner->{$this->getAttributeField('path')};
+    }
+
+    /**
+     *
+     */
+    public function afterDelete()
+    {
+        $this->deleteFiles();
+    }
+
+    /**
+     *
+     */
+    public function afterFindMultiple()
+    {
+        $models = $this->owner->{$this->uploadRelation};
+        $fields = $this->fields();
+        $data = [];
+        foreach ($models as $k => $model) {
+            foreach ($fields as $dataField => $modelAttribute) {
+                $data[$k][$dataField] = ArrayHelper::getValue($model, $modelAttribute);
+            }
+        }
+        $this->owner->{$this->attribute} = $data;
+    }
+
+    /**
+     *
+     */
+    public function afterFindSingle()
+    {
+        $file = array_map(function ($attribute) {
+            return $this->owner->getAttribute($attribute);
+        }, $this->fields());
+        $this->owner->{$this->attribute} = $file;
+
+    }
+
+    /**
+     *
+     */
+    public function getUploadModelClass()
+    {
+        if (!$this->uploadModel) {
+            $this->uploadModel = $this->getUploadRelation()->modelClass;
+        }
+        return $this->uploadModel;
+    }
+
+    /**
+     * @param array $files
+     */
+    protected function saveFilesToRelation($files)
+    {
+        $modelClass = $this->getUploadModelClass();
+        foreach ($files as $file) {
+            $model = new $modelClass;
+            $model->setScenario($this->uploadModelScenario);
+            $model = $this->prepareModel($model, $file);
+            if ($this->getUploadRelation()->via !== null) {
+                $model->save(false);
+            }
+            $this->owner->link($this->uploadRelation, $model);
+        }
+    }
+
+    /**
+     * @return \trntv\filekit\Storage
+     * @throws \yii\base\InvalidConfigException
+     */
+    protected function getStorage()
+    {
+        if (!$this->storage) {
+            $this->storage = Yii::$app->get($this->filesStorage);
+        }
+        return $this->storage;
+
+    }
+
+    /**
+     * @return array
+     */
+    protected function getUploaded()
+    {
+        $files = $this->owner->{$this->attribute};
+        return $files ?: [];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery|\yii\db\ActiveQueryInterface
+     */
+    protected function getUploadRelation()
+    {
+        return $this->owner->getRelation($this->uploadRelation);
+    }
+
+    /**
+     * @param $model \yii\db\ActiveRecord
+     * @param $data
+     * @return \yii\db\ActiveRecord
+     */
+    protected function prepareModel(&$model, $data)
+    {
+        $attributes = array_flip($model->attributes());
+        foreach ($this->fields() as $dataField => $modelField) {
+            if (array_key_exists($modelField, $attributes)) {
+                $model->{$modelField} =  ArrayHelper::getValue($data, $dataField);
+            }
+        }
+        return $model;
+    }
+
+    /**
+     * @return array
+     */
+    protected function fields()
+    {
+        $fields = [
+            'path' => $this->pathAttribute,
+            'base_url' => $this->baseUrlAttribute,
+            'type' => $this->typeAttribute,
+            'size' => $this->sizeAttribute,
+            'name' => $this->nameAttribute,
+            'order' => $this->orderAttribute
+        ];
+
+        if ($this->attributePrefix !== null) {
+            $fields = array_map(function ($fieldName) {
+                return $this->attributePrefix . $fieldName;
+            }, $fields);
+        }
+
+        return $fields;
+    }
+
+    /**
+     * @param $type
+     * @return mixed
+     */
+    protected function getAttributeField($type)
+    {
+        return ArrayHelper::getValue($this->fields(), $type, false);
+    }
+
+    /**
+     * @return bool|void
+     */
+    protected function deleteFiles()
+    {
+        $storage = $this->getStorage();
+        return is_array($this->deletePaths)
+            ? $storage->deleteAll($this->deletePaths)
+            : $storage->delete($this->deletePaths);
+    }
+}

@@ -65,11 +65,7 @@
                     },
                     processfail: function(e, data) {
                         if (data.files.error) {
-                            var errors = [];
-                            $.each(data.files, function (index, file) {
-                                errors.push(file.error)
-                            })
-                            methods.showError(errors.join('<br>'))
+                            methods.showError(data.files[0].file.error);
                         }
                     },
                     progressall: function (e, data) {
@@ -139,8 +135,11 @@
                 methods.checkInputVisibility();
             },
             createItem: function(file){
+                var name = options.name;
                 var index = methods.getNumberOfFiles();
-                var name = options.name + '[' + index + ']';
+                if (options.multiple) {
+                    name += '[' + index + ']';
+                }
                 var item = $('<li>', {"class": "upload-kit-item done"})
                     .append($('<input/>', {"name": name + '[path]', "value": file.path, "type":"hidden"}))
                     .append($('<input/>', {"name": name + '[name]', "value": file.name, "type":"hidden"}))

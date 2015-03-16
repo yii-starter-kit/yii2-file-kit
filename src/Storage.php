@@ -171,7 +171,9 @@ class Storage extends \yii\base\Component implements BootstrapInterface
      */
     public function delete($file)
     {
-        return $this->getFilesystem()->delete($file);
+        if ($this->getFilesystem()->has($file)) {
+            return $this->getFilesystem()->delete($file);
+        }
     }
 
     /**
