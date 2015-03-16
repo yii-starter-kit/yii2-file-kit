@@ -27,7 +27,7 @@ class UploadAction extends BaseAction
     /**
      * @var bool
      */
-    public $disableCsrf = false;
+    public $disableCsrf = true;
 
     /**
      * @var string

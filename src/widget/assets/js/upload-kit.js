@@ -56,11 +56,21 @@
                     maxNumberOfFiles: options.maxNumberOfFiles,
                     maxFileSize: options.maxFileSize, // 5 MB
                     acceptFileTypes: options.acceptFileTypes,
+                    process: true,
                     getNumberOfFiles: methods.getNumberOfFiles,
                     start: function (e, data) {
                         $container.find('.upload-kit-input')
                             .removeClass('error')
                             .addClass('in-progress')
+                    },
+                    processfail: function(e, data) {
+                        if (data.files.error) {
+                            var errors = [];
+                            $.each(data.files, function (index, file) {
+                                errors.push(file.error)
+                            })
+                            methods.showError(errors.join('<br>'))
+                        }
                     },
                     progressall: function (e, data) {
                         var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -138,7 +148,7 @@
                     .append($('<input/>', {"name": name + '[type]', "value": file.type, "type":"hidden"}))
                     .append($('<input/>', {"name": name + '[order]', "value": file.order, "type":"hidden", "data-role": "order"}))
                     .append($('<input/>', {"name": name + '[base_url]', "value": file.base_url, "type":"hidden"}))
-                    .append($('<span/>', {"class": "type"}))
+                    .append($('<span/>', {"class": "name", "title": file.name}))
                     .append($('<span/>', {"class": "glyphicon glyphicon-remove-circle remove", "data-url": file.delete_url}));
                 if (file.type.search(/image\/.*/g) !== -1) {
                     item.removeClass('not-image').addClass('image');
@@ -147,7 +157,7 @@
                 } else {
                     item.removeClass('image').addClass('not-image');
                     item.css('backgroundImage', '');
-                    item.find('span.type').text(file.type);
+                    item.find('span.name').text(file.name);
                 }
                 return item;
             },
