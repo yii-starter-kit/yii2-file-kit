@@ -1,6 +1,7 @@
 <?php
 namespace trntv\filekit\actions;
 
+use trntv\filekit\events\UploadEvent;
 use trntv\filekit\File;
 use yii\base\DynamicModel;
 use yii\helpers\Url;
@@ -19,6 +20,9 @@ use yii\web\UploadedFile;
 */
 class UploadAction extends BaseAction
 {
+
+    const EVENT_AFTER_SAVE = 'afterSave';
+
     /**
      * @var string
      */
@@ -90,21 +94,21 @@ class UploadAction extends BaseAction
     public function run()
     {
         $result = [];
-        $files = UploadedFile::getInstancesByName($this->fileparam);
+        $uploadedFiles = UploadedFile::getInstancesByName($this->fileparam);
 
-        foreach ($files as $file) {
-            /* @var \yii\web\UploadedFile $file */
+        foreach ($uploadedFiles as $uploadedFile) {
+            /* @var \yii\web\UploadedFile $uploadedFile */
             $output = [
-                $this->responseNameParam => $file->getBaseName(),
-                $this->responseMimeTypeParam => $file->type,
-                $this->responseSizeParam => $file->size,
+                $this->responseNameParam => $uploadedFile->getBaseName(),
+                $this->responseMimeTypeParam => $uploadedFile->type,
+                $this->responseSizeParam => $uploadedFile->size,
                 $this->responseBaseUrlParam =>  $this->getFileStorage()->baseUrl
             ];
-            if ($file->error === UPLOAD_ERR_OK) {
+            if ($uploadedFile->error === UPLOAD_ERR_OK) {
                 $validationModel = new DynamicModel(['file'], $this->validationRules);
-                $validationModel->file = $file;
+                $validationModel->file = $uploadedFile;
                 if ($validationModel->validate()) {
-                    $path = $this->getFileStorage()->save(File::create($file));
+                    $path = $this->getFileStorage()->save(File::create($uploadedFile));
 
                     if ($path) {
                         $output[$this->responsePathParam] = $path;
@@ -112,6 +116,7 @@ class UploadAction extends BaseAction
                         $paths = \Yii::$app->session->get($this->sessionKey, []);
                         $paths[] = $path;
                         \Yii::$app->session->set($this->sessionKey, $paths);
+                        $this->afterSave($output, new File($this->getFileStorage()->getFilesystem(), $path));
 
                     } else {
                         $output['error'] = true;
@@ -124,11 +129,18 @@ class UploadAction extends BaseAction
                 }
             } else {
                 $output['error'] = true;
-                $output['errors'] = $file->error;
+                $output['errors'] = $uploadedFile->error;
             }
 
             $result['files'][] = $output;
         }
         return $result;
+    }
+
+    public function afterSave($file)
+    {
+        $this->trigger(self::EVENT_AFTER_SAVE, new UploadEvent([
+            'file' => $file
+        ]));
     }
 }

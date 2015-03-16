@@ -77,6 +77,14 @@ public function actions(){
     return [
            'upload'=>[
                'class'=>'trntv\filekit\actions\UploadAction',
+               'validationRules' => [
+                    ...
+               ],
+               'on afterSave' => function($event) {
+                    /* @var $file \League\Flysystem\File */
+                    $file = $event->file
+                    // do something (resize, add watermark etc)
+               }
            ]
        ];
 }
@@ -115,8 +123,8 @@ echo \trntv\filekit\widget\Upload::widget([
     'attribute'=>'files',
     'url'=>['upload'],
     'sortable'=>true,
-    'maxFileSize'=>10000000, // 10 MiB
-    'maxNumberOfFiles'=>3
+    'maxFileSize'=>10 * 1024 * 1024, 
+    'maxNumberOfFiles'=>3 // default 1
 ]);
 ```
 
@@ -127,8 +135,8 @@ echo $form->field($model, 'files')->widget(
     [
         'url'=>['upload'],
         'sortable'=>true,
-        'maxFileSize'=>10000000, // 10 MiB
-        'maxNumberOfFiles'=>3
+        'maxFileSize'=>10 * 1024 * 1024, // 10 MiB
+        'maxNumberOfFiles'=>3 // default 1
     ]
 );
 ```
