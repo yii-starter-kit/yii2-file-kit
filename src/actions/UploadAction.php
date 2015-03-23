@@ -117,7 +117,7 @@ class UploadAction extends BaseAction
                         $paths = \Yii::$app->session->get($this->sessionKey, []);
                         $paths[] = $path;
                         \Yii::$app->session->set($this->sessionKey, $paths);
-                        $this->afterSave($output, new FlysystemFile($this->getFileStorage()->getFilesystem(), $path));
+                        $this->afterSave(new FlysystemFile($this->getFileStorage()->getFilesystem(), $path));
 
                     } else {
                         $output['error'] = true;

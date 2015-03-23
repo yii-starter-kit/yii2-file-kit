@@ -39,7 +39,7 @@ class UploadBehavior extends Behavior
     /**
      * @var string
      */
-    public $baseUrlAttribute = 'baseUrl';
+    public $baseUrlAttribute = 'base_url';
     /**
      * @var string
      */
@@ -118,11 +118,34 @@ class UploadBehavior extends Behavior
     }
 
     /**
+     * @return array
+     */
+    public function fields()
+    {
+        $fields = [
+            'path' => $this->pathAttribute,
+            'base_url' => $this->baseUrlAttribute,
+            'type' => $this->typeAttribute,
+            'size' => $this->sizeAttribute,
+            'name' => $this->nameAttribute,
+            'order' => $this->orderAttribute
+        ];
+
+        if ($this->attributePrefix !== null) {
+            $fields = array_map(function ($fieldName) {
+                return $this->attributePrefix . $fieldName;
+            }, $fields);
+        }
+
+        return $fields;
+    }
+
+    /**
      *
      */
     public function afterValidateSingle()
     {
-        $this->prepareModel($this->owner, $this->owner->{$this->attribute});
+        $this->loadModel($this->owner, $this->owner->{$this->attribute});
     }
 
     /**
@@ -210,9 +233,14 @@ class UploadBehavior extends Behavior
         $fields = $this->fields();
         $data = [];
         foreach ($models as $k => $model) {
+            /* @var $model \yii\db\BaseActiveRecord */
+            $file = [];
             foreach ($fields as $dataField => $modelAttribute) {
-                $data[$k][$dataField] = ArrayHelper::getValue($model, $modelAttribute);
+                $file[$dataField] = $model->hasAttribute($modelAttribute)
+                    ? ArrayHelper::getValue($model, $modelAttribute)
+                    : null;
             }
+            $data[$k] = $this->enrichFileData($file);
         }
         $this->owner->{$this->attribute} = $data;
     }
@@ -225,7 +253,7 @@ class UploadBehavior extends Behavior
         $file = array_map(function ($attribute) {
             return $this->owner->getAttribute($attribute);
         }, $this->fields());
-        $this->owner->{$this->attribute} = $file;
+        $this->owner->{$this->attribute} = $this->enrichFileData($file);
 
     }
 
@@ -249,7 +277,7 @@ class UploadBehavior extends Behavior
         foreach ($files as $file) {
             $model = new $modelClass;
             $model->setScenario($this->uploadModelScenario);
-            $model = $this->prepareModel($model, $file);
+            $model = $this->loadModel($model, $file);
             if ($this->getUploadRelation()->via !== null) {
                 $model->save(false);
             }
@@ -292,7 +320,7 @@ class UploadBehavior extends Behavior
      * @param $data
      * @return \yii\db\ActiveRecord
      */
-    protected function prepareModel(&$model, $data)
+    protected function loadModel(&$model, $data)
     {
         $attributes = array_flip($model->attributes());
         foreach ($this->fields() as $dataField => $modelField) {
@@ -301,29 +329,6 @@ class UploadBehavior extends Behavior
             }
         }
         return $model;
-    }
-
-    /**
-     * @return array
-     */
-    protected function fields()
-    {
-        $fields = [
-            'path' => $this->pathAttribute,
-            'base_url' => $this->baseUrlAttribute,
-            'type' => $this->typeAttribute,
-            'size' => $this->sizeAttribute,
-            'name' => $this->nameAttribute,
-            'order' => $this->orderAttribute
-        ];
-
-        if ($this->attributePrefix !== null) {
-            $fields = array_map(function ($fieldName) {
-                return $this->attributePrefix . $fieldName;
-            }, $fields);
-        }
-
-        return $fields;
     }
 
     /**
@@ -344,5 +349,27 @@ class UploadBehavior extends Behavior
         return is_array($this->deletePaths)
             ? $storage->deleteAll($this->deletePaths)
             : $storage->delete($this->deletePaths);
+    }
+
+    /**
+     * @param $file
+     * @return mixed
+     */
+    protected function enrichFileData($file)
+    {
+        $fs = $this->getStorage()->getFilesystem();
+        if ($file['path'] && $fs->has($file['path'])) {
+            $data = [
+                'type' => $fs->getMimetype($file['path']),
+                'size' => $fs->getSize($file['path']),
+                'timestamp' => $fs->getTimestamp($file['path'])
+            ];
+            foreach ($data as $k => $v) {
+                if (!array_key_exists($k, $file) || !$file[$k]) {
+                    $file[$k] = $v;
+                }
+            }
+        }
+        return $file;
     }
 }
