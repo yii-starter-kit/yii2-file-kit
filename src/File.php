@@ -151,7 +151,7 @@ class File extends Object
             $this->pathinfo = pathinfo($this->path);
         }
         if ($part !== false) {
-            return array_key_exists($part, $this->pathinfo) ? $this->pathinfo['key'] : null;
+            return array_key_exists($part, $this->pathinfo) ? $this->pathinfo[$part] : null;
         }
         return $this->pathinfo;
     }
