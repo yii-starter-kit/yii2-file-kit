@@ -145,6 +145,7 @@ class Storage extends \yii\base\Component implements BootstrapInterface
         fclose($stream);
 
         if ($success) {
+            $file->setPath($path);
             $this->afterSave($file);
             return $path;
         }
