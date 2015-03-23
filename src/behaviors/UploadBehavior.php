@@ -240,7 +240,10 @@ class UploadBehavior extends Behavior
                     ? ArrayHelper::getValue($model, $modelAttribute)
                     : null;
             }
-            $data[$k] = $this->enrichFileData($file);
+            if ($file['path']) {
+                $data[$k] = $this->enrichFileData($file);
+            }
+
         }
         $this->owner->{$this->attribute} = $data;
     }
@@ -253,7 +256,10 @@ class UploadBehavior extends Behavior
         $file = array_map(function ($attribute) {
             return $this->owner->getAttribute($attribute);
         }, $this->fields());
-        $this->owner->{$this->attribute} = $this->enrichFileData($file);
+        if ($file['path']) {
+            $this->owner->{$this->attribute} = $this->enrichFileData($file);
+        }
+
 
     }
 
