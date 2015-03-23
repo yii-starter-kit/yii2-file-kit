@@ -49,6 +49,10 @@ class UploadAction extends BaseAction
     /**
      * @var string
      */
+    public $responseUrlParam = 'url';
+    /**
+     * @var string
+     */
     public $responseDeleteUrlParam = 'delete_url';
     /**
      * @var string
@@ -113,6 +117,7 @@ class UploadAction extends BaseAction
 
                     if ($path) {
                         $output[$this->responsePathParam] = $path;
+                        $output[$this->responseUrlParam] = $this->getFileStorage()->baseUrl . '/' . $path;
                         $output[$this->responseDeleteUrlParam] = Url::to([$this->deleteRoute, 'path' => $path]);
                         $paths = \Yii::$app->session->get($this->sessionKey, []);
                         $paths[] = $path;
