@@ -37,7 +37,7 @@ class File extends Object
     protected $pathinfo;
 
     /**
-     * @param $file
+     * @param $file string|\yii\web\UploadedFile
      * @return object
      * @throws InvalidConfigException
      */

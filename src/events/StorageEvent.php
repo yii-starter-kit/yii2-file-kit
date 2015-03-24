@@ -12,9 +12,9 @@ use yii\base\Event;
 class StorageEvent extends Event
 {
     /**
-     * @var \trntv\filekit\File
+     * @var \League\Flysystem\FilesystemInterface
      */
-    public $file;
+    public $filesystem;
     /**
      * @var string
      */

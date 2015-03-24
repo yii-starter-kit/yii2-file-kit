@@ -8,7 +8,7 @@ It includes:
 # File Storage
 To work with the File Kit you need to configure FileStorage first. This component is a layer of abstraction over the filesystem
 - Its main task to take on the generation of a unique name for each file and trigger corresponding events.
-```
+```php
 'fileStorage'=>[
     'class' => 'trntv\filekit\Storage',
     'baseUrl' => '@web/uploads'
@@ -42,7 +42,7 @@ class LocalFlysystemBuilder implements FilesystemBuilderInterface
 }
 ```
 Configuration:
-```
+```php
 'fileStorage'=>[
     ...
     'filesystem'=> [
@@ -54,9 +54,17 @@ Configuration:
 ```
 Read more about flysystem at http://flysystem.thephpleague.com/
 
+Then you can use it like this:
+```php
+$file = UploadedFile::getInstanceByName('file');
+Yii::$app->fileStorage->save($file); // method will return new path inside filesystem
+$files = UploadedFile::getInstancesByName('files');
+Yii::$app->fileStorage->saveAll($files);
+```
+
 2. Use third-party extensions, `creocoder/yii2-flysystem` for example, and provide a name of the filesystem component in `filesystemComponent`
 Configuration:
-```
+```php
 'fs' => [
     'class' => 'creocoder\flysystem\LocalFilesystem',
     'path' => '@webroot/files'
@@ -72,7 +80,7 @@ File Kit contains several Actions to work with uploads.
 
 ### Upload Action
 Designed to save the file uploaded by the widget
-```
+```php
 public function actions(){
     return [
            'upload'=>[
@@ -92,7 +100,7 @@ public function actions(){
 See additional settings in the corresponding class
 
 ### Delete Action
-```
+```php
 public function actions(){
     return [
        'delete'=>[
@@ -104,7 +112,7 @@ public function actions(){
 See additional settings in the corresponding class
 
 ### View (Donwload) Action
-```
+```php
 public function actions(){
     return [
        'view'=>[
@@ -117,7 +125,7 @@ See additional settings in the corresponding class
 
 # Upload Widget
 Standalone usage
-```
+```php
 echo \trntv\filekit\widget\Upload::widget([
     'model'=>$model,
     'attribute'=>'files',
@@ -129,7 +137,7 @@ echo \trntv\filekit\widget\Upload::widget([
 ```
 
 With ActiveForm
-```
+```php
 echo $form->field($model, 'files')->widget(
     '\trntv\filekit\widget\Upload',
     [

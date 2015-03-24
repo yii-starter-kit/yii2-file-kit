@@ -3,7 +3,6 @@ namespace trntv\filekit;
 
 use League\Flysystem\FilesystemInterface;
 use trntv\filekit\events\StorageEvent;
-use trntv\filekit\filesystem\AbstractFilesystemBuilder;
 use trntv\filekit\filesystem\FilesystemBuilderInterface;
 use yii\base\BootstrapInterface;
 use yii\base\InvalidConfigException;
@@ -100,7 +99,7 @@ class Storage extends \yii\base\Component implements BootstrapInterface
      */
     public function bootstrap($app)
     {
-        if (!isset($app->getI18n()->translations['extensions/trntv/filekit'])) {
+        if ($app->getI18n() && !array_key_exists('extensions/trntv/filekit', $app->getI18n()->translations)) {
             $app->getI18n()->translations['extensions/trntv/filekit'] = [
                 'class' => 'yii\i18n\PhpMessageSource',
                 'sourceLanguage' => 'en-US',
@@ -113,30 +112,30 @@ class Storage extends \yii\base\Component implements BootstrapInterface
     }
 
     /**
-     * @param File $file
+     * @param $file string|\yii\web\UploadedFile
      * @param bool $preserveFileName
      * @param bool $overwrite
      * @return bool|string
      */
-    public function save(File $file, $preserveFileName = false, $overwrite = false)
+    public function save($file, $preserveFileName = false, $overwrite = false)
     {
-
+        $fileObj = File::create($file);
         if ($preserveFileName === false) {
             do {
                 $filename = implode('.', [
                     \Yii::$app->security->generateRandomString(),
-                    $file->getExtension()
+                    $fileObj->getExtension()
                 ]);
                 $path = implode('/', [$this->dirindex, $filename]);
             } while ($this->getFilesystem()->has($path));
         } else {
-            $filename = $file->getPathInfo('filename');
+            $filename = $fileObj->getPathInfo('filename');
             $path = implode('/', [$this->dirindex, $filename]);
         }
 
-        $this->beforeSave($file);
+        $this->beforeSave($fileObj->getPath(), $this->getFilesystem());
 
-        $stream = fopen($file->getPath(), 'r+');
+        $stream = fopen($fileObj->getPath(), 'r+');
         if ($overwrite) {
             $success = $this->getFilesystem()->putStream($path, $stream);
         } else {
@@ -145,8 +144,7 @@ class Storage extends \yii\base\Component implements BootstrapInterface
         fclose($stream);
 
         if ($success) {
-            $file->setPath($path);
-            $this->afterSave($file);
+            $this->afterSave($path, $this->getFilesystem());
             return $path;
         }
 
@@ -155,26 +153,34 @@ class Storage extends \yii\base\Component implements BootstrapInterface
     }
 
     /**
-     * @param $files
+     * @param $files array|\yii\web\UploadedFile[]
      * @param bool $preserveFileName
      * @param bool $overwrite
+     * @return array
      */
     public function saveAll($files, $preserveFileName = false, $overwrite = false)
     {
+        $paths = [];
         foreach ($files as $file) {
-            $this->save($file, $preserveFileName, $overwrite);
+            $paths[] = $this->save($file, $preserveFileName, $overwrite);
         }
+        return $paths;
     }
 
     /**
-     * @param $file
+     * @param $path
      * @return bool
      */
-    public function delete($file)
+    public function delete($path)
     {
-        if ($this->getFilesystem()->has($file)) {
-            return $this->getFilesystem()->delete($file);
+        if ($this->getFilesystem()->has($path)) {
+            $this->beforeDelete($path, $this->getFilesystem());
+            if ($this->getFilesystem()->delete($path)) {
+                $this->afterDelete($path, $this->getFilesystem());
+                return true;
+            };
         }
+        return false;
     }
 
     /**
@@ -209,57 +215,63 @@ class Storage extends \yii\base\Component implements BootstrapInterface
     }
 
     /**
-     * @param $file
+     * @param $path
      * @throws InvalidConfigException
      */
-    public function beforeSave($file)
+    public function beforeSave($path)
     {
         /* @var \trntv\filekit\events\StorageEvent $event */
         $event = \Yii::createObject([
             'class' => StorageEvent::className(),
-            'file' => $file
+            'path' => $path
         ]);
         $this->trigger(self::EVENT_BEFORE_SAVE, $event);
     }
 
     /**
-     * @param $file
+     * @param $path
+     * @param $filesystem
      * @throws InvalidConfigException
      */
-    public function afterSave($file)
+    public function afterSave($path, $filesystem)
     {
         /* @var \trntv\filekit\events\StorageEvent $event */
         $event = \Yii::createObject([
             'class' => StorageEvent::className(),
-            'file' => $file
+            'path' => $path,
+            'filesystem' => $filesystem
         ]);
         $this->trigger(self::EVENT_AFTER_SAVE, $event);
     }
 
     /**
      * @param $path
+     * @param $filesystem
      * @throws InvalidConfigException
      */
-    public function beforeDelete($path)
+    public function beforeDelete($path, $filesystem)
     {
         /* @var \trntv\filekit\events\StorageEvent $event */
         $event = \Yii::createObject([
             'class' => StorageEvent::className(),
-            'path' => $path
+            'path' => $path,
+            'filesystem' => $filesystem
         ]);
         $this->trigger(self::EVENT_BEFORE_DELETE, $event);
     }
 
     /**
      * @param $path
+     * @param $filesystem
      * @throws InvalidConfigException
      */
-    public function afterDelete($path)
+    public function afterDelete($path, $filesystem)
     {
         /* @var \trntv\filekit\events\StorageEvent $event */
         $event = \Yii::createObject([
             'class' => StorageEvent::className(),
-            'path' => $path
+            'path' => $path,
+            'filesystem' => $filesystem
         ]);
         $this->trigger(self::EVENT_AFTER_DELETE, $event);
     }
