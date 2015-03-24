@@ -32,6 +32,11 @@ class UploadAction extends BaseAction
     /**
      * @var bool
      */
+    public $multiple = true;
+
+    /**
+     * @var bool
+     */
     public $disableCsrf = true;
 
     /**
@@ -140,9 +145,12 @@ class UploadAction extends BaseAction
 
             $result['files'][] = $output;
         }
-        return $result;
+        return $this->multiple ? $result : array_shift($result);
     }
 
+    /**
+     * @param $file
+     */
     public function afterSave($file)
     {
         $this->trigger(self::EVENT_AFTER_SAVE, new UploadEvent([
