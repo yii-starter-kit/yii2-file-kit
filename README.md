@@ -47,7 +47,7 @@ Configuration:
     ...
     'filesystem'=> [
         'class' => 'app\components\FilesystemBuilder',
-        'foo' => 'bar'
+        'path' => '@webroot/uploads'
         ...
     ]
 ]
