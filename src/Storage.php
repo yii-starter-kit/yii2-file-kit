@@ -23,7 +23,6 @@ class Storage extends \yii\base\Component implements BootstrapInterface
      * Event triggered after save
      */
     const EVENT_BEFORE_SAVE = 'beforeSave';
-
     /**
      * Event triggered after delete
      */
@@ -32,21 +31,18 @@ class Storage extends \yii\base\Component implements BootstrapInterface
      * Event triggered after save
      */
     const EVENT_AFTER_SAVE = 'afterSave';
-
     /**
      * @var
      */
     public $baseUrl;
-
+    /**
+     * @var
+     */
+    public $filesystemComponent;
     /**
      * @var
      */
     protected $filesystem;
-    /**
-     * @var
-     */
-    protected $filesystemComponent;
-
     /**
      * Max files in directory
      * "-1" = unlimited
@@ -57,7 +53,6 @@ class Storage extends \yii\base\Component implements BootstrapInterface
      * @var int
      */
     private $dirindex = 1;
-
     /**
      * @throws InvalidConfigException
      */
