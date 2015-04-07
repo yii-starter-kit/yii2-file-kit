@@ -78,6 +78,7 @@ class UploadAction extends BaseAction
 
     /**
      * @var array
+     * @see https://github.com/yiisoft/yii2/blob/master/docs/guide/input-validation.md#ad-hoc-validation-
      */
     public $validationRules;
 

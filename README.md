@@ -167,3 +167,11 @@ This behavior is designed to save uploaded files in the corresponding relation.
  }
 ```
 See additional settings in the corresponding class.
+
+# Validation
+There are two ways you can perform validation over uploads.
+On the client side validation is performed by Blueimp File Upload.
+Here is [documentation](https://github.com/blueimp/jQuery-File-Upload/wiki/Options#validation-options) about available options.
+
+On the server side validation is performed by [[yii\web\UploadAction]], where you can configure validation rules for 
+[[yii\base\DynamicModel]] that will be used in validation process
