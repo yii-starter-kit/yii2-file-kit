@@ -22,3 +22,7 @@ composer.lock
 # mac deployment helpers
 switch
 index
+
+#phpunit
+phpunit.xml
+phpunit.phar
