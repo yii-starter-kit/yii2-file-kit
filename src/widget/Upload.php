@@ -84,10 +84,11 @@ class Upload extends InputWidget
             $this->clientOptions,
             [
                 'url' => Url::to($this->url),
-                'multiple'=>$this->multiple,
-                'sortable'=>$this->sortable,
-                'maxNumberOfFiles'=>$this->maxNumberOfFiles,
-                'maxFileSize'=>$this->maxFileSize,
+                'multiple' => $this->multiple,
+                'sortable' => $this->sortable,
+                'maxNumberOfFiles' => $this->maxNumberOfFiles,
+                'maxFileSize' => $this->maxFileSize,
+                'acceptFileTypes' => $this->acceptFileTypes,
                 'files' => $this->files
             ]
         );

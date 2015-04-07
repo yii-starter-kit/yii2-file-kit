@@ -35,10 +35,10 @@
                     .after($('<span class="glyphicon glyphicon-circle-arrow-down drag"></span>'))
                     .after($('<span/>', {"data-toggle":"popover", "class":"glyphicon glyphicon-exclamation-sign error-popover"}))
                     .after(
-                        '<div class="progress">'+
-                        '<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>'+
-                        '</li>'
-                    );
+                    '<div class="progress">'+
+                    '<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>'+
+                    '</li>'
+                );
                 $files.on('click', '.upload-kit-item .remove', methods.removeItem);
                 methods.checkInputVisibility();
                 methods.fileuploadInit();
@@ -55,7 +55,9 @@
                     multiple: options.multiple,
                     maxNumberOfFiles: options.maxNumberOfFiles,
                     maxFileSize: options.maxFileSize, // 5 MB
-                    acceptFileTypes: options.acceptFileTypes,
+                    acceptFileTypes: options.acceptFileTypes
+                        ? new RegExp(options.acceptFileTypes)
+                        : null,
                     process: true,
                     getNumberOfFiles: methods.getNumberOfFiles,
                     start: function (e, data) {
@@ -65,7 +67,7 @@
                     },
                     processfail: function(e, data) {
                         if (data.files.error) {
-                            methods.showError(data.files[0].file.error);
+                            methods.showError(data.files[0].error);
                         }
                     },
                     progressall: function (e, data) {
