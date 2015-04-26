@@ -5,8 +5,9 @@ It includes:
 - Actions to download, delete, and view (download) files
 - Behavior for saving files in the model and delete files when you delete a model
 
-## Demo
-Since file kit is a part of [yii2-starter-kit](https://github.com/trntv/yii2-starter-kit) this demo can be found in starter kit demo.
+Demo
+----
+Since file kit is a part of [yii2-starter-kit](https://github.com/trntv/yii2-starter-kit) it's demo can be found in starter kit demo (here)[http://backend.yii2-starter-kit.terentev.net/article/create].
 
 # File Storage
 To work with the File Kit you need to configure FileStorage first. This component is a layer of abstraction over the filesystem
