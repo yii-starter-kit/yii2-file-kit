@@ -221,7 +221,7 @@ class UploadBehavior extends Behavior
      */
     public function afterDelete()
     {
-        $this->deletePaths = array_filter($this->deletePaths);
+        $this->deletePaths = is_array($this->deletePaths) ? array_filter($this->deletePaths) : $this->deletePaths;
         $this->deleteFiles();
     }
 
@@ -353,9 +353,12 @@ class UploadBehavior extends Behavior
     protected function deleteFiles()
     {
         $storage = $this->getStorage();
-        return is_array($this->deletePaths)
-            ? $storage->deleteAll($this->deletePaths)
-            : $storage->delete($this->deletePaths);
+        if ($this->deletePaths !== null) {
+            return is_array($this->deletePaths)
+                ? $storage->deleteAll($this->deletePaths)
+                : $storage->delete($this->deletePaths);
+        }
+        return true;
     }
 
     /**
