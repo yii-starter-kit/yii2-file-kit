@@ -7,7 +7,7 @@ It includes:
 
 Demo
 ----
-Since file kit is a part of [yii2-starter-kit](https://github.com/trntv/yii2-starter-kit) it's demo can be found in starter kit demo (here)[http://backend.yii2-starter-kit.terentev.net/article/create].
+Since file kit is a part of [yii2-starter-kit](https://github.com/trntv/yii2-starter-kit) it's demo can be found in starter kit demo [here](http://backend.yii2-starter-kit.terentev.net/article/create).
 
 # File Storage
 To work with the File Kit you need to configure FileStorage first. This component is a layer of abstraction over the filesystem
