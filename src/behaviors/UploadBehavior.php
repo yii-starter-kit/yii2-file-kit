@@ -221,6 +221,7 @@ class UploadBehavior extends Behavior
      */
     public function afterDelete()
     {
+        $this->deletePaths = array_filter($this->deletePaths);
         $this->deleteFiles();
     }
 
