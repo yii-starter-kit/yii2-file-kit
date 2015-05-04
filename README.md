@@ -161,7 +161,7 @@ This behavior is designed to save uploaded files in the corresponding relation.
  {
      return [
           'file' => [
-              'class' => 'trntv\filekit\behaviors\FilesBehavior',
+              'class' => 'trntv\filekit\behaviors\UploadBehavior',
               'multiple' => true,
               'attribute' => 'files',
               'filesRelation' => 'uploadedFiles',
