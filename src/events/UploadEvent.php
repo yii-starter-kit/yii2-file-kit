@@ -10,7 +10,15 @@ use yii\base\Event;
 class UploadEvent extends Event
 {
     /**
-     * @var \League\Flysystem\File
+     * @var mixed
+     */
+    public $filesystem;
+    /**
+     * @var string
+     */
+    public $path;
+    /**
+     * @var \League\Flysystem\File|null
      */
     public $file;
 }

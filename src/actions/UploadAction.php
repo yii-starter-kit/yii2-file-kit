@@ -1,6 +1,7 @@
 <?php
 namespace trntv\filekit\actions;
 
+use League\Flysystem\FilesystemInterface;
 use trntv\filekit\events\UploadEvent;
 use trntv\filekit\File;
 use League\Flysystem\File as FlysystemFile;
@@ -127,7 +128,7 @@ class UploadAction extends BaseAction
                         $paths = \Yii::$app->session->get($this->sessionKey, []);
                         $paths[] = $path;
                         \Yii::$app->session->set($this->sessionKey, $paths);
-                        $this->afterSave(new FlysystemFile($this->getFileStorage()->getFilesystem(), $path));
+                        $this->afterSave($path);
 
                     } else {
                         $output['error'] = true;
@@ -149,11 +150,18 @@ class UploadAction extends BaseAction
     }
 
     /**
-     * @param $file
+     * @param $path
      */
-    public function afterSave($file)
+    public function afterSave($path)
     {
+        $file = null;
+        $fs = $this->getFileStorage()->getFilesystem();
+        if ($fs instanceof FilesystemInterface) {
+            $file = new FlysystemFile($fs, $path);
+        }
         $this->trigger(self::EVENT_AFTER_SAVE, new UploadEvent([
+            'path' => $path,
+            'filesystem' => $fs,
             'file' => $file
         ]));
     }
