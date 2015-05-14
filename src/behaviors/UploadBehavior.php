@@ -331,7 +331,7 @@ class UploadBehavior extends Behavior
     {
         $attributes = array_flip($model->attributes());
         foreach ($this->fields() as $dataField => $modelField) {
-            if (array_key_exists($modelField, $attributes)) {
+            if ($modelField && array_key_exists($modelField, $attributes)) {
                 $model->{$modelField} =  ArrayHelper::getValue($data, $dataField);
             }
         }
