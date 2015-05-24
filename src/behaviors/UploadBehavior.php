@@ -66,7 +66,7 @@ class UploadBehavior extends Behavior
      * Schema example:
      *      `id` INT NOT NULL AUTO_INCREMENT,
      *      `path` VARCHAR(1024) NOT NULL,
-     *      `baseUrl` VARCHAR(255) NULL,
+     *      `base_url` VARCHAR(255) NULL,
      *      `type` VARCHAR(255) NULL,
      *      `size` INT NULL,
      *      `name` VARCHAR(255) NULL,
