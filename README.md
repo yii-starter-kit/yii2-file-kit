@@ -153,23 +153,48 @@ echo $form->field($model, 'files')->widget(
 );
 ```
 
-# FilesBehavior
+# UploadBehavior
 This behavior is designed to save uploaded files in the corresponding relation.
 
+Somewhere in model:
+
+For multiple files
+```php
+ public function behaviors()
+ {
+    return [
+        'file' => [
+            'class' => 'trntv\filekit\behaviors\UploadBehavior',
+            'multiple' => true,
+            'attribute' => 'files',
+            'filesRelation' => 'uploadedFiles',
+            'pathAttribute' => 'path',
+            'baseUrlAttribute' => 'base_url',
+            'typeAttribute' => 'type',
+            'sizeAttribute' => 'size',
+            'nameAttribute' => 'name',
+            'orderAttribute' => 'order'
+        ],
+    ];
+ }
+```
+
+For single file upload
 ```php
  public function behaviors()
  {
      return [
           'file' => [
               'class' => 'trntv\filekit\behaviors\UploadBehavior',
-              'multiple' => true,
-              'attribute' => 'files',
-              'filesRelation' => 'uploadedFiles',
-              
+              'attribute' => 'file',
+              'pathAttribute' => 'path',
+              'baseUrlAttribute' => 'base_url',
+               ...
           ],
       ];
  }
 ```
+
 See additional settings in the corresponding class.
 
 # Validation

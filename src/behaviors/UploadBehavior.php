@@ -35,27 +35,27 @@ class UploadBehavior extends Behavior
     /**
      * @var string
      */
-    public $pathAttribute = 'path';
+    public $pathAttribute;
     /**
      * @var string
      */
-    public $baseUrlAttribute = 'base_url';
+    public $baseUrlAttribute;
     /**
      * @var string
      */
-    public $typeAttribute = 'type';
+    public $typeAttribute;
     /**
      * @var string
      */
-    public $sizeAttribute = 'size';
+    public $sizeAttribute;
     /**
      * @var string
      */
-    public $nameAttribute = 'name';
+    public $nameAttribute;
     /**
      * @var string
      */
-    public $orderAttribute = 'order';
+    public $orderAttribute;
 
     /**
      * @var string name of the relation
@@ -260,12 +260,10 @@ class UploadBehavior extends Behavior
         if ($file['path']) {
             $this->owner->{$this->attribute} = $this->enrichFileData($file);
         }
-
-
     }
 
     /**
-     *
+     * @return string
      */
     public function getUploadModelClass()
     {
