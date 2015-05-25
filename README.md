@@ -115,7 +115,7 @@ public function actions(){
 ```
 See additional settings in the corresponding class
 
-### View (Donwload) Action
+### View (Download) Action
 ```php
 public function actions(){
     return [
