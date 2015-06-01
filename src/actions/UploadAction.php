@@ -6,6 +6,7 @@ use trntv\filekit\events\UploadEvent;
 use trntv\filekit\File;
 use League\Flysystem\File as FlysystemFile;
 use yii\base\DynamicModel;
+use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\Response;
 use yii\web\UploadedFile;
@@ -111,7 +112,7 @@ class UploadAction extends BaseAction
         foreach ($uploadedFiles as $uploadedFile) {
             /* @var \yii\web\UploadedFile $uploadedFile */
             $output = [
-                $this->responseNameParam => $uploadedFile->name,
+                $this->responseNameParam => Html::encode($uploadedFile->name),
                 $this->responseMimeTypeParam => $uploadedFile->type,
                 $this->responseSizeParam => $uploadedFile->size,
                 $this->responseBaseUrlParam =>  $this->getFileStorage()->baseUrl
