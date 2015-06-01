@@ -1,3 +1,6 @@
+[![Packagist](https://img.shields.io/packagist/dt/trntv/yii2-file-kit.svg)]()
+[![Dependency Status](https://www.versioneye.com/php/trntv:yii2-file-kit/badge.svg)](https://www.versioneye.com/php/trntv:yii2-file-kit/2.0.0)
+
 This kit is designed to automate routine processes of uploading files, their saving and storage.
 It includes:
 - File upload widget (based on [Blueimp File Upload](https://github.com/blueimp/jQuery-File-Upload))
