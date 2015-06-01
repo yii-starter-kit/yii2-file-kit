@@ -111,7 +111,7 @@ class UploadAction extends BaseAction
         foreach ($uploadedFiles as $uploadedFile) {
             /* @var \yii\web\UploadedFile $uploadedFile */
             $output = [
-                $this->responseNameParam => $uploadedFile->getBaseName(),
+                $this->responseNameParam => $uploadedFile->name,
                 $this->responseMimeTypeParam => $uploadedFile->type,
                 $this->responseSizeParam => $uploadedFile->size,
                 $this->responseBaseUrlParam =>  $this->getFileStorage()->baseUrl
