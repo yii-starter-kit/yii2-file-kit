@@ -56,7 +56,7 @@
                     maxNumberOfFiles: options.maxNumberOfFiles,
                     maxFileSize: options.maxFileSize, // 5 MB
                     acceptFileTypes: options.acceptFileTypes
-                        ? new RegExp(options.acceptFileTypes)
+                        ? new RegExp(eval(options.acceptFileTypes))
                         : null,
                     process: true,
                     getNumberOfFiles: methods.getNumberOfFiles,
