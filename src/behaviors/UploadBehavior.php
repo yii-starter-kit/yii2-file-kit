@@ -186,7 +186,7 @@ class UploadBehavior extends Behavior
      */
     public function beforeUpdateSingle()
     {
-        $this->deletePaths = $this->owner->{$this->getAttributeField('path')};
+        $this->deletePaths = $this->owner->getOldAttribute($this->getAttributeField('path'));
     }
 
     /**
@@ -194,7 +194,7 @@ class UploadBehavior extends Behavior
      */
     public function afterUpdateSingle()
     {
-        $path = $this->owner->{$this->getAttributeField('path')};
+        $path = $this->owner->getAttribute($this->getAttributeField('path'));
         if ($this->deletePaths !== $path) {
             $this->deleteFiles();
         }
@@ -213,7 +213,7 @@ class UploadBehavior extends Behavior
      */
     public function beforeDeleteSingle()
     {
-        $this->deletePaths = $this->owner->{$this->getAttributeField('path')};
+        $this->deletePaths = $this->owner->getAttribute($this->getAttributeField('path'));
     }
 
     /**
@@ -257,7 +257,7 @@ class UploadBehavior extends Behavior
         $file = array_map(function ($attribute) {
             return $this->owner->getAttribute($attribute);
         }, $this->fields());
-        if ($file['path']) {
+        if (array_key_exists('path', $file)) {
             $this->owner->{$this->attribute} = $this->enrichFileData($file);
         }
     }
