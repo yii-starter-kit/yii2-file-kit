@@ -5,6 +5,7 @@ use League\Flysystem\FilesystemInterface;
 use trntv\filekit\events\UploadEvent;
 use trntv\filekit\File;
 use League\Flysystem\File as FlysystemFile;
+use Yii;
 use yii\base\DynamicModel;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -142,7 +143,7 @@ class UploadAction extends BaseAction
                 }
             } else {
                 $output['error'] = true;
-                $output['errors'] = $uploadedFile->error;
+                $output['errors'] = $this->resolveErrorMessage($uploadedFile->error);
             }
 
             $result['files'][] = $output;
@@ -165,5 +166,39 @@ class UploadAction extends BaseAction
             'filesystem' => $fs,
             'file' => $file
         ]));
+    }
+
+    protected function resolveErrorMessage($value)
+    {
+        switch ($value) {
+            case UPLOAD_ERR_OK:
+                return false;
+                break;
+            case UPLOAD_ERR_INI_SIZE:
+                $message = 'The uploaded file exceeds the upload_max_filesize directive in php.ini.';
+                break;
+            case UPLOAD_ERR_FORM_SIZE:
+                $message = 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.';
+                break;
+            case UPLOAD_ERR_PARTIAL:
+                $message = 'The uploaded file was only partially uploaded.';
+                break;
+            case UPLOAD_ERR_NO_FILE:
+                $message = 'No file was uploaded.';
+                break;
+            case UPLOAD_ERR_NO_TMP_DIR:
+                $message = 'Missing a temporary folder.';
+                break;
+            case UPLOAD_ERR_CANT_WRITE:
+                $message = 'Failed to write file to disk.';
+                break;
+            case UPLOAD_ERR_EXTENSION:
+                $message = 'A PHP extension stopped the file upload.';
+                break;
+            default:
+                return null;
+                break;
+        }
+        return $message;
     }
 }
