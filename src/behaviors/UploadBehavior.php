@@ -257,7 +257,7 @@ class UploadBehavior extends Behavior
         $file = array_map(function ($attribute) {
             return $this->owner->getAttribute($attribute);
         }, $this->fields());
-        if (array_key_exists('path', $file)) {
+        if (array_key_exists('path', $file) && $file['path']) {
             $this->owner->{$this->attribute} = $this->enrichFileData($file);
         }
     }
