@@ -139,8 +139,10 @@ echo \trntv\filekit\widget\Upload::widget([
     'url' => ['upload'],
     'sortable' => true,
     'maxFileSize' => 10 * 1024 * 1024, // 10Mb
+    'mixFileSize' => 1 * 1024 * 1024, // 1Mb
     'maxNumberOfFiles' => 3 // default 1,
-    'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i')
+    'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
+    'clientOptions' => [ ...other blueimp options... ]
 ]);
 ```
 
@@ -149,10 +151,11 @@ With ActiveForm
 echo $form->field($model, 'files')->widget(
     '\trntv\filekit\widget\Upload',
     [
-        'url'=>['upload'],
-        'sortable'=>true,
-        'maxFileSize'=>10 * 1024 * 1024, // 10 MiB
-        'maxNumberOfFiles'=>3 // default 1
+        'url' => ['upload'],
+        'sortable' => true,
+        'maxFileSize' => 10 * 1024 * 1024, // 10 MiB
+        'maxNumberOfFiles' => 3,
+        'clientOptions' => [ ...other blueimp options... ]
     ]
 );
 ```

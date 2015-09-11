@@ -40,6 +40,10 @@ class Upload extends InputWidget
      */
     public $sortable = false;
     /**
+     * @var int min file size in bytes
+     */
+    public $minFileSize;
+    /**
      * @var int
      */
     public $maxNumberOfFiles = 1;
@@ -51,8 +55,6 @@ class Upload extends InputWidget
      * @var string regexp
      */
     public $acceptFileTypes;
-
-    public $fileStorage = 'fileStorage';
 
     /**
      * @throws \yii\base\InvalidConfigException
@@ -88,6 +90,7 @@ class Upload extends InputWidget
                 'sortable' => $this->sortable,
                 'maxNumberOfFiles' => $this->maxNumberOfFiles,
                 'maxFileSize' => $this->maxFileSize,
+                'minFileSize' => $this->minFileSize,
                 'acceptFileTypes' => $this->acceptFileTypes,
                 'files' => $this->files
             ]

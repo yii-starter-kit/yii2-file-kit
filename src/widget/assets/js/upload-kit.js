@@ -59,6 +59,7 @@
                     maxNumberOfFiles: options.maxNumberOfFiles,
                     maxFileSize: options.maxFileSize, // 5 MB
                     acceptFileTypes: options.acceptFileTypes,
+                    minFileSize: options. minFileSize,
                     process: true,
                     getNumberOfFiles: methods.getNumberOfFiles,
                     start: function (e, data) {
