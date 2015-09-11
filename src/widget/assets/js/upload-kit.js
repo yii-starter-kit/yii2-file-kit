@@ -42,7 +42,10 @@
                 $files.on('click', '.upload-kit-item .remove', methods.removeItem);
                 methods.checkInputVisibility();
                 methods.fileuploadInit();
-                methods.dragInit()
+                methods.dragInit();
+                if (options.acceptFileTypes && !(options.acceptFileTypes instanceof RegExp)) {
+                    options.acceptFileTypes = new RegExp(eval(options.acceptFileTypes))
+                }
 
             },
             fileuploadInit: function(){
@@ -55,9 +58,7 @@
                     multiple: options.multiple,
                     maxNumberOfFiles: options.maxNumberOfFiles,
                     maxFileSize: options.maxFileSize, // 5 MB
-                    acceptFileTypes: options.acceptFileTypes
-                        ? new RegExp(options.acceptFileTypes)
-                        : null,
+                    acceptFileTypes: options.acceptFileTypes,
                     process: true,
                     getNumberOfFiles: methods.getNumberOfFiles,
                     start: function (e, data) {

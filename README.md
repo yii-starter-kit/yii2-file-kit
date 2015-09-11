@@ -134,12 +134,13 @@ See additional settings in the corresponding class
 Standalone usage
 ```php
 echo \trntv\filekit\widget\Upload::widget([
-    'model'=>$model,
-    'attribute'=>'files',
-    'url'=>['upload'],
-    'sortable'=>true,
-    'maxFileSize'=>10 * 1024 * 1024, 
-    'maxNumberOfFiles'=>3 // default 1
+    'model' => $model,
+    'attribute' => 'files',
+    'url' => ['upload'],
+    'sortable' => true,
+    'maxFileSize' => 10 * 1024 * 1024, // 10Mb
+    'maxNumberOfFiles' => 3 // default 1,
+    'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i')
 ]);
 ```
 
