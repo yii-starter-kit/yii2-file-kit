@@ -84,7 +84,6 @@ class Upload extends InputWidget
         }
 
         $this->clientOptions = ArrayHelper::merge(
-            $this->clientOptions,
             [
                 'url' => Url::to($this->url),
                 'multiple' => $this->multiple,
@@ -100,7 +99,8 @@ class Upload extends InputWidget
                     'maxFileSize' => Yii::t('app', 'File is too large'),
                     'minFileSize' => Yii::t('app', 'File is too small')
                 ]
-            ]
+            ],
+            $this->clientOptions
         );
     }
 
