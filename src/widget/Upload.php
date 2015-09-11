@@ -5,6 +5,7 @@
 
 namespace trntv\filekit\widget;
 
+use Yii;
 use yii\base\InvalidParamException;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -92,7 +93,13 @@ class Upload extends InputWidget
                 'maxFileSize' => $this->maxFileSize,
                 'minFileSize' => $this->minFileSize,
                 'acceptFileTypes' => $this->acceptFileTypes,
-                'files' => $this->files
+                'files' => $this->files,
+                'messages' => [
+                    'maxNumberOfFiles' => Yii::t('app', 'Maximum number of files exceeded'),
+                    'acceptFileTypes' => Yii::t('app', 'File type not allowed'),
+                    'maxFileSize' => Yii::t('app', 'File is too large'),
+                    'minFileSize' => Yii::t('app', 'File is too small')
+                ]
             ]
         );
     }
