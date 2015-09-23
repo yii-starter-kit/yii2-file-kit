@@ -199,7 +199,7 @@ class Storage extends \yii\base\Component implements BootstrapInterface
         } else {
             $this->dirindex = $this->getFilesystem()->read('.dirindex');
             if ($this->maxDirFiles !== -1) {
-                $filesCount =  $this->getFilesystem()->listContents($this->dirindex);
+                $filesCount = count($this->getFilesystem()->listContents($this->dirindex));
                 if ($filesCount > $this->maxDirFiles) {
                     $this->dirindex++;
                     $this->getFilesystem()->write('.dirindex', $this->dirindex);
