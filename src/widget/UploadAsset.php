@@ -9,9 +9,6 @@ use yii\web\AssetBundle;
 
 class UploadAsset extends AssetBundle
 {
-
-    public $sourcePath = '@trntv/filekit/widget/assets';
-
     public $css = [
         'css/upload-kit.css'
     ];
@@ -25,4 +22,10 @@ class UploadAsset extends AssetBundle
         'yii\bootstrap\BootstrapAsset',
         'trntv\filekit\widget\BlueimpFileuploadAsset'
     ];
+
+    public function init()
+    {
+        $this->sourcePath = __DIR__."/assets";
+        parent::init();
+    }
 }

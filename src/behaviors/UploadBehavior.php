@@ -166,7 +166,7 @@ class UploadBehavior extends Behavior
         $filesPaths = ArrayHelper::getColumn($this->getUploaded(), 'path');
         $models = $this->owner->getRelation($this->uploadRelation)->all();
         $modelsPaths = ArrayHelper::getColumn($models, $this->getAttributeField('path'));
-        $newFiles = [];
+        $newFiles = $updatedFiles = [];
         foreach ($models as $model) {
             $path = $model->getAttribute($this->getAttributeField('path'));
             if (!in_array($path, $filesPaths, true) && $model->delete()) {
@@ -176,9 +176,12 @@ class UploadBehavior extends Behavior
         foreach ($this->getUploaded() as $file) {
             if (!in_array($file['path'], $modelsPaths, true)) {
                 $newFiles[] = $file;
+            } else {
+                $updatedFiles[] = $file;
             }
         }
         $this->saveFilesToRelation($newFiles);
+        $this->updateFilesInRelation($updatedFiles);
     }
 
     /**
@@ -287,6 +290,22 @@ class UploadBehavior extends Behavior
                 $model->save(false);
             }
             $this->owner->link($this->uploadRelation, $model);
+        }
+    }
+
+    /**
+     * @param array $files
+     */
+    protected function updateFilesInRelation($files)
+    {
+        $modelClass = $this->getUploadModelClass();
+        foreach ($files as $file) {
+            $model = $modelClass::findOne([$this->getAttributeField('path') => $file['path']]);
+            if ($model) {
+                $model->setScenario($this->uploadModelScenario);
+                $model = $this->loadModel($model, $file);
+                $model->save(false);
+            }
         }
     }
 
