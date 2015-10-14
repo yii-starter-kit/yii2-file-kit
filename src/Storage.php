@@ -115,17 +115,18 @@ class Storage extends \yii\base\Component implements BootstrapInterface
     public function save($file, $preserveFileName = false, $overwrite = false)
     {
         $fileObj = File::create($file);
+        $dirIndex = $this->getDirIndex();
         if ($preserveFileName === false) {
             do {
                 $filename = implode('.', [
                     \Yii::$app->security->generateRandomString(),
                     $fileObj->getExtension()
                 ]);
-                $path = implode('/', [$this->dirindex, $filename]);
+                $path = implode('/', [$dirIndex, $filename]);
             } while ($this->getFilesystem()->has($path));
         } else {
             $filename = $fileObj->getPathInfo('filename');
-            $path = implode('/', [$this->dirindex, $filename]);
+            $path = implode('/', [$dirIndex, $filename]);
         }
 
         $this->beforeSave($fileObj->getPath(), $this->getFilesystem());
