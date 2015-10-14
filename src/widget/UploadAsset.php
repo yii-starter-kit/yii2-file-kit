@@ -10,11 +10,11 @@ use yii\web\AssetBundle;
 class UploadAsset extends AssetBundle
 {
     public $css = [
-        'css/upload-kit.css'
+        'css/upload-kit.min.css'
     ];
 
     public $js = [
-        'js/upload-kit.js'
+        'js/upload-kit.min.js'
     ];
 
     public $depends = [

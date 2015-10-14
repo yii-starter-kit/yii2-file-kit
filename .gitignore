@@ -26,3 +26,6 @@ index
 #phpunit
 phpunit.xml
 phpunit.phar
+
+# npm
+node_modules
