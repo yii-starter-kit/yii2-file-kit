@@ -198,7 +198,7 @@ class UploadBehavior extends Behavior
     public function afterUpdateSingle()
     {
         $path = $this->owner->getAttribute($this->getAttributeField('path'));
-        if ($this->deletePaths !== $path) {
+        if (!empty($this->deletePaths) AND $this->deletePaths !== $path) {
             $this->deleteFiles();
         }
     }
