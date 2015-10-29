@@ -12,6 +12,23 @@ Demo
 ----
 Since file kit is a part of [yii2-starter-kit](https://github.com/trntv/yii2-starter-kit) it's demo can be found in starter kit demo [here](http://backend.yii2-starter-kit.terentev.net/article/create).
 
+# Installation
+The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
+
+Either run
+
+```
+php composer.phar require trntv/yii2-file-kit
+```
+
+or add
+
+```
+"trntv/yii2-yii2-file-kit": "*"
+```
+
+to the require section of your `composer.json` file.
+
 # File Storage
 To work with the File Kit you need to configure FileStorage first. This component is a layer of abstraction over the filesystem
 - Its main task to take on the generation of a unique name for each file and trigger corresponding events.
