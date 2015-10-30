@@ -141,7 +141,7 @@ class UploadBehavior extends Behavior
     }
 
     /**
-     *
+     * @return void
      */
     public function afterValidateSingle()
     {
@@ -149,7 +149,7 @@ class UploadBehavior extends Behavior
     }
 
     /**
-     *
+     * @return void
      */
     public function afterInsertMultiple()
     {
@@ -185,7 +185,7 @@ class UploadBehavior extends Behavior
     }
 
     /**
-     *
+     * @return void
      */
     public function beforeUpdateSingle()
     {
@@ -193,18 +193,18 @@ class UploadBehavior extends Behavior
     }
 
     /**
-     *
+     * @return void
      */
     public function afterUpdateSingle()
     {
         $path = $this->owner->getAttribute($this->getAttributeField('path'));
-        if ($this->deletePaths !== $path) {
+        if (!empty($this->deletePaths) && $this->deletePaths !== $path) {
             $this->deleteFiles();
         }
     }
 
     /**
-     *
+     * @return void
      */
     public function beforeDeleteMultiple()
     {
@@ -212,7 +212,7 @@ class UploadBehavior extends Behavior
     }
 
     /**
-     *
+     * @return void
      */
     public function beforeDeleteSingle()
     {
@@ -220,7 +220,7 @@ class UploadBehavior extends Behavior
     }
 
     /**
-     *
+     * @return void
      */
     public function afterDelete()
     {
@@ -229,7 +229,7 @@ class UploadBehavior extends Behavior
     }
 
     /**
-     *
+     * @return void
      */
     public function afterFindMultiple()
     {
@@ -253,7 +253,7 @@ class UploadBehavior extends Behavior
     }
 
     /**
-     *
+     * @return void
      */
     public function afterFindSingle()
     {
