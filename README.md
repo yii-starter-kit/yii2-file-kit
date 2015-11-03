@@ -24,7 +24,7 @@ php composer.phar require trntv/yii2-file-kit
 or add
 
 ```
-"trntv/yii2-yii2-file-kit": "*"
+"trntv/yii2-file-kit": "*"
 ```
 
 to the require section of your `composer.json` file.
