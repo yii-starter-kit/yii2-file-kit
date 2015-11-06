@@ -56,7 +56,11 @@ class Upload extends InputWidget
      * @var string regexp
      */
     public $acceptFileTypes;
-
+    /**
+     * @var string
+     */
+    public $deleteRoute = '/file-storage/upload-delete';
+    
     /**
      * @throws \yii\base\InvalidConfigException
      */
@@ -86,6 +90,7 @@ class Upload extends InputWidget
         $this->clientOptions = ArrayHelper::merge(
             [
                 'url' => Url::to($this->url),
+                'urlDeleteAction' => Url::to($this->deleteRoute),
                 'multiple' => $this->multiple,
                 'sortable' => $this->sortable,
                 'maxNumberOfFiles' => $this->maxNumberOfFiles,
