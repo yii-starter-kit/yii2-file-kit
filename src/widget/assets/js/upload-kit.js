@@ -141,6 +141,7 @@
             },
             createItem: function(file){
                 var name = options.name;
+                var delete_url_param;
                 var index = methods.getNumberOfFiles();
                 if (options.multiple) {
                     name += '[' + index + ']';
