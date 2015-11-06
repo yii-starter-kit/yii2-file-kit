@@ -145,6 +145,14 @@
                 if (options.multiple) {
                     name += '[' + index + ']';
                 }
+                                
+                //support delete action for saved files on init
+                if (file.delete_url) {//kds
+                    delete_url_param = file.delete_url;
+                } else {
+                    delete_url_param = options.urlDeleteAction + '?path=' + file.path;
+                }
+
                 var item = $('<li>', {"class": "upload-kit-item done"})
                     .append($('<input/>', {"name": name + '[path]', "value": file.path, "type":"hidden"}))
                     .append($('<input/>', {"name": name + '[name]', "value": file.name, "type":"hidden"}))
@@ -153,7 +161,7 @@
                     .append($('<input/>', {"name": name + '[order]', "value": file.order, "type":"hidden", "data-role": "order"}))
                     .append($('<input/>', {"name": name + '[base_url]', "value": file.base_url, "type":"hidden"}))
                     .append($('<span/>', {"class": "name", "title": file.name}))
-                    .append($('<span/>', {"class": "glyphicon glyphicon-remove-circle remove", "data-url": file.delete_url}));
+                    .append($('<span/>', {"class": "glyphicon glyphicon-remove-circle remove", "data-url": delete_url_param}));
                 if (!file.type || file.type.search(/image\/.*/g) !== -1) {
                     item.removeClass('not-image').addClass('image');
                     item.prepend($('<img/>', {src: file.base_url + '/' +file.path}));
