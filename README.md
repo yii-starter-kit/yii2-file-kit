@@ -109,6 +109,8 @@ public function actions(){
     return [
            'upload'=>[
                'class'=>'trntv\filekit\actions\UploadAction',
+                //'deleteRoute' => 'my-custom-delete',//my custom delete action for deleting just uploaded files(not yet saved)
+                //'fileStorage' => 'fileStorageMy',//my custom fileStorage from configuration
                'validationRules' => [
                     ...
                ],
@@ -129,6 +131,7 @@ public function actions(){
     return [
        'delete'=>[
            'class'=>'trntv\filekit\actions\DeleteAction',
+           //'fileStorage' => 'fileStorageMy',//my custom fileStorage from configuration(such as in the upload action)
        ]
     ];
 }
@@ -154,9 +157,10 @@ echo \trntv\filekit\widget\Upload::widget([
     'model' => $model,
     'attribute' => 'files',
     'url' => ['upload'],
+    'deleteRoute' => '/file-storage/my-custom-delete',//custom delete action for deleting saved files on init(not just uploaded)
     'sortable' => true,
     'maxFileSize' => 10 * 1024 * 1024, // 10Mb
-    'mixFileSize' => 1 * 1024 * 1024, // 1Mb
+    'minFileSize' => 1 * 1024 * 1024, // 1Mb
     'maxNumberOfFiles' => 3 // default 1,
     'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
     'clientOptions' => [ ...other blueimp options... ]
@@ -169,6 +173,7 @@ echo $form->field($model, 'files')->widget(
     '\trntv\filekit\widget\Upload',
     [
         'url' => ['upload'],
+        'deleteRoute' => '/file-storage/my-custom-delete',//custom delete action for deleting saved files on init(not just uploaded)
         'sortable' => true,
         'maxFileSize' => 10 * 1024 * 1024, // 10 MiB
         'maxNumberOfFiles' => 3,
