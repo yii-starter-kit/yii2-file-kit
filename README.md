@@ -109,6 +109,8 @@ public function actions(){
     return [
            'upload'=>[
                'class'=>'trntv\filekit\actions\UploadAction',
+               //'deleteRoute' => 'my-custom-delete',//my custom delete action for deleting just uploaded files(not yet saved)
+               //'fileStorage' => 'fileStorageMy',//my custom fileStorage from configuration
                'validationRules' => [
                     ...
                ],
@@ -129,6 +131,7 @@ public function actions(){
     return [
        'delete'=>[
            'class'=>'trntv\filekit\actions\DeleteAction',
+           //'fileStorage' => 'fileStorageMy',//my custom fileStorage from configuration(such as in the upload action)
        ]
     ];
 }
@@ -156,7 +159,7 @@ echo \trntv\filekit\widget\Upload::widget([
     'url' => ['upload'],
     'sortable' => true,
     'maxFileSize' => 10 * 1024 * 1024, // 10Mb
-    'mixFileSize' => 1 * 1024 * 1024, // 1Mb
+    'minFileSize' => 1 * 1024 * 1024, // 1Mb
     'maxNumberOfFiles' => 3 // default 1,
     'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
     'clientOptions' => [ ...other blueimp options... ]
@@ -189,6 +192,7 @@ For multiple files
     return [
         'file' => [
             'class' => 'trntv\filekit\behaviors\UploadBehavior',
+            //'filesStorage' => 'fileStorageMy',//my custom fileStorage from configuration(for properly remove the file from disk)
             'multiple' => true,
             'attribute' => 'files',
             'filesRelation' => 'uploadedFiles',
@@ -210,6 +214,7 @@ For single file upload
      return [
           'file' => [
               'class' => 'trntv\filekit\behaviors\UploadBehavior',
+            //'filesStorage' => 'fileStorageMy',//my custom fileStorage from configuration(for properly remove the file from disk)
               'attribute' => 'file',
               'pathAttribute' => 'path',
               'baseUrlAttribute' => 'base_url',
