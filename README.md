@@ -191,7 +191,7 @@ For multiple files
             'class' => 'trntv\filekit\behaviors\UploadBehavior',
             'multiple' => true,
             'attribute' => 'files',
-            'filesRelation' => 'uploadedFiles',
+            'uploadRelation' => 'uploadedFiles',
             'pathAttribute' => 'path',
             'baseUrlAttribute' => 'base_url',
             'typeAttribute' => 'type',
