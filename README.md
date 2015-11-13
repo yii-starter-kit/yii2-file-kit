@@ -24,7 +24,7 @@ php composer.phar require trntv/yii2-file-kit
 or add
 
 ```
-"trntv/yii2-yii2-file-kit": "*"
+"trntv/yii2-file-kit": "*"
 ```
 
 to the require section of your `composer.json` file.
@@ -156,7 +156,7 @@ echo \trntv\filekit\widget\Upload::widget([
     'url' => ['upload'],
     'sortable' => true,
     'maxFileSize' => 10 * 1024 * 1024, // 10Mb
-    'mixFileSize' => 1 * 1024 * 1024, // 1Mb
+    'minFileSize' => 1 * 1024 * 1024, // 1Mb
     'maxNumberOfFiles' => 3 // default 1,
     'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
     'clientOptions' => [ ...other blueimp options... ]
@@ -191,7 +191,7 @@ For multiple files
             'class' => 'trntv\filekit\behaviors\UploadBehavior',
             'multiple' => true,
             'attribute' => 'files',
-            'filesRelation' => 'uploadedFiles',
+            'uploadRelation' => 'uploadedFiles',
             'pathAttribute' => 'path',
             'baseUrlAttribute' => 'base_url',
             'typeAttribute' => 'type',
