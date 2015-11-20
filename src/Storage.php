@@ -90,23 +90,6 @@ class Storage extends \yii\base\Component implements BootstrapInterface
     }
 
     /**
-     * @param \yii\base\Application $app
-     */
-    public function bootstrap($app)
-    {
-        if ($app->getI18n() && !array_key_exists('extensions/trntv/filekit', $app->getI18n()->translations)) {
-            $app->getI18n()->translations['extensions/trntv/filekit'] = [
-                'class' => 'yii\i18n\PhpMessageSource',
-                'sourceLanguage' => 'en-US',
-                'basePath' => '@trntv/filekit/messages',
-                'fileMap'=>[
-                    'extensions/trntv/filekit'=>'filekit.php'
-                ]
-            ];
-        }
-    }
-
-    /**
      * @param $file string|\yii\web\UploadedFile
      * @param bool $preserveFileName
      * @param bool $overwrite

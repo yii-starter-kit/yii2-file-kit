@@ -56,6 +56,10 @@ class Upload extends InputWidget
      * @var string regexp
      */
     public $acceptFileTypes;
+    /**
+     * @var string
+     */
+    public $messagesCategory = 'filekit/widget';
 
     /**
      * @throws \yii\base\InvalidConfigException
@@ -63,6 +67,9 @@ class Upload extends InputWidget
     public function init()
     {
         parent::init();
+
+        $this->registerMessages();
+
         if ($this->maxNumberOfFiles > 1) {
             $this->multiple = true;
         }
@@ -94,10 +101,10 @@ class Upload extends InputWidget
                 'acceptFileTypes' => $this->acceptFileTypes,
                 'files' => $this->files,
                 'messages' => [
-                    'maxNumberOfFiles' => Yii::t('app', 'Maximum number of files exceeded'),
-                    'acceptFileTypes' => Yii::t('app', 'File type not allowed'),
-                    'maxFileSize' => Yii::t('app', 'File is too large'),
-                    'minFileSize' => Yii::t('app', 'File is too small')
+                    'maxNumberOfFiles' => Yii::t($this->messagesCategory, 'Maximum number of files exceeded', [], 'en'),
+                    'acceptFileTypes' => Yii::t($this->messagesCategory, 'File type not allowed', [], 'en'),
+                    'maxFileSize' => Yii::t($this->messagesCategory, 'File is too large', [], 'en'),
+                    'minFileSize' => Yii::t($this->messagesCategory, 'File is too small', [], 'en')
                 ]
             ],
             $this->clientOptions
@@ -143,5 +150,22 @@ class Upload extends InputWidget
             JuiAsset::register($this->getView());
         }
         $this->getView()->registerJs("jQuery('#{$this->getId()}').yiiUploadKit({$options});");
+    }
+
+    /**
+     * @return void Registers widget translations
+     */
+    protected function registerMessages()
+    {
+        if (!array_key_exists($this->messagesCategory, Yii::$app->i18n->translations)) {
+            Yii::$app->i18n->translations[$this->messagesCategory] = [
+                'class' => 'yii\i18n\PhpMessageSource',
+                'sourceLanguage' => 'en-US',
+                'basePath'=> __DIR__ . '/messages',
+                'fileMap'=>[
+                    'widget'=>'widget.php'
+                ],
+            ];
+        }
     }
 }
