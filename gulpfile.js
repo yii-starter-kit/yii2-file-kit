@@ -6,7 +6,7 @@ var path = require('path');
 var minifyCSS = require('gulp-minify-css');
 
 gulp.task('js', function() {
-    return gulp.src('./src/widget/assets/js/*.js')
+    return gulp.src('./src/widget/assets/js/upload-kit.js')
         .pipe(uglify())
         .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('src/widget/assets/js'));

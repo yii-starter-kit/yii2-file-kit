@@ -63,10 +63,12 @@
                     messages: options.messages,
                     process: true,
                     getNumberOfFiles: methods.getNumberOfFiles,
-                    start: function (e, data) {
+                start: function (e, data) {
                         $container.find('.upload-kit-input')
-                            .removeClass('error')
-                            .addClass('in-progress')
+                                .removeClass('error')
+                                .addClass('in-progress');
+                        $input.trigger('start');
+                        if (options.start !== undefined) options.start(e, data);
                     },
                     processfail: function(e, data) {
                         if (data.files.error) {
@@ -92,12 +94,17 @@
                         });
                         methods.handleEmptyValue();
                         methods.checkInputVisibility();
+                        $input.trigger('done');
+                        if (options.done !== undefined) options.done(e, data);
                     },
                     fail: function (e, data) {
-                        methods.showError(data.errorThrown)
+                        methods.showError(data.errorThrown);
+                        if (options.fail !== undefined) options.fail(e, data);
                     },
                     always: function (e, data) {
-                        $container.find('.upload-kit-input').removeClass('in-progress')
+                        $container.find('.upload-kit-input').removeClass('in-progress');
+                        $input.trigger('always');
+                        if (options.always !== undefined) options.always(e, data);
                     }
 
                 });

@@ -176,6 +176,22 @@ echo $form->field($model, 'files')->widget(
     ]
 );
 ```
+## Upload Widget events
+Upload widget trigger some of built-in blueimp events:
+- start
+- fail
+- done
+- always
+    
+You can use them directly or add your custom handlers in options:
+```php
+'clientOptions' => [ 
+    'start' => 'function(e, data) { ... do something ... }',
+    'done' => 'function(e, data) { ... do something ... }',
+    'fail' => 'function(e, data) { ... do something ... }',
+    'always' => 'function(e, data) { ... do something ... }',
+ ]
+```
 
 # UploadBehavior
 This behavior is designed to save uploaded files in the corresponding relation.
