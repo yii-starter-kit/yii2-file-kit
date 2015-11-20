@@ -5,6 +5,7 @@ use League\Flysystem\FilesystemInterface;
 use trntv\filekit\events\StorageEvent;
 use trntv\filekit\filesystem\FilesystemBuilderInterface;
 use yii\base\BootstrapInterface;
+use yii\base\Component;
 use yii\base\InvalidConfigException;
 
 /**
@@ -12,7 +13,7 @@ use yii\base\InvalidConfigException;
  * @package trntv\filekit
  * @author Eugene Terentev <eugene@terentev.net>
  */
-class Storage extends \yii\base\Component implements BootstrapInterface
+class Storage extends Component
 {
 
     /**
