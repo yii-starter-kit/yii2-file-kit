@@ -244,3 +244,35 @@ Here is [documentation](https://github.com/blueimp/jQuery-File-Upload/wiki/Optio
 
 On the server side validation is performed by [[yii\web\UploadAction]], where you can configure validation rules for 
 [[yii\base\DynamicModel]] that will be used in validation process
+
+# Tips
+## Adding watermark
+Install ``intervention/image`` library
+```
+composer require intervention/image
+```
+Edit your upload actions as so
+```
+public function actions(){
+    return [
+           'upload'=>[
+               'class'=>'trntv\filekit\actions\UploadAction',
+               ...
+               'on afterSave' => function($event) {
+                    /* @var $file \League\Flysystem\File */
+                    $file = $event->file;
+                    
+                    // create new Intervention Image
+                    $img = Intervention\Image\ImageManager::make($file->read());
+                    
+                    // insert watermark at bottom-right corner with 10px offset
+                    $img->insert('public/watermark.png', 'bottom-right', 10, 10);
+                    
+                    // save image
+                    $file->put($img->encode());
+               }
+               ...
+           ]
+       ];
+}
+```

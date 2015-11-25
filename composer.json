@@ -11,15 +11,18 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "yiisoft/yii2": "~2.0.0",
-        "yiisoft/yii2-jui": "~2.0.0",
-        "league/url": "~3.0",
-        "league/flysystem": "~1.0",
+        "yiisoft/yii2": "^2.0.0",
+        "yiisoft/yii2-jui": "^2.0.0",
+        "league/url": "^3.0",
+        "league/flysystem": "^1.0",
         "bower-asset/blueimp-file-upload": "^9.7.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.5.0",
         "creocoder/yii2-flysystem": "~0.8"
+    },
+    "suggest": {
+        "intervention/image": "Allows image manipulation"
     },
     "autoload": {
         "psr-4": { "trntv\\filekit\\": "src/" }
