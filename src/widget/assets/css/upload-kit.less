@@ -12,7 +12,7 @@
     width: 150px;
   }
   .upload-kit-input,
-  .upload-kit-item{
+  .upload-kit-item {
     position: relative;
     height: 150px;
     color: @color;
@@ -28,7 +28,8 @@
 
     .progress,
     .add,
-    .remove
+    .remove,
+    .cancel
     {
       display: block;
       position: absolute;
@@ -42,6 +43,22 @@
       z-index: 999;
       display: none;
       cursor: default;
+    }
+
+    .cancel{
+      cursor: pointer;
+      font-size: 3em;
+      text-align: center;
+      top: 65%;
+      left: 50%;
+      width: 50px;
+      height: 50px;
+      margin-left: -25px;
+      background-color: @transparent-background;
+      padding: 4px;
+      border-radius: 5px;
+      color: #FFF;
+      margin-top: -0.5em;
     }
 
     input[type=file]{
@@ -74,8 +91,13 @@
       width: 90%;
       display: none;
     }
-    .drag{
+    .drag,
+    .cancel
+    {
       display: none;
+    }
+    .cancel {
+      z-index: 3
     }
     &.drag-highlight{
       .add{
@@ -87,7 +109,9 @@
     }
   }
   .upload-kit-input.in-progress{
-    .progress{
+    .progress,
+    .cancel
+    {
       display: block;
     }
     .add{

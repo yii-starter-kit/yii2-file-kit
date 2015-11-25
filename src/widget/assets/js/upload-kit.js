@@ -12,6 +12,7 @@
         var $container = $input.parent('div');
         var $files = $('<ul>', {"class":"files"}).insertBefore($input);
         var $emptyInput = $container.find('.empty-value');
+        var $fileupload;
 
         var methods = {
             init: function(){
@@ -33,6 +34,7 @@
                 $input.wrapAll($('<li class="upload-kit-input"></div>'))
                     .after($('<span class="glyphicon glyphicon-plus-sign add"></span>'))
                     .after($('<span class="glyphicon glyphicon-circle-arrow-down drag"></span>'))
+                    .after($('<span class="glyphicon glyphicon-ban-circle cancel"></span>'))
                     .after($('<span/>', {"data-toggle":"popover", "class":"glyphicon glyphicon-exclamation-sign error-popover"}))
                     .after(
                     '<div class="progress">'+
@@ -49,7 +51,7 @@
 
             },
             fileuploadInit: function(){
-                var $fileupload = $input.fileupload({
+                $fileupload = $input.fileupload({
                     name: options.name || 'file',
                     url: options.url,
                     dropZone: $input.parents('.upload-kit-input'),
@@ -63,7 +65,8 @@
                     messages: options.messages,
                     process: true,
                     getNumberOfFiles: methods.getNumberOfFiles,
-                start: function (e, data) {
+                    start: function (e, data) {
+                        $fileupload.data(data);
                         $container.find('.upload-kit-input')
                                 .removeClass('error')
                                 .addClass('in-progress');
@@ -107,7 +110,14 @@
                         if (options.always !== undefined) options.always(e, data);
                     }
 
+                })
+
+                $fileupload.on('fileuploadadd', function (e, data) {
+                    $fileupload.data(data);
+                    $input.trigger('add');
+                    if (options.add !== undefined) options.add(e, data);
                 });
+
                 if (options.files) {
                     options.files.sort(function(a, b){
                         return parseInt(a.order) - parseInt(b.order);
@@ -116,6 +126,10 @@
                     methods.handleEmptyValue();
                     methods.checkInputVisibility();
                 }
+                $container.on('click', '.cancel', function() {
+                    var data = $fileupload.data();
+                    data.abort && data.abort();
+                });
             },
             dragInit: function(){
                 $(document).on('dragover', function ()

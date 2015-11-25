@@ -178,6 +178,7 @@ echo $form->field($model, 'files')->widget(
 ```
 ## Upload Widget events
 Upload widget trigger some of built-in blueimp events:
+- add (or ``fileuploadadd``)
 - start
 - fail
 - done
@@ -186,6 +187,7 @@ Upload widget trigger some of built-in blueimp events:
 You can use them directly or add your custom handlers in options:
 ```php
 'clientOptions' => [ 
+    'add' => 'function(e, data) { ... do something ... }',
     'start' => 'function(e, data) { ... do something ... }',
     'done' => 'function(e, data) { ... do something ... }',
     'fail' => 'function(e, data) { ... do something ... }',

@@ -14,7 +14,7 @@ class UploadAsset extends AssetBundle
     ];
 
     public $js = [
-        'js/upload-kit.min.js'
+        'js/upload-kit.js'
     ];
 
     public $depends = [
