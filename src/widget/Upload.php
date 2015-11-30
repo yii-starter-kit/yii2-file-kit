@@ -59,7 +59,7 @@ class Upload extends InputWidget
     /**
      * @var string
      */
-    public $messagesCategory = 'filekit/widget';
+    public $messagesCategory = 'widget';
 
     /**
      * @throws \yii\base\InvalidConfigException
