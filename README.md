@@ -109,6 +109,21 @@ public function actions(){
     return [
            'upload'=>[
                'class'=>'trntv\filekit\actions\UploadAction',
+               'multiple' => true,
+               'disableCsrf' => true,
+               'responseFormat' => Response::FORMAT_JSON,
+               'responsePathParam' => 'path',
+               'responseBaseUrlParam' => 'base_url',
+               'responseUrlParam' => 'url',
+               'responseDeleteUrlParam' => 'delete_url',
+               'responseMimeTypeParam' => 'type',
+               'responseNameParam' => 'name',
+               'responseSizeParam' => 'size',
+               'deleteRoute' => 'delete',
+               'fileStorage' => 'fileStorage', // Yii::$app->get('fileStorage')
+               'fileStorageParam' => 'fileStorage', // ?fileStorage=someStorageComponent
+               'sessionKey' => '_uploadedFiles',
+               'allowChangeFilestorage' => false,
                'validationRules' => [
                     ...
                ],
