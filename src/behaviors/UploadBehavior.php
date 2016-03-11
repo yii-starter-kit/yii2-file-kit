@@ -1,9 +1,11 @@
 <?php
 namespace trntv\filekit\behaviors;
 
+use trntv\filekit\Storage;
 use Yii;
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
+use yii\di\Instance;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -80,7 +82,8 @@ class UploadBehavior extends Behavior
     public $uploadModelScenario = 'default';
 
     /**
-     * @var string
+     * @var mixed|string
+     * Filestorage component name or Yii2 compatible object configuration
      */
     public $filesStorage = 'fileStorage';
 
@@ -316,7 +319,7 @@ class UploadBehavior extends Behavior
     protected function getStorage()
     {
         if (!$this->storage) {
-            $this->storage = Yii::$app->get($this->filesStorage);
+            $this->storage = Instance::ensure($this->filesStorage, Storage::className());
         }
         return $this->storage;
 
