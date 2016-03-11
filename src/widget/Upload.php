@@ -101,10 +101,10 @@ class Upload extends InputWidget
                 'acceptFileTypes' => $this->acceptFileTypes,
                 'files' => $this->files,
                 'messages' => [
-                    'maxNumberOfFiles' => Yii::t($this->messagesCategory, 'Maximum number of files exceeded', [], 'en'),
-                    'acceptFileTypes' => Yii::t($this->messagesCategory, 'File type not allowed', [], 'en'),
-                    'maxFileSize' => Yii::t($this->messagesCategory, 'File is too large', [], 'en'),
-                    'minFileSize' => Yii::t($this->messagesCategory, 'File is too small', [], 'en')
+                    'maxNumberOfFiles' => Yii::t($this->messagesCategory, 'Maximum number of files exceeded'),
+                    'acceptFileTypes' => Yii::t($this->messagesCategory, 'File type not allowed'),
+                    'maxFileSize' => Yii::t($this->messagesCategory, 'File is too large'),
+                    'minFileSize' => Yii::t($this->messagesCategory, 'File is too small')
                 ]
             ],
             $this->clientOptions
