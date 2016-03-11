@@ -19,7 +19,7 @@ class ViewAction extends BaseAction
      * @var boolean, whether the browser should open the file within the browser window. Defaults to false,
      * meaning a download dialog will pop up.
      */
-    public $inline;
+    public $inline = false;
 
     /**
      * @return static

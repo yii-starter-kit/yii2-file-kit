@@ -8,6 +8,8 @@ It includes:
 - Actions to download, delete, and view (download) files
 - Behavior for saving files in the model and delete files when you delete a model
 
+Here you can see list of available [filesystem adapters](https://github.com/thephpleague/flysystem#adapters)
+
 Demo
 ----
 Since file kit is a part of [yii2-starter-kit](https://github.com/trntv/yii2-starter-kit) it's demo can be found in starter kit demo [here](http://backend.yii2-starter-kit.terentev.net/article/create).
@@ -24,7 +26,7 @@ php composer.phar require trntv/yii2-file-kit
 or add
 
 ```
-"trntv/yii2-file-kit": "*"
+"trntv/yii2-file-kit": "@stable"
 ```
 
 to the require section of your `composer.json` file.
@@ -41,31 +43,21 @@ To work with the File Kit you need to configure FileStorage first. This componen
     'filesystemComponent' => ...    
 ],
 ```
-There are several ways to configure `Storage` to work with `flysystem`.
+There are several ways to configure `trntv\filekit\Storage` to work with `flysystem`.
 
-1. Create a builder class that implements `trntv\filekit\filesystem\FilesystemBuilderInterface` and implement method` build`
-which returns filesystem object
-Example:
+1. ##Closure
 ```php
-namespace app\components;
-
-use League\Flysystem\Adapter\Local;
-use League\Flysystem\Filesystem;
-use League\Flysystem\Adapter\Local as Adapter;
-use trntv\filekit\filesystem\FilesystemBuilderInterface;
-
-class LocalFlysystemBuilder implements FilesystemBuilderInterface
-{
-    public $path;
-
-    public function build()
-    {
-        $adapter = new Local(\Yii::getAlias($this->path));
-        return new Filesystem($adapter);
+'fileStorage'=>[
+    ...
+    'filesystem'=> function() {
+        $adapter = new \League\Flysystem\Adapter\Local('some/path/to/storage');
+        return new League\Flysystem\Filesystem($adapter);
     }
-}
+]
 ```
-Configuration:
+2. ##Using filesystem builder 
+ - 2.1 Create a builder class that implements `trntv\filekit\filesystem\FilesystemBuilderInterface` and implement method` build` which returns filesystem object. See ``examples/``
+ - 2.2 Add to your configuration:
 ```php
 'fileStorage'=>[
     ...
@@ -78,27 +70,29 @@ Configuration:
 ```
 Read more about flysystem at http://flysystem.thephpleague.com/
 
-Then you can use it like this:
+3. ##Using third-party extensions
+- 3.1 Create filesystem component (example uses `creocoder/yii2-flysystem`)
 ```php
-$file = UploadedFile::getInstanceByName('file');
-Yii::$app->fileStorage->save($file); // method will return new path inside filesystem
-$files = UploadedFile::getInstancesByName('files');
-Yii::$app->fileStorage->saveAll($files);
+'components' => [
+    ...
+    'fs' => [
+        'class' => 'creocoder\flysystem\LocalFilesystem',
+        'path' => '@webroot/files'
+    ],
+    ...
+]
+```
+- 3.2 Set filesystem component name in storage configuration:
+```php
+'components' => [
+    ...
+    'fileStorage'=>[
+        'filesystemComponent'=> 'fs'
+    ],
+    ...
+]
 ```
 
-2. Use third-party extensions, `creocoder/yii2-flysystem` for example, and provide a name of the filesystem component in `filesystemComponent`
-Configuration:
-```php
-'fs' => [
-    'class' => 'creocoder\flysystem\LocalFilesystem',
-    'path' => '@webroot/files'
-    ...
-],
-'fileStorage'=>[
-    ...
-    'filesystemComponent'=> 'fs'
-],
-```
 # Actions
 File Kit contains several Actions to work with uploads.
 
