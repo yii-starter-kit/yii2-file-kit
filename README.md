@@ -45,7 +45,7 @@ To work with the File Kit you need to configure FileStorage first. This componen
 ```
 There are several ways to configure `trntv\filekit\Storage` to work with `flysystem`.
 
-1. ##Closure
+## Using Closure
 ```php
 'fileStorage'=>[
     ...
@@ -55,9 +55,9 @@ There are several ways to configure `trntv\filekit\Storage` to work with `flysys
     }
 ]
 ```
-2. ##Using filesystem builder 
- - 2.1 Create a builder class that implements `trntv\filekit\filesystem\FilesystemBuilderInterface` and implement method` build` which returns filesystem object. See ``examples/``
- - 2.2 Add to your configuration:
+## Using filesystem builder 
+- Create a builder class that implements `trntv\filekit\filesystem\FilesystemBuilderInterface` and implement method `build` which returns filesystem object. See ``examples/``
+- Add to your configuration:
 ```php
 'fileStorage'=>[
     ...
@@ -70,8 +70,8 @@ There are several ways to configure `trntv\filekit\Storage` to work with `flysys
 ```
 Read more about flysystem at http://flysystem.thephpleague.com/
 
-3. ##Using third-party extensions
-- 3.1 Create filesystem component (example uses `creocoder/yii2-flysystem`)
+## Using third-party extensions
+- Create filesystem component (example uses `creocoder/yii2-flysystem`)
 ```php
 'components' => [
     ...
@@ -82,7 +82,7 @@ Read more about flysystem at http://flysystem.thephpleague.com/
     ...
 ]
 ```
-- 3.2 Set filesystem component name in storage configuration:
+- Set filesystem component name in storage configuration:
 ```php
 'components' => [
     ...
