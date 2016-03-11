@@ -4,7 +4,6 @@ namespace trntv\filekit;
 use League\Flysystem\FilesystemInterface;
 use trntv\filekit\events\StorageEvent;
 use trntv\filekit\filesystem\FilesystemBuilderInterface;
-use yii\base\BootstrapInterface;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
 
@@ -129,7 +128,6 @@ class Storage extends Component
         }
 
         return false;
-
     }
 
     /**
@@ -180,14 +178,14 @@ class Storage extends Component
     protected function getDirIndex()
     {
         if (!$this->getFilesystem()->has('.dirindex')) {
-            $this->getFilesystem()->write('.dirindex', $this->dirindex);
+            $this->getFilesystem()->write('.dirindex', (string) $this->dirindex);
         } else {
             $this->dirindex = $this->getFilesystem()->read('.dirindex');
             if ($this->maxDirFiles !== -1) {
                 $filesCount = count($this->getFilesystem()->listContents($this->dirindex));
                 if ($filesCount > $this->maxDirFiles) {
                     $this->dirindex++;
-                    $this->getFilesystem()->put('.dirindex', $this->dirindex);
+                    $this->getFilesystem()->put('.dirindex', (string) $this->dirindex);
                 }
             }
         }
