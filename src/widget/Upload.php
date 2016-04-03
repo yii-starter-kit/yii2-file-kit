@@ -70,7 +70,7 @@ class Upload extends InputWidget
 
         $this->registerMessages();
 
-        if ($this->maxNumberOfFiles > 1) {
+        if ($this->maxNumberOfFiles > 1 || $this->multiple) {
             $this->multiple = true;
         }
         if ($this->hasModel()) {
