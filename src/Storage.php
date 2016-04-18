@@ -95,7 +95,7 @@ class Storage extends Component
      * @param bool $overwrite
      * @return bool|string
      */
-    public function save($file, $preserveFileName = false, $overwrite = false)
+    public function save($file, $preserveFileName = false, $overwrite = false, $config = [])
     {
         $fileObj = File::create($file);
         $dirIndex = $this->getDirIndex();
@@ -115,12 +115,15 @@ class Storage extends Component
         $this->beforeSave($fileObj->getPath(), $this->getFilesystem());
 
         $stream = fopen($fileObj->getPath(), 'r+');
+		$mimeType = mime_content_type($fileObj->getPath());
         if ($overwrite) {
-            $success = $this->getFilesystem()->putStream($path, $stream);
+            $success = $this->getFilesystem()->putStream($path, $stream, array_merge(['ContentType' => $mimeType], $config));
         } else {
-            $success = $this->getFilesystem()->writeStream($path, $stream);
+            $success = $this->getFilesystem()->writeStream($path, $stream, array_merge(['ContentType' => $mimeType], $config));
         }
-        fclose($stream);
+		if (is_resource($stream)) {
+			fclose($stream);
+		}
 
         if ($success) {
             $this->afterSave($path, $this->getFilesystem());
@@ -136,7 +139,7 @@ class Storage extends Component
      * @param bool $overwrite
      * @return array
      */
-    public function saveAll($files, $preserveFileName = false, $overwrite = false)
+    public function saveAll($files, $preserveFileName = false, $overwrite = false, $config = [])
     {
         $paths = [];
         foreach ($files as $file) {
