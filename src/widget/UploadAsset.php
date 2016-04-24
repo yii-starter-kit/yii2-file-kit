@@ -9,13 +9,6 @@ use yii\web\AssetBundle;
 
 class UploadAsset extends AssetBundle
 {
-    public $css = [
-        'css/upload-kit.min.css'
-    ];
-
-    public $js = [
-        'js/upload-kit.min.js'
-    ];
 
     public $depends = [
         'yii\web\JqueryAsset',
@@ -25,7 +18,14 @@ class UploadAsset extends AssetBundle
 
     public function init()
     {
-        $this->sourcePath = __DIR__."/assets";
+        $this->sourcePath = __DIR__ . "/assets";
+        $this->css = [
+            YII_DEBUG ? 'css/upload-kit.css' : 'css/upload-kit.min.css'
+        ];
+
+        $this->js = [
+            YII_DEBUG ? 'js/upload-kit.js' : 'js/upload-kit.min.js'
+        ];
         parent::init();
     }
 }
