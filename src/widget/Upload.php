@@ -163,7 +163,7 @@ class Upload extends InputWidget
                 'sourceLanguage' => 'en-US',
                 'basePath'=> __DIR__ . '/messages',
                 'fileMap'=>[
-                    'widget'=>'widget.php'
+                    $this->messagesCategory=>'widget.php'
                 ],
             ];
         }
