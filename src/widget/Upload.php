@@ -60,6 +60,10 @@ class Upload extends InputWidget
      * @var string
      */
     public $messagesCategory = 'filekit/widget';
+    /**
+     * @var bool preview image file or not in the upload box.
+     */
+    public $previewImage = true;
 
     /**
      * @throws \yii\base\InvalidConfigException
@@ -100,6 +104,7 @@ class Upload extends InputWidget
                 'minFileSize' => $this->minFileSize,
                 'acceptFileTypes' => $this->acceptFileTypes,
                 'files' => $this->files,
+                'previewImage' => $this->previewImage,
                 'messages' => [
                     'maxNumberOfFiles' => Yii::t($this->messagesCategory, 'Maximum number of files exceeded'),
                     'acceptFileTypes' => Yii::t($this->messagesCategory, 'File type not allowed'),

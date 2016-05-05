@@ -161,7 +161,7 @@
                     .append($('<input/>', {"name": name + '[base_url]', "value": file.base_url, "type":"hidden"}))
                     .append($('<span/>', {"class": "name", "title": file.name}))
                     .append($('<span/>', {"class": "glyphicon glyphicon-remove-circle remove", "data-url": file.delete_url}));
-                if (!file.type || file.type.search(/image\/.*/g) !== -1) {
+                if ((!file.type || file.type.search(/image\/.*/g) !== -1) && options.previewImage) {
                     item.removeClass('not-image').addClass('image');
                     item.prepend($('<img/>', {src: file.base_url + '/' +file.path}));
                     item.find('span.type').text('');
