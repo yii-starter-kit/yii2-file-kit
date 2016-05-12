@@ -195,10 +195,10 @@ Upload widget trigger some of built-in blueimp events:
 You can use them directly or add your custom handlers in options:
 ```php
 'clientOptions' => [ 
-    'start' => 'function(e, data) { ... do something ... }',
-    'done' => 'function(e, data) { ... do something ... }',
-    'fail' => 'function(e, data) { ... do something ... }',
-    'always' => 'function(e, data) { ... do something ... }',
+    'start' => new JsExpression('function(e, data) { ... do something ... }'),
+    'done' => new JsExpression('function(e, data) { ... do something ... }'),
+    'fail' => new JsExpression('function(e, data) { ... do something ... }'),
+    'always' => new JsExpression('function(e, data) { ... do something ... }'),
  ]
 ```
 
