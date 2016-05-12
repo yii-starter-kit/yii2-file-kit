@@ -38,7 +38,7 @@ class File extends Object
 
     /**
      * @param $file string|\yii\web\UploadedFile
-     * @return object
+     * @return self
      * @throws InvalidConfigException
      */
     public static function create($file)
@@ -69,7 +69,8 @@ class File extends Object
 
     /**
      * @param array $files
-     * @return array
+     * @return self[]
+     * @throws \yii\base\InvalidConfigException
      */
     public static function createAll(array $files)
     {
