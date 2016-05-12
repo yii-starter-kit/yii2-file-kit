@@ -1,6 +1,7 @@
 <?php
 namespace trntv\filekit;
 
+use Yii;
 use League\Flysystem\FilesystemInterface;
 use trntv\filekit\events\StorageEvent;
 use trntv\filekit\filesystem\FilesystemBuilderInterface;
@@ -14,7 +15,6 @@ use yii\base\InvalidConfigException;
  */
 class Storage extends Component
 {
-
     /**
      * Event triggered after delete
      */
@@ -59,13 +59,13 @@ class Storage extends Component
     public function init()
     {
         if ($this->baseUrl !== null) {
-            $this->baseUrl = \Yii::getAlias($this->baseUrl);
+            $this->baseUrl = Yii::getAlias($this->baseUrl);
         }
 
         if ($this->filesystemComponent !== null) {
-            $this->filesystem = \Yii::$app->get($this->filesystemComponent);
+            $this->filesystem = Yii::$app->get($this->filesystemComponent);
         } else {
-            $this->filesystem = \Yii::createObject($this->filesystem);
+            $this->filesystem = Yii::createObject($this->filesystem);
             if ($this->filesystem instanceof FilesystemBuilderInterface) {
                 $this->filesystem = $this->filesystem->build();
             }
@@ -93,7 +93,10 @@ class Storage extends Component
      * @param $file string|\yii\web\UploadedFile
      * @param bool $preserveFileName
      * @param bool $overwrite
+     * @param array $config
      * @return bool|string
+     * @throws \yii\base\Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function save($file, $preserveFileName = false, $overwrite = false, $config = [])
     {
@@ -102,7 +105,7 @@ class Storage extends Component
         if ($preserveFileName === false) {
             do {
                 $filename = implode('.', [
-                    \Yii::$app->security->generateRandomString(),
+                    Yii::$app->security->generateRandomString(),
                     $fileObj->getExtension()
                 ]);
                 $path = implode('/', [$dirIndex, $filename]);
@@ -115,12 +118,14 @@ class Storage extends Component
         $this->beforeSave($fileObj->getPath(), $this->getFilesystem());
 
         $stream = fopen($fileObj->getPath(), 'r+');
-		$mimeType = mime_content_type($fileObj->getPath());
+
+        $config = array_merge(['ContentType' => $fileObj->getMimeType()], $config);
         if ($overwrite) {
-            $success = $this->getFilesystem()->putStream($path, $stream, array_merge(['ContentType' => $mimeType], $config));
+            $success = $this->getFilesystem()->putStream($path, $stream, $config);
         } else {
-            $success = $this->getFilesystem()->writeStream($path, $stream, array_merge(['ContentType' => $mimeType], $config));
+            $success = $this->getFilesystem()->writeStream($path, $stream, $config);
         }
+
 		if (is_resource($stream)) {
 			fclose($stream);
 		}
@@ -137,13 +142,14 @@ class Storage extends Component
      * @param $files array|\yii\web\UploadedFile[]
      * @param bool $preserveFileName
      * @param bool $overwrite
+     * @param array $config
      * @return array
      */
-    public function saveAll($files, $preserveFileName = false, $overwrite = false, $config = [])
+    public function saveAll($files, $preserveFileName = false, $overwrite = false, array $config = [])
     {
         $paths = [];
         foreach ($files as $file) {
-            $paths[] = $this->save($file, $preserveFileName, $overwrite);
+            $paths[] = $this->save($file, $preserveFileName, $overwrite, $config);
         }
         return $paths;
     }
@@ -197,14 +203,16 @@ class Storage extends Component
 
     /**
      * @param $path
+     * @param null|\League\Flysystem\FilesystemInterface $filesystem
      * @throws InvalidConfigException
      */
-    public function beforeSave($path)
+    public function beforeSave($path, $filesystem = null)
     {
         /* @var \trntv\filekit\events\StorageEvent $event */
-        $event = \Yii::createObject([
+        $event = Yii::createObject([
             'class' => StorageEvent::className(),
-            'path' => $path
+            'path' => $path,
+            'filesystem' => $filesystem
         ]);
         $this->trigger(self::EVENT_BEFORE_SAVE, $event);
     }
@@ -217,7 +225,7 @@ class Storage extends Component
     public function afterSave($path, $filesystem)
     {
         /* @var \trntv\filekit\events\StorageEvent $event */
-        $event = \Yii::createObject([
+        $event = Yii::createObject([
             'class' => StorageEvent::className(),
             'path' => $path,
             'filesystem' => $filesystem
@@ -233,7 +241,7 @@ class Storage extends Component
     public function beforeDelete($path, $filesystem)
     {
         /* @var \trntv\filekit\events\StorageEvent $event */
-        $event = \Yii::createObject([
+        $event = Yii::createObject([
             'class' => StorageEvent::className(),
             'path' => $path,
             'filesystem' => $filesystem
@@ -249,7 +257,7 @@ class Storage extends Component
     public function afterDelete($path, $filesystem)
     {
         /* @var \trntv\filekit\events\StorageEvent $event */
-        $event = \Yii::createObject([
+        $event = Yii::createObject([
             'class' => StorageEvent::className(),
             'path' => $path,
             'filesystem' => $filesystem
