@@ -159,7 +159,11 @@
                     .append($('<input/>', {"name": name + '[type]', "value": file.type, "type":"hidden"}))
                     .append($('<input/>', {"name": name + '[order]', "value": file.order, "type":"hidden", "data-role": "order"}))
                     .append($('<input/>', {"name": name + '[base_url]', "value": file.base_url, "type":"hidden"}))
-                    .append($('<span/>', {"class": "name", "title": file.name, "text": file.name}))
+                    .append($('<span/>', {
+                        "class": "name",
+                        "title": file.name,
+                        "text": options.showPreviewFilename ? file.name : null
+                    }))
                     .append($('<span/>', {"class": "glyphicon glyphicon-remove-circle remove", "data-url": file.delete_url}));
                 if (!file.type || file.type.search(/image\/.*/g) !== -1) {
                     item.removeClass('not-image').addClass('image');

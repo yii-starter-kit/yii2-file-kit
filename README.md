@@ -103,8 +103,8 @@ public function actions(){
     return [
            'upload'=>[
                'class'=>'trntv\filekit\actions\UploadAction',
-               //'deleteRoute' => 'my-custom-delete',//my custom delete action for deleting just uploaded files(not yet saved)
-               //'fileStorage' => 'fileStorageMy',//my custom fileStorage from configuration
+               //'deleteRoute' => 'my-custom-delete', // my custom delete action for deleting just uploaded files(not yet saved)
+               //'fileStorage' => 'myfileStorage', // my custom fileStorage from configuration
                'multiple' => true,
                'disableCsrf' => true,
                'responseFormat' => Response::FORMAT_JSON,
@@ -120,6 +120,7 @@ public function actions(){
                'fileStorageParam' => 'fileStorage', // ?fileStorage=someStorageComponent
                'sessionKey' => '_uploadedFiles',
                'allowChangeFilestorage' => false,
+               'showPreviewFilename' => false,
                'validationRules' => [
                     ...
                ],
