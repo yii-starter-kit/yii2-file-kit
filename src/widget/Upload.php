@@ -35,6 +35,10 @@ class Upload extends InputWidget
     /**
      * @var bool
      */
+    public $showPreviewFilename = false;
+    /**
+     * @var bool
+     */
     public $multiple = false;
     /**
      * @var bool
@@ -100,6 +104,7 @@ class Upload extends InputWidget
                 'minFileSize' => $this->minFileSize,
                 'acceptFileTypes' => $this->acceptFileTypes,
                 'files' => $this->files,
+                'showPreviewFilename' => $this->showPreviewFilename,
                 'messages' => [
                     'maxNumberOfFiles' => Yii::t($this->messagesCategory, 'Maximum number of files exceeded'),
                     'acceptFileTypes' => Yii::t($this->messagesCategory, 'File type not allowed'),

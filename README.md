@@ -120,7 +120,6 @@ public function actions(){
                'fileStorageParam' => 'fileStorage', // ?fileStorage=someStorageComponent
                'sessionKey' => '_uploadedFiles',
                'allowChangeFilestorage' => false,
-               'showPreviewFilename' => false,
                'validationRules' => [
                     ...
                ],
@@ -172,6 +171,7 @@ echo \trntv\filekit\widget\Upload::widget([
     'minFileSize' => 1 * 1024 * 1024, // 1Mb
     'maxNumberOfFiles' => 3 // default 1,
     'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
+    'showPreviewFilename' => false,
     'clientOptions' => [ ...other blueimp options... ]
 ]);
 ```
