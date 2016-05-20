@@ -250,6 +250,40 @@ For single file upload
  }
 ```
 
+To add extra fields for extra information of the file you want to save
+```php
+ public function behaviors()
+ {
+    return [
+        'file' => [
+            'class' => 'trntv\filekit\behaviors\UploadBehavior',
+            'filesStorage' => 'fileStorageMy', // my custom fileStorage from configuration(for properly remove the file from disk)
+            'attribute' => 'file',
+            'pathAttribute' => 'path',
+            'baseUrlAttribute' => 'base_url',
+            ...
+            'extraFields' => [
+                [
+                    'name' => 'title', //model attribute name
+                    'label' => 'Title', //field label
+                    'type' => 'text' //field editor type
+                ],
+                [
+                    'name' => 'informations',
+                    'label' => 'Informations',
+                    'type' => 'textarea'
+                ],
+                [
+                    'name' => 'published',
+                    'label' => 'Published',
+                    'type' => 'checkbox'
+                ]
+            ]
+        ],
+    ];
+ }
+```
+
 See additional settings in the corresponding class.
 
 # Validation
