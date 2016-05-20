@@ -10,15 +10,15 @@
     overflow: hidden;
   }
   .upload-kit-input{
-    width: 150px;
+    width: 150px; 
+    height: 150px; 
   }
   .upload-kit-input,
   .upload-kit-item{
+    width: 250px;
     position: relative;
-    height: 150px;
     color: @color;
-    border: 2px dashed @color;
-    border-radius: 7px;
+    border: 1px solid @color;
     float: left;
     margin-right: 10px;
     margin-bottom: 10px;
@@ -26,7 +26,15 @@
     background-position: center center;
     background-origin: border-box;
     list-style: none;
+    padding: 5px;
+    
+    &:hover{
+        box-shadow: 0px 2px 4px #B6B6B6;
+    }
 
+    label{
+        color:#333;
+    }
     .progress,
     .add,
     .remove
@@ -114,7 +122,7 @@
       cursor: pointer;
       font-size: 3em;
       text-align: center;
-      top: 50%;
+      top: 120px;
       left: 50%;
       width: 50px;
       height: 50px;
@@ -128,18 +136,20 @@
   }
   .upload-kit-item.image{
     &>img{
-      height: 100%;
-      width: auto;
-      border-radius: 7px;
+      height: auto;
+      width: 250px;
+      margin: -5px -5px 5px -5px;
     }
   }
   .upload-kit-item.not-image{
     background-image: url('../img/file.png');
-    background-size: 75%;
+    background-size: 45%;
     background-repeat: no-repeat;
-    position: relative;
+    background-position: top;
+    background-position: 50% 35px;
     display: block;
-    width: 150px;
+    padding-top: 175px;
+    width: 250px;
 
     .name{
       text-align: center;
@@ -148,15 +158,15 @@
       display: block;
       position: absolute;
       padding: 5px 7px;
-      width: 146px;
+      width: 250px;
       color: #fff;
-      bottom: 0;
+      top: 0;
+      left:0;
       background-color: @transparent-background;
       font-weight: bolder;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      border-radius: 0 0 7px 7px;
     }
   }
   .upload-kit-item.done:hover{

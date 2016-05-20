@@ -165,6 +165,40 @@
                         "text": options.showPreviewFilename ? file.name : null
                     }))
                     .append($('<span/>', {"class": "glyphicon glyphicon-remove-circle remove", "data-url": file.delete_url}));
+                if(options.extraFields !== null){
+                    for (i = 0; i < options.extraFields.length; i++) {
+                        switch(options.extraFields[i].type){
+                            case 'text':
+                                item.append(
+                                    $('<div/>',{ "class":"form-group"}).append(
+                                        $('<label/>').append(options.extraFields[i].label)
+                                    ).append(
+                                        $('<input/>', {"name": name + '['+options.extraFields[i].name+']', "value": file[options.extraFields[i].name], "type":"text", "class":"form-control"})
+                                    )
+                                );
+                                break;
+                            case 'checkbox':
+                                item.append(
+                                    $('<div/>',{ "class":"form-group"}).append(
+                                        $('<label/>').append(options.extraFields[i].label)
+                                    ).append(
+                                       $('<input/>', {"name": name + '['+options.extraFields[i].name+']', "value": file[options.extraFields[i].name], "type":"checkbox", "class":"form-control"})
+                                    )
+                                );
+                                break;
+                            case 'textarea':
+                                item.append(
+                                    $('<div/>',{ "class":"form-group"}).append(
+                                        $('<label/>').append(options.extraFields[i].label)
+                                    ).append(
+                                        $('<textarea/>', {"name": name + '['+options.extraFields[i].name+']', "class":"form-control"}).val(file[options.extraFields[i].name]))
+                                    
+                                );
+                                break;
+                        }
+                        
+                    }
+                }
                 if (!file.type || file.type.search(/image\/.*/g) !== -1) {
                     item.removeClass('not-image').addClass('image');
                     item.prepend($('<img/>', {src: file.base_url + '/' +file.path}));
