@@ -143,8 +143,6 @@ class UploadBehavior extends Behavior
             }, $fields);
         }
 
-        var_dump($fields);
-
         return $fields;
     }
 
