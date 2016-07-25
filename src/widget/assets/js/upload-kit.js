@@ -152,13 +152,14 @@
                 if (options.multiple) {
                     name += '[' + index + ']';
                 }
+                console.log(options);
                 var item = $('<li>', {"class": "upload-kit-item done"})
-                    .append($('<input/>', {"name": name + '[path]', "value": file.path, "type":"hidden"}))
+                    .append($('<input/>', {"name": name + '[' + options.pathAttributeName + ']', "value": file[options.pathAttribute], "type":"hidden"}))
                     .append($('<input/>', {"name": name + '[name]', "value": file.name, "type":"hidden"}))
                     .append($('<input/>', {"name": name + '[size]', "value": file.size, "type":"hidden"}))
                     .append($('<input/>', {"name": name + '[type]', "value": file.type, "type":"hidden"}))
                     .append($('<input/>', {"name": name + '[order]', "value": file.order, "type":"hidden", "data-role": "order"}))
-                    .append($('<input/>', {"name": name + '[base_url]', "value": file.base_url, "type":"hidden"}))
+                    .append($('<input/>', {"name": name + '[' + options.baseUrlAttributeName + ']', "value": file[options.baseUrlAttribute], "type":"hidden"}))
                     .append($('<span/>', {
                         "class": "name",
                         "title": file.name,
@@ -167,7 +168,7 @@
                     .append($('<span/>', {"class": "glyphicon glyphicon-remove-circle remove", "data-url": file.delete_url}));
                 if (!file.type || file.type.search(/image\/.*/g) !== -1) {
                     item.removeClass('not-image').addClass('image');
-                    item.prepend($('<img/>', {src: file.base_url + '/' +file.path}));
+                    item.prepend($('<img/>', {src: file[options.baseUrlAttribute] + '/' +file[options.pathAttribute]}));
                     item.find('span.type').text('');
                 } else {
                     item.removeClass('image').addClass('not-image');

@@ -34,6 +34,9 @@ class UploadBehavior extends Behavior
      * @var
      */
     public $attributePrefix;
+
+    public $attributePathName = 'path';
+    public $attributeBaseUrlName = 'base_url';
     /**
      * @var string
      */
@@ -126,8 +129,8 @@ class UploadBehavior extends Behavior
     public function fields()
     {
         $fields = [
-            'path' => $this->pathAttribute,
-            'base_url' => $this->baseUrlAttribute,
+            $this->attributePathName ? : 'path' => $this->pathAttribute,
+            $this->attributeBaseUrlName ? : 'base_url' => $this->baseUrlAttribute,
             'type' => $this->typeAttribute,
             'size' => $this->sizeAttribute,
             'name' => $this->nameAttribute,
@@ -139,6 +142,8 @@ class UploadBehavior extends Behavior
                 return $this->attributePrefix . $fieldName;
             }, $fields);
         }
+
+        var_dump($fields);
 
         return $fields;
     }
