@@ -63,7 +63,7 @@ class Upload extends InputWidget
     /**
      * @var string
      */
-    public $messagesCategory = 'filekit/widget';
+    public $messagesCategory = 'filekit';
 
     /**
      * @throws \yii\base\InvalidConfigException
@@ -117,6 +117,23 @@ class Upload extends InputWidget
     }
 
     /**
+     * @return void Registers widget translations
+     */
+    protected function registerMessages()
+    {
+        if (!array_key_exists($this->messagesCategory, Yii::$app->i18n->translations)) {
+            Yii::$app->i18n->translations[$this->messagesCategory] = [
+                'class' => 'yii\i18n\PhpMessageSource',
+                'sourceLanguage' => 'en-US',
+                'basePath' => __DIR__ . '/messages',
+                'fileMap' => [
+                    $this->messagesCategory => 'filekit.php'
+                ],
+            ];
+        }
+    }
+
+    /**
      * @return string
      */
     public function getFileInputName()
@@ -155,22 +172,5 @@ class Upload extends InputWidget
             JuiAsset::register($this->getView());
         }
         $this->getView()->registerJs("jQuery('#{$this->getId()}').yiiUploadKit({$options});");
-    }
-
-    /**
-     * @return void Registers widget translations
-     */
-    protected function registerMessages()
-    {
-        if (!array_key_exists($this->messagesCategory, Yii::$app->i18n->translations)) {
-            Yii::$app->i18n->translations[$this->messagesCategory] = [
-                'class' => 'yii\i18n\PhpMessageSource',
-                'sourceLanguage' => 'en-US',
-                'basePath'=> __DIR__ . '/messages',
-                'fileMap'=>[
-                    $this->messagesCategory=>'widget.php'
-                ],
-            ];
-        }
     }
 }
