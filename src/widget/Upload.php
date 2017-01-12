@@ -63,7 +63,7 @@ class Upload extends InputWidget
     /**
      * @var string
      */
-    public $messagesCategory = 'filekit';
+    public $messagesCategory = 'filekit/widget';
 
     /**
      * @throws \yii\base\InvalidConfigException
@@ -127,7 +127,7 @@ class Upload extends InputWidget
                 'sourceLanguage' => 'en-US',
                 'basePath' => __DIR__ . '/messages',
                 'fileMap' => [
-                    $this->messagesCategory => 'filekit.php'
+                    $this->messagesCategory => 'filekit/widget.php'
                 ],
             ];
         }
