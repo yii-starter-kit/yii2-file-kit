@@ -58,6 +58,10 @@ class UploadBehavior extends Behavior
      * @var string
      */
     public $orderAttribute;
+    /**
+     * @var array 
+     */
+    public $extraFields = [];
 
     /**
      * @var string name of the relation
@@ -125,14 +129,15 @@ class UploadBehavior extends Behavior
      */
     public function fields()
     {
-        $fields = [
-            'path' => $this->pathAttribute,
-            'base_url' => $this->baseUrlAttribute,
-            'type' => $this->typeAttribute,
-            'size' => $this->sizeAttribute,
-            'name' => $this->nameAttribute,
-            'order' => $this->orderAttribute
-        ];
+        $fields = ArrayHelper::merge(
+                [
+                    'path' => $this->pathAttribute,
+                    'base_url' => $this->baseUrlAttribute,
+                    'type' => $this->typeAttribute,
+                    'size' => $this->sizeAttribute,
+                    'name' => $this->nameAttribute,
+                    'order' => $this->orderAttribute
+                ], ArrayHelper::map($this->extraFields, 'name', 'name'));
 
         if ($this->attributePrefix !== null) {
             $fields = array_map(function ($fieldName) {

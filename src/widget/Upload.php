@@ -64,7 +64,7 @@ class Upload extends InputWidget
      * @var string
      */
     public $messagesCategory = 'filekit/widget';
-
+    
     /**
      * @throws \yii\base\InvalidConfigException
      */
@@ -110,7 +110,8 @@ class Upload extends InputWidget
                     'acceptFileTypes' => Yii::t($this->messagesCategory, 'File type not allowed'),
                     'maxFileSize' => Yii::t($this->messagesCategory, 'File is too large'),
                     'minFileSize' => Yii::t($this->messagesCategory, 'File is too small')
-                ]
+                ],
+                'extraFields' => $this->model->extraFields
             ],
             $this->clientOptions
         );
