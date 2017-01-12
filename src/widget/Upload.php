@@ -64,6 +64,10 @@ class Upload extends InputWidget
      * @var string
      */
     public $messagesCategory = 'filekit/widget';
+    /**
+     * @var bool preview image file or not in the upload box.
+     */
+    public $previewImage = true;
 
     /**
      * @throws \yii\base\InvalidConfigException
@@ -104,6 +108,7 @@ class Upload extends InputWidget
                 'minFileSize' => $this->minFileSize,
                 'acceptFileTypes' => $this->acceptFileTypes,
                 'files' => $this->files,
+                'previewImage' => $this->previewImage,
                 'showPreviewFilename' => $this->showPreviewFilename,
                 'pathAttribute' => 'path',
                 'baseUrlAttribute' => 'base_url',

@@ -166,7 +166,7 @@
                         "text": options.showPreviewFilename ? file.name : null
                     }))
                     .append($('<span/>', {"class": "glyphicon glyphicon-remove-circle remove", "data-url": file.delete_url}));
-                if (!file.type || file.type.search(/image\/.*/g) !== -1) {
+                if ((!file.type || file.type.search(/image\/.*/g) !== -1) && options.previewImage) {
                     item.removeClass('not-image').addClass('image');
                     item.prepend($('<img/>', {src: file[options.baseUrlAttribute] + '/' +file[options.pathAttribute]}));
                     item.find('span.type').text('');
