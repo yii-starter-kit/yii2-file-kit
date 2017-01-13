@@ -63,7 +63,11 @@ class Upload extends InputWidget
     /**
      * @var string
      */
-    public $messagesCategory = 'filekit';
+    public $messagesCategory = 'filekit/widget';
+    /**
+     * @var bool preview image file or not in the upload box.
+     */
+    public $previewImage = true;
 
     /**
      * @throws \yii\base\InvalidConfigException
@@ -104,7 +108,12 @@ class Upload extends InputWidget
                 'minFileSize' => $this->minFileSize,
                 'acceptFileTypes' => $this->acceptFileTypes,
                 'files' => $this->files,
+                'previewImage' => $this->previewImage,
                 'showPreviewFilename' => $this->showPreviewFilename,
+                'pathAttribute' => 'path',
+                'baseUrlAttribute' => 'base_url',
+                'pathAttributeName' => 'path',
+                'baseUrlAttributeName' => 'base_url',
                 'messages' => [
                     'maxNumberOfFiles' => Yii::t($this->messagesCategory, 'Maximum number of files exceeded'),
                     'acceptFileTypes' => Yii::t($this->messagesCategory, 'File type not allowed'),
@@ -127,7 +136,7 @@ class Upload extends InputWidget
                 'sourceLanguage' => 'en-US',
                 'basePath' => __DIR__ . '/messages',
                 'fileMap' => [
-                    $this->messagesCategory => 'filekit.php'
+                    $this->messagesCategory => 'filekit/widget.php'
                 ],
             ];
         }
