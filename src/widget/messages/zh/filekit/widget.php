@@ -1,4 +1,4 @@
-
+<?php
 return [
     'Maximum number of files exceeded' => '超过最大文件数量',
     'File type not allowed' => '不允许的文件类型',
