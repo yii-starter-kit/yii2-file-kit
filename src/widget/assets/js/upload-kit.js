@@ -168,7 +168,10 @@
                     .append($('<span/>', {"class": "glyphicon glyphicon-remove-circle remove", "data-url": file.delete_url}));
                 if ((!file.type || file.type.search(/image\/.*/g) !== -1) && options.previewImage) {
                     item.removeClass('not-image').addClass('image');
-                    item.prepend($('<img/>', {src: file[options.baseUrlAttribute] + '/' +file[options.pathAttribute]}));
+                    var thumbSrc = file[options.thumbUrlAttribute] ? 
+                    		file[options.thumbUrlAttribute] : 
+                    		file[options.baseUrlAttribute] + '/' +file[options.pathAttribute];
+                    item.prepend($('<img/>', {src: thumbSrc}));
                     item.find('span.type').text('');
                 } else {
                     item.removeClass('image').addClass('not-image');

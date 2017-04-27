@@ -19,4 +19,10 @@ class StorageEvent extends Event
      * @var string
      */
     public $path;
+	
+	/**
+     * original filename
+     * @var type 
+     */
+    public $oriName;
 }

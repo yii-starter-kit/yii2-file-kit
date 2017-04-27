@@ -131,7 +131,7 @@ class Storage extends Component
 		}
 
         if ($success) {
-            $this->afterSave($path, $this->getFilesystem());
+            $this->afterSave($path, is_string($file) ? basename($file) : $file->name, $this->getFilesystem());
             return $path;
         }
 
@@ -219,15 +219,17 @@ class Storage extends Component
 
     /**
      * @param $path
+	 * @param string $oriName Original file name
      * @param $filesystem
      * @throws InvalidConfigException
      */
-    public function afterSave($path, $filesystem)
+    public function afterSave($path, $oriName, $filesystem)
     {
         /* @var \trntv\filekit\events\StorageEvent $event */
         $event = Yii::createObject([
             'class' => StorageEvent::className(),
             'path' => $path,
+            'oriName'=> $oriName,
             'filesystem' => $filesystem
         ]);
         $this->trigger(self::EVENT_AFTER_SAVE, $event);

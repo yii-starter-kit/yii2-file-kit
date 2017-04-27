@@ -124,7 +124,7 @@ class UploadAction extends BaseAction
 
                     if ($path) {
                         $output[$this->responsePathParam] = $path;
-                        $output[$this->responseUrlParam] = $this->getFileStorage()->baseUrl . '/' . $path;
+                        $output[$this->responseUrlParam] = Yii::$app->glide->createSignedUrl(['glide/index', 'path' => $path, 'w' => 146], true);
                         $output[$this->responseDeleteUrlParam] = Url::to([$this->deleteRoute, 'path' => $path]);
                         $paths = \Yii::$app->session->get($this->sessionKey, []);
                         $paths[] = $path;

@@ -35,7 +35,14 @@ class UploadBehavior extends Behavior
      */
     public $attributePrefix;
 
+	/**
+	 * @var string
+	 */
     public $attributePathName = 'path';
+    
+    /**
+     * @var string
+     */
     public $attributeBaseUrlName = 'base_url';
     /**
      * @var string
@@ -94,10 +101,24 @@ class UploadBehavior extends Behavior
      * @var array
      */
     protected $deletePaths;
+    
     /**
      * @var \trntv\filekit\Storage
      */
     protected $storage;
+    
+    /**
+     *
+     * @var type 
+     */
+    public $thumbUrlAttribute;
+    
+    /**
+     *
+     * @var callable 
+     */
+    public $loadModelCallback;
+    
     /**
      * @return array
      */
@@ -134,7 +155,8 @@ class UploadBehavior extends Behavior
             'type' => $this->typeAttribute,
             'size' => $this->sizeAttribute,
             'name' => $this->nameAttribute,
-            'order' => $this->orderAttribute
+            'order' => $this->orderAttribute,
+            'thumb_url' => $this->thumbUrlAttribute,
         ];
 
         if ($this->attributePrefix !== null) {
@@ -361,6 +383,12 @@ class UploadBehavior extends Behavior
                 $model->{$modelField} =  ArrayHelper::getValue($data, $dataField);
             }
         }
+        
+        if($this->loadModelCallback !== null){
+            call_user_func($this->loadModelCallback, $model, $data, $this->owner);
+        }
+        
+        
         return $model;
     }
 
@@ -398,7 +426,12 @@ class UploadBehavior extends Behavior
             $data = [
                 'type' => $fs->getMimetype($file['path']),
                 'size' => $fs->getSize($file['path']),
-                'timestamp' => $fs->getTimestamp($file['path'])
+                'timestamp' => $fs->getTimestamp($file['path']),
+                'thumb_url' => Yii::$app->glide->createSignedUrl([
+                        'glide/index',
+                        'path' => $file['path'],
+                        'w'=>200
+                    ], true)
             ];
             foreach ($data as $k => $v) {
                 if (!array_key_exists($k, $file) || !$file[$k]) {
