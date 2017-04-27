@@ -198,6 +198,24 @@
             getNumberOfFiles: function() {
                 return $container.find('.files .upload-kit-item').length;
             },
+            getFileIndex: function() {
+                if($container.find('.files .upload-kit-item').length === 0){
+                    return 0;
+                }
+                var idx = 0, objs = $container.find('.files .upload-kit-item > input'); 
+                if(!objs || objs.length === 1) return idx;
+                $(objs).each(function(){
+                    var name = $(this).attr('name'); 
+                    if(!name) return idx;
+                    
+                    var nums = name.match(/\[\d+\]\[name\]/g); 
+                    if(nums){
+                        var num = nums[0].split('[')[1].split(']')[0]; 
+                        idx = (num > idx) ? num : idx;
+                    }
+                });
+                return Number(idx) + 1;
+            },
             updateOrder: function () {
                 $files.find('.upload-kit-item').each(function(index, item){
                     $(item).find('input[data-role=order]').val(index);
