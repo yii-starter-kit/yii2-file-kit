@@ -108,10 +108,9 @@ class UploadBehavior extends Behavior
     protected $storage;
     
     /**
-     *
-     * @var type 
+     * @var Glide component
      */
-    public $thumbUrlAttribute;
+    public $glide = null;
     
     /**
      *
@@ -156,7 +155,7 @@ class UploadBehavior extends Behavior
             'size' => $this->sizeAttribute,
             'name' => $this->nameAttribute,
             'order' => $this->orderAttribute,
-            'thumb_url' => $this->thumbUrlAttribute,
+            'url' => 'url',
         ];
 
         if ($this->attributePrefix !== null) {
@@ -427,11 +426,11 @@ class UploadBehavior extends Behavior
                 'type' => $fs->getMimetype($file['path']),
                 'size' => $fs->getSize($file['path']),
                 'timestamp' => $fs->getTimestamp($file['path']),
-                'thumb_url' => Yii::$app->glide->createSignedUrl([
+                'url' => !$this->glide ? '' : $this->glide->createSignedUrl([
                         'glide/index',
                         'path' => $file['path'],
                         'w'=>200
-                    ], true)
+                    ], true) ,
             ];
             foreach ($data as $k => $v) {
                 if (!array_key_exists($k, $file) || !$file[$k]) {

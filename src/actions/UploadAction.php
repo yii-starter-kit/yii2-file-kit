@@ -79,6 +79,11 @@ class UploadAction extends BaseAction
     public $deleteRoute = 'delete';
 
     /**
+     * @var Glide component
+     */
+    public $glide = null;
+    
+    /**
      * @var array
      * @see https://github.com/yiisoft/yii2/blob/master/docs/guide/input-validation.md#ad-hoc-validation-
      */
@@ -89,14 +94,14 @@ class UploadAction extends BaseAction
      */
     public function init()
     {
-        \Yii::$app->response->format = $this->responseFormat;
+        Yii::$app->response->format = $this->responseFormat;
 
-        if (\Yii::$app->request->get('fileparam')) {
-            $this->fileparam = \Yii::$app->request->get('fileparam');
+        if (Yii::$app->request->get('fileparam')) {
+            $this->fileparam = Yii::$app->request->get('fileparam');
         }
 
         if ($this->disableCsrf) {
-            \Yii::$app->request->enableCsrfValidation = false;
+            Yii::$app->request->enableCsrfValidation = false;
         }
     }
 
@@ -124,11 +129,13 @@ class UploadAction extends BaseAction
 
                     if ($path) {
                         $output[$this->responsePathParam] = $path;
-                        $output[$this->responseUrlParam] = Yii::$app->glide->createSignedUrl(['glide/index', 'path' => $path, 'w' => 146], true);
+                        $output[$this->responseUrlParam] = $this->glide ? 
+                        	$this->glide->createSignedUrl(['glide/index', 'path' => $path, 'w' => 200], true) : 
+                        	$this->getFileStorage()->baseUrl . '/' . $path;
                         $output[$this->responseDeleteUrlParam] = Url::to([$this->deleteRoute, 'path' => $path]);
-                        $paths = \Yii::$app->session->get($this->sessionKey, []);
+                        $paths = Yii::$app->session->get($this->sessionKey, []);
                         $paths[] = $path;
-                        \Yii::$app->session->set($this->sessionKey, $paths);
+                        Yii::$app->session->set($this->sessionKey, $paths);
                         $this->afterSave($path);
 
                     } else {

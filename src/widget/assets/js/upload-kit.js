@@ -148,11 +148,11 @@
             },
             createItem: function(file){
                 var name = options.name;
-                var index = methods.getNumberOfFiles();
+                var index = methods.getIndexOfFiles();
                 if (options.multiple) {
                     name += '[' + index + ']';
                 }
-                console.log(options);
+                
                 var item = $('<li>', {"class": "upload-kit-item done"})
                     .append($('<input/>', {"name": name + '[' + options.pathAttributeName + ']', "value": file[options.pathAttribute], "type":"hidden"}))
                     .append($('<input/>', {"name": name + '[name]', "value": file.name, "type":"hidden"}))
@@ -167,10 +167,8 @@
                     }))
                     .append($('<span/>', {"class": "glyphicon glyphicon-remove-circle remove", "data-url": file.delete_url}));
                 if ((!file.type || file.type.search(/image\/.*/g) !== -1) && options.previewImage) {
-                    item.removeClass('not-image').addClass('image');
-                    var thumbSrc = file[options.thumbUrlAttribute] ? 
-                    		file[options.thumbUrlAttribute] : 
-                    		file[options.baseUrlAttribute] + '/' +file[options.pathAttribute];
+                    item.removeClass('not-image').addClass('image'); 
+                    var thumbSrc = file['url'] ? file['url'] : file[options.baseUrlAttribute] + '/' +file[options.pathAttribute];
                     item.prepend($('<img/>', {src: thumbSrc}));
                     item.find('span.type').text('');
                 } else {
@@ -198,12 +196,12 @@
             getNumberOfFiles: function() {
                 return $container.find('.files .upload-kit-item').length;
             },
-            getFileIndex: function() {
+            getIndexOfFiles: function() {
                 if($container.find('.files .upload-kit-item').length === 0){
                     return 0;
                 }
-                var idx = 0, objs = $container.find('.files .upload-kit-item > input'); 
-                if(!objs || objs.length === 1) return idx;
+                var idx = 0, objs = $container.find(".files .upload-kit-item > input[type='hidden']");
+                if(!objs) return idx;
                 $(objs).each(function(){
                     var name = $(this).attr('name'); 
                     if(!name) return idx;
