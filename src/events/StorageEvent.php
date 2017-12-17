@@ -25,4 +25,16 @@ class StorageEvent extends Event
      * @var type 
      */
     public $oriName;
+    
+    /**
+     * file size (bytes)
+     * @var int
+     */
+    public $size;
+    
+    /**
+     * mime type
+     * @var string
+     */
+    public $mimeType;
 }

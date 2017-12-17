@@ -387,7 +387,6 @@ class UploadBehavior extends Behavior
             call_user_func($this->loadModelCallback, $model, $data, $this->owner);
         }
         
-        
         return $model;
     }
 
