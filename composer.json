@@ -11,7 +11,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "yiisoft/yii2": "^2.0.0",
+        "yiisoft/yii2": "~2.0.13",
         "yiisoft/yii2-jui": "^2.0.0",
         "league/flysystem": "^1.0",
         "bower-asset/blueimp-file-upload": "^9.7.0"
