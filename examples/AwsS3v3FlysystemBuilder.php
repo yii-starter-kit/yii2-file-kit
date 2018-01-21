@@ -2,13 +2,13 @@
 
 use League\Flysystem\Filesystem;
 use trntv\filekit\filesystem\FilesystemBuilderInterface;
-use yii\base\Object;
+use yii\base\BaseObject;
 
 /**
  * Class AwsS3v3FlysystemBuilder
  * @author Eugene Terentev <eugene@terentev.net>
  */
-class AwsS3v3FlysystemBuilder extends Object implements FilesystemBuilderInterface
+class AwsS3v3FlysystemBuilder extends BaseObject implements FilesystemBuilderInterface
 {
     public $key;
     public $secret;

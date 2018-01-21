@@ -2,14 +2,14 @@
 
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
-use yii\base\Object;
+use yii\base\BaseObject;
 
 /**
  * Class LocalFilesystemBuilder
  * @author Eugene Terentev <eugene@terentev.net>*
  *
  */
-class LocalFilesystemBuilder extends Object implements \trntv\filekit\filesystem\FilesystemBuilderInterface
+class LocalFilesystemBuilder extends BaseObject implements \trntv\filekit\filesystem\FilesystemBuilderInterface
 {
     /**
      * @var
