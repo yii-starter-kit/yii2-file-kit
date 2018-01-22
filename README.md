@@ -176,6 +176,22 @@ echo \trntv\filekit\widget\Upload::widget([
 ]);
 ```
 
+Standalone usage - without model
+```php
+echo \trntv\filekit\widget\Upload::widget([
+    'name' => 'filename',
+    'hiddenInputId' => 'filename', // must for not use model
+    'url' => ['upload'],
+    'sortable' => true,
+    'maxFileSize' => 10 * 1024 * 1024, // 10Mb
+    'minFileSize' => 1 * 1024 * 1024, // 1Mb
+    'maxNumberOfFiles' => 3 // default 1,
+    'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
+    'showPreviewFilename' => false,
+    'clientOptions' => [ ...other blueimp options... ]
+]);
+```
+
 With ActiveForm
 ```php
 echo $form->field($model, 'files')->widget(
