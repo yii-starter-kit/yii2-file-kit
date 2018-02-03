@@ -68,6 +68,12 @@ class Upload extends InputWidget
      * @var bool preview image file or not in the upload box.
      */
     public $previewImage = true;
+    /**
+     * custom hiddenInput id，if not set $this->options['id'] will be use.
+     * useful if use name,value
+     * @var null|string
+     */
+    public $hiddenInputId = null;
 
     /**
      * @throws \yii\base\InvalidConfigException
@@ -159,7 +165,7 @@ class Upload extends InputWidget
         $content = Html::beginTag('div');
         $content .= Html::hiddenInput($this->name, null, [
             'class' => 'empty-value',
-            'id' => $this->options['id']
+            'id' => $this->hiddenInputId === null ? $this->options['id'] : $this->hiddenInputId
         ]);
         $content .= Html::fileInput($this->getFileInputName(), null, [
             'name' => $this->getFileInputName(),
