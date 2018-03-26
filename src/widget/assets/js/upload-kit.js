@@ -208,7 +208,7 @@
                     
                     var nums = name.match(/\[\d+\]\[name\]/g); 
                     if(nums){
-                        var num = Number(nums[0].split('[')[1].split(']')[0];) 
+                        var num = Number(nums[0].split('[')[1].split(']')[0]); 
                         idx = (num > idx) ? num : idx;
                     }
                 });
