@@ -43,12 +43,13 @@ class Storage extends Component
      * @var
      */
     protected $filesystem;
+
     /**
-     * Max files in directory
-     * "-1" = unlimited
-     * @var int
+     * dirindex to exclude
+     * @var integer
      */
-    public $maxDirFiles = 65535; // Default: Fat32 limit
+    public $dirindexOffset = 0;
+    
     /**
      * @var int
      */
@@ -101,18 +102,20 @@ class Storage extends Component
     public function save($file, $preserveFileName = false, $overwrite = false, $config = [])
     {
         $fileObj = File::create($file);
-        $dirIndex = $this->getDirIndex();
+        $path = "";
         if ($preserveFileName === false) {
             do {
                 $filename = implode('.', [
                     Yii::$app->security->generateRandomString(),
                     $fileObj->getExtension()
                 ]);
-                $path = implode('/', [$dirIndex, $filename]);
-            } while ($this->getFilesystem()->has($path));
-        } else {
+                $path = implode('/', [$this->getDirIndex($filename), $filename]);
+            } 
+            while ($this->getFilesystem()->has($path));
+        } 
+        else {
             $filename = $fileObj->getPathInfo('filename');
-            $path = implode('/', [$dirIndex, $filename]);
+            $path = implode('/', [$this->getDirIndex($filename), $filename]);
         }
 
         $this->beforeSave($fileObj->getPath(), $this->getFilesystem());
@@ -187,23 +190,19 @@ class Storage extends Component
     }
 
     /**
-     * @return false|int|string
+     * 
+     * @param string $filename
+     * @throws \Exception
+     * @return number
      */
-    protected function getDirIndex()
+    protected function getDirIndex($filename)
     {
-        if (!$this->getFilesystem()->has('.dirindex')) {
-            $this->getFilesystem()->write('.dirindex', (string) $this->dirindex);
-        } else {
-            $this->dirindex = $this->getFilesystem()->read('.dirindex');
-            if ($this->maxDirFiles !== -1) {
-                $filesCount = count($this->getFilesystem()->listContents($this->dirindex));
-                if ($filesCount > $this->maxDirFiles) {
-                    $this->dirindex++;
-                    $this->getFilesystem()->put('.dirindex', (string) $this->dirindex);
-                }
-            }
+        if(empty($filename)){
+            throw new \Exception('Invalid filename.');
         }
-        return $this->dirindex;
+        
+        $hash = crc32($filename) % 1024 + 1;
+        return $hash + $this->dirindexOffset;
     }
 
     /**
