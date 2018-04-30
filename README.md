@@ -166,6 +166,7 @@ echo \trntv\filekit\widget\Upload::widget([
     'model' => $model,
     'attribute' => 'files',
     'url' => ['upload'],
+    'uploadPath' => 'subfolder', // optional, for storing files in storage subfolder
     'sortable' => true,
     'maxFileSize' => 10 * 1024 * 1024, // 10Mb
     'minFileSize' => 1 * 1024 * 1024, // 1Mb
@@ -182,6 +183,7 @@ echo \trntv\filekit\widget\Upload::widget([
     'name' => 'filename',
     'hiddenInputId' => 'filename', // must for not use model
     'url' => ['upload'],
+    'uploadPath' => 'subfolder', // optional, for storing files in storage subfolder
     'sortable' => true,
     'maxFileSize' => 10 * 1024 * 1024, // 10Mb
     'minFileSize' => 1 * 1024 * 1024, // 1Mb
@@ -198,6 +200,7 @@ echo $form->field($model, 'files')->widget(
     '\trntv\filekit\widget\Upload',
     [
         'url' => ['upload'],
+        'uploadPath' => 'subfolder', // optional, for storing files in storage subfolder
         'sortable' => true,
         'maxFileSize' => 10 * 1024 * 1024, // 10 MiB
         'maxNumberOfFiles' => 3,
