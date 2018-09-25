@@ -28,6 +28,12 @@ class Upload extends InputWidget
      * @var array|\ArrayObject
      */
     public $url;
+
+    /**
+     * @var string path where files would be stored
+     */
+    public $uploadPath = '';
+
     /**
      * @var array
      */
@@ -102,6 +108,10 @@ class Upload extends InputWidget
         }
         if (!$this->files && $this->value) {
             $this->files = $this->multiple ? $this->value : [$this->value];
+        }
+
+        if (!array_key_exists('upload-path', $this->url) && !empty($this->uploadPath)) {
+            $this->url['upload-path'] = $this->uploadPath;
         }
 
         $this->clientOptions = ArrayHelper::merge(
