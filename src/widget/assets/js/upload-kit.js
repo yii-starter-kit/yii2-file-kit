@@ -148,7 +148,7 @@
             },
             createItem: function(file){
                 var name = options.name;
-                var index = methods.getNumberOfFiles();
+                var index = methods.getNewItemIndex();
                 if (options.multiple) {
                     name += '[' + index + ']';
                 }
@@ -195,6 +195,13 @@
             getNumberOfFiles: function() {
                 return $container.find('.files .upload-kit-item').length;
             },
+            getNewItemIndex: function () {
+                var existingIndexes = []
+                $container.find('.files .upload-kit-item').each(function () {
+                existingIndexes.push($(this).val());
+                })
+                return existingIndexes.length ? (Math.max(...existingIndexes)+1) : 0;
+          },
             updateOrder: function () {
                 $files.find('.upload-kit-item').each(function(index, item){
                     $(item).find('input[data-role=order]').val(index);
