@@ -156,7 +156,7 @@ class UploadAction extends BaseAction
 
             $result['files'][] = $output;
         }
-        return $this->multiple ? $result : array_shift($result);
+        return $result;
     }
 
     /**
