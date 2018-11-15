@@ -3,13 +3,13 @@
   "main": "gulpfile.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/trntv/yii2-file-kit.git"
+    "url": "git+https://github.com/yii2-starter-kit/yii2-file-kit.git"
   },
   "author": "Eugene Terentev",
   "bugs": {
-    "url": "https://github.com/trntv/yii2-file-kit/issues"
+    "url": "https://github.com/yii2-starter-kit/yii2-file-kit/issues"
   },
-  "homepage": "https://github.com/trntv/yii2-file-kit#readme",
+  "homepage": "https://github.com/yii2-starter-kit/yii2-file-kit#readme",
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-less": "^3.0.3",

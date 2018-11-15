@@ -1,5 +1,4 @@
-[![Packagist](https://img.shields.io/packagist/dt/trntv/yii2-file-kit.svg)]()
-[![Dependency Status](https://www.versioneye.com/php/trntv:yii2-file-kit/badge.svg)](https://www.versioneye.com/php/trntv:yii2-file-kit/2.0.0)
+[![Packagist](https://img.shields.io/packagist/dt/yii2-starter-kit/yii2-file-kit.svg)]()
 
 This kit is designed to automate routine processes of uploading files, their saving and storage.
 It includes:
@@ -12,7 +11,7 @@ Here you can see list of available [filesystem adapters](https://github.com/thep
 
 Demo
 ----
-Since file kit is a part of [yii2-starter-kit](https://github.com/trntv/yii2-starter-kit) it's demo can be found in starter kit demo [here](http://backend.yii2-starter-kit.terentev.net/article/create).
+Since file kit is a part of [yii2-starter-kit](https://github.com/yii2-starter-kit/yii2-starter-kit) it's demo can be found in starter kit demo [here](http://backend.yii2-starter-kit.terentev.net/article/create).
 
 # Installation
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
@@ -20,13 +19,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require trntv/yii2-file-kit
+php composer.phar require yii2-starter-kit/yii2-file-kit
 ```
 
 or add
 
 ```
-"trntv/yii2-file-kit": "@stable"
+"yii2-starter-kit/yii2-file-kit": "@stable"
 ```
 
 to the require section of your `composer.json` file.

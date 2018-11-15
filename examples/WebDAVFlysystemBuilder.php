@@ -7,7 +7,7 @@ use trntv\filekit\filesystem\FilesystemBuilderInterface;
 /**
  * Class WebDAVFlysystemBuilder
  * @author Artem Dekhtyar <mail@artemd.ru>
- * @link https://github.com/trntv/yii2-file-kit/issues/46
+ * @link https://github.com/yii2-starter-kit/yii2-file-kit/issues/46
  */
 class WebDAVFlysystemBuilder implements FilesystemBuilderInterface
 {

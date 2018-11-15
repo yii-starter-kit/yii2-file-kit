@@ -1,6 +1,6 @@
 /*!
  * Yii2 File Kit library
- * http://github.com/trntv/yii2-file-kit
+ * http://github.com/yii2-starter-kit/yii2-file-kit
  *
  * Author: Eugine Terentev <eugine@terentev.net>
  *
