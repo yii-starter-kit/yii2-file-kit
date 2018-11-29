@@ -20,6 +20,13 @@ use yii\widgets\InputWidget;
  */
 class Upload extends InputWidget
 {
+
+    /**
+     * Avaible errors handlers
+     */
+    const YII_ERROR_HANDLER = 'yii';
+    const POPOVER_ERROR_HANDLER = 'popover';
+
     /**
      * @var
      */
@@ -80,6 +87,12 @@ class Upload extends InputWidget
      * @var null|string
      */
     public $hiddenInputId = null;
+    /**
+     * Client error handler.
+     * For using yiiActiveForm set to 'yii'
+     * @var string
+     */
+    public $errorHandler = self::POPOVER_ERROR_HANDLER;
 
     /**
      * @throws \yii\base\InvalidConfigException
@@ -113,6 +126,13 @@ class Upload extends InputWidget
         if (!array_key_exists('upload-path', $this->url) && !empty($this->uploadPath)) {
             $this->url['upload-path'] = $this->uploadPath;
         }
+        if(!in_array($this->errorHandler,[self::YII_ERROR_HANDLER, self::POPOVER_ERROR_HANDLER]))
+            throw new InvalidParamException('errorHandler param can be "yii" or "popover"');
+        if($this->hasModel() && $this->errorHandler == self::YII_ERROR_HANDLER){
+            $this->addFieldValidator();
+        } else {
+            $this->errorHandler = self::POPOVER_ERROR_HANDLER;
+        }
 
         $this->clientOptions = ArrayHelper::merge(
             [
@@ -126,6 +146,7 @@ class Upload extends InputWidget
                 'files' => $this->files,
                 'previewImage' => $this->previewImage,
                 'showPreviewFilename' => $this->showPreviewFilename,
+                'errorHandler' => $this->errorHandler,
                 'pathAttribute' => 'path',
                 'baseUrlAttribute' => 'base_url',
                 'pathAttributeName' => 'path',
@@ -197,5 +218,28 @@ class Upload extends InputWidget
             JuiAsset::register($this->getView());
         }
         $this->getView()->registerJs("jQuery('#{$this->getId()}').yiiUploadKit({$options});");
+    }
+
+    /**
+     * Adding attribute to yiiActiveForm validator
+     */
+    public function addFieldValidator()
+    {
+        $inputID = $this->field->inputId;
+        if (isset($this->field->selectors['error'])) {
+            $errorSelector = $this->field->selectors['error'];
+        } elseif (isset($this->field->errorOptions['class'])) {
+            $errorSelector = '.' . implode('.', preg_split('/\s+/', $this->field->errorOptions['class'], -1, PREG_SPLIT_NO_EMPTY));
+        } else {
+            $errorSelector = isset($this->field->errorOptions['tag']) ? $this->field->errorOptions['tag'] : 'span';
+        }
+        $clientValidator[] = [
+            'id' => Html::getInputId($this->model, $this->attribute),
+            'name' => $this->attribute,
+            'container' => isset($this->field->selectors['container']) ? $this->field->selectors['container'] : ".field-$inputID",
+            'input' => isset($this->field->selectors['input']) ? $this->field->selectors['input'] : "#$inputID",
+            'error' => $errorSelector
+        ];
+        $this->field->form->attributes = ArrayHelper::merge($this->field->form->attributes, $clientValidator);
     }
 }
