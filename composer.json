@@ -1,5 +1,5 @@
 {
-    "name": "yii2-starter-kit-carleone/yii2-file-kit",
+    "name": "yii2-starter-kit/yii2-file-kit",
     "description": "Yii2 file upload and storage kit",
     "type": "yii2-extension",
     "license": "BSD-3-Clause",
