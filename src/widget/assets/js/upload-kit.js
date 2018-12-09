@@ -35,10 +35,10 @@
                     .after($('<span class="glyphicon glyphicon-circle-arrow-down drag"></span>'))
                     .after($('<span/>', {"data-toggle":"popover", "class":"glyphicon glyphicon-exclamation-sign error-popover"}))
                     .after(
-                    '<div class="progress">'+
-                    '<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>'+
-                    '</li>'
-                );
+                        '<div class="progress">'+
+                        '<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>'+
+                        '</li>'
+                    );
                 $files.on('click', '.upload-kit-item .remove', methods.removeItem);
                 methods.checkInputVisibility();
                 methods.fileuploadInit();
@@ -63,10 +63,13 @@
                     messages: options.messages,
                     process: true,
                     getNumberOfFiles: methods.getNumberOfFiles,
-                start: function (e, data) {
+                    start: function (e, data) {
+                        if(options.errorHandler == 'yii'){
+                            $container.parents('form').yiiActiveForm('updateAttribute', $emptyInput.attr('id'), '');
+                        }
                         $container.find('.upload-kit-input')
-                                .removeClass('error')
-                                .addClass('in-progress');
+                            .removeClass('error')
+                            .addClass('in-progress');
                         $input.trigger('start');
                         if (options.start !== undefined) options.start(e, data);
                     },
@@ -128,7 +131,9 @@
                 });
             },
             showError: function(error){
-                if ($.fn.popover) {
+                if(options.errorHandler == 'yii'){
+                    $container.parents('form').yiiActiveForm('updateAttribute', $emptyInput.attr('id'), [error]);
+                }else if ($.fn.popover) {
                     $container.find('.error-popover').attr('data-content', error).popover({html:true,trigger:"hover"});
                 }
                 $container.find('.upload-kit-input').addClass('error');
@@ -196,18 +201,18 @@
                 return $container.find('.files .upload-kit-item').length;
             },
             getNewItemIndex: function () {
-                var existingIndexes = []
-                $container.find('.files .upload-kit-item').each(function () {
-                existingIndexes.push($(this).val());
-                })
-                return existingIndexes.length ? (Math.max(...existingIndexes)+1) : 0;
-          },
+                var existingIndexes = [];
+                $container.find('.files .upload-kit-item').each(function (index, item) {
+                    existingIndexes.push(index);
+                });
+                return existingIndexes.length ? (Math.max(existingIndexes)+1) : 0;
+            },
             updateOrder: function () {
                 $files.find('.upload-kit-item').each(function(index, item){
                     $(item).find('input[data-role=order]').val(index);
                 })
             }
-        };
+        }; 
 
         methods.init.apply(this);
         return this;
