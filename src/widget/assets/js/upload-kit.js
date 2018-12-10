@@ -157,7 +157,7 @@
                 if (options.multiple) {
                     name += '[' + index + ']';
                 }
-                var item = $('<li>', {"class": "upload-kit-item done"})
+                var item = $('<li>', {"class": "upload-kit-item done", value: index})
                     .append($('<input/>', {"name": name + '[' + options.pathAttributeName + ']', "value": file[options.pathAttribute], "type":"hidden"}))
                     .append($('<input/>', {"name": name + '[name]', "value": file.name, "type":"hidden"}))
                     .append($('<input/>', {"name": name + '[size]', "value": file.size, "type":"hidden"}))
