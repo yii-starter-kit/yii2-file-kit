@@ -157,7 +157,6 @@
                 if (options.multiple) {
                     name += '[' + index + ']';
                 }
-                console.log(options);
                 var item = $('<li>', {"class": "upload-kit-item done", value: index})
                     .append($('<input/>', {"name": name + '[' + options.pathAttributeName + ']', "value": file[options.pathAttribute], "type":"hidden"}))
                     .append($('<input/>', {"name": name + '[name]', "value": file.name, "type":"hidden"}))
@@ -205,7 +204,7 @@
                 $container.find('.files .upload-kit-item').each(function (index, item) {
                     existingIndexes.push(index);
                 });
-                return existingIndexes.length ? (Math.max(existingIndexes)+1) : 0;
+                return existingIndexes.length ? (Math.max.apply(Math, existingIndexes)+1) : 0;
             },
             updateOrder: function () {
                 $files.find('.upload-kit-item').each(function(index, item){
