@@ -169,10 +169,10 @@ echo \trntv\filekit\widget\Upload::widget([
     'sortable' => true,
     'maxFileSize' => 10 * 1024 * 1024, // 10Mb
     'minFileSize' => 1 * 1024 * 1024, // 1Mb
-    'maxNumberOfFiles' => 3 // default 1,
-    'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
+    'maxNumberOfFiles' => 3, // default 1,
+    'acceptFileTypes' => new \yii\web\JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
     'showPreviewFilename' => false,
-    'clientOptions' => [ ...other blueimp options... ]
+    'clientOptions' => [/* ...other blueimp options... */]
 ]);
 ```
 
@@ -186,10 +186,10 @@ echo \trntv\filekit\widget\Upload::widget([
     'sortable' => true,
     'maxFileSize' => 10 * 1024 * 1024, // 10Mb
     'minFileSize' => 1 * 1024 * 1024, // 1Mb
-    'maxNumberOfFiles' => 3 // default 1,
-    'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
+    'maxNumberOfFiles' => 3, // default 1,
+    'acceptFileTypes' => new \yii\web\JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
     'showPreviewFilename' => false,
-    'clientOptions' => [ ...other blueimp options... ]
+    'clientOptions' => [/* ...other blueimp options... */]
 ]);
 ```
 
@@ -203,7 +203,7 @@ echo $form->field($model, 'files')->widget(
         'sortable' => true,
         'maxFileSize' => 10 * 1024 * 1024, // 10 MiB
         'maxNumberOfFiles' => 3,
-        'clientOptions' => [ ...other blueimp options... ]
+        'clientOptions' => [/* ...other blueimp options... */]
     ]
 );
 ```
