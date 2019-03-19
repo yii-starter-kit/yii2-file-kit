@@ -51,9 +51,25 @@ class Storage extends Component
      */
     public $maxDirFiles = 65535; // Default: Fat32 limit
     /**
+     * An array default config when save file.
+     * It can be a callable for more flexible
+     *
+     * ```php
+     * function (\trntv\filekit\File $fileObj) {
+     *
+     *      return ['ContentDisposition' => 'filename="' . $fileObj->getPathInfo('filename') . '"'];
+     * }
+     * ```
+     *
+     * @var array|callable
+     * @since 2.0.2
+     */
+    public $defaultSaveConfig = [];
+    /**
      * @var int
      */
     private $dirindex = 1;
+
     /**
      * @throws InvalidConfigException
      */
@@ -94,7 +110,7 @@ class Storage extends Component
      * @param $file string|\yii\web\UploadedFile
      * @param bool $preserveFileName
      * @param bool $overwrite
-     * @param array $config
+     * @param array|callable $config
      * @param string $pathPrefix string path to save current file
      *
      * @return bool|string
@@ -124,16 +140,27 @@ class Storage extends Component
 
         $stream = fopen($fileObj->getPath(), 'rb+');
 
-        $config = array_merge(['ContentType' => $fileObj->getMimeType()], $config);
+        $defaultConfig = $this->defaultSaveConfig;
+
+        if (is_callable($defaultConfig)) {
+            $defaultConfig = call_user_func($defaultConfig, $fileObj);
+        }
+
+        if (is_callable($config)) {
+            $config = call_user_func($config, $fileObj);
+        }
+
+        $config = array_merge(['ContentType' => $fileObj->getMimeType()], $defaultConfig, $config);
+
         if ($overwrite) {
             $success = $this->getFilesystem()->putStream($path, $stream, $config);
         } else {
             $success = $this->getFilesystem()->writeStream($path, $stream, $config);
         }
 
-		if (is_resource($stream)) {
-			fclose($stream);
-		}
+        if (is_resource($stream)) {
+            fclose($stream);
+        }
 
         if ($success) {
             $this->afterSave($path, $this->getFilesystem());
@@ -197,14 +224,14 @@ class Storage extends Component
         }
 
         if (!$this->getFilesystem()->has($normalizedPath)) {
-            $this->getFilesystem()->write($normalizedPath, (string) $this->dirindex);
+            $this->getFilesystem()->write($normalizedPath, (string)$this->dirindex);
         } else {
             $this->dirindex = $this->getFilesystem()->read($normalizedPath);
             if ($this->maxDirFiles !== -1) {
                 $filesCount = count($this->getFilesystem()->listContents($this->dirindex));
                 if ($filesCount > $this->maxDirFiles) {
                     $this->dirindex++;
-                    $this->getFilesystem()->put($normalizedPath, (string) $this->dirindex);
+                    $this->getFilesystem()->put($normalizedPath, (string)$this->dirindex);
                 }
             }
         }

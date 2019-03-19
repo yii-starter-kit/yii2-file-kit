@@ -90,6 +90,22 @@ class UploadAction extends BaseAction
     public $uploadPath = '';
 
     /**
+     * An array config when save file.
+     * It can be a callable for more flexible
+     *
+     * ```php
+     * function (\trntv\filekit\File $fileObj) {
+     *
+     *      return ['ContentDisposition' => 'filename="' . $fileObj->getPathInfo('filename') . '"'];
+     * }
+     * ```
+     *
+     * @var array|callable
+     * @since 2.0.2
+     */
+    public $saveConfig = [];
+
+    /**
      *
      */
     public function init()
@@ -129,7 +145,7 @@ class UploadAction extends BaseAction
             if ($uploadedFile->error === UPLOAD_ERR_OK) {
                 $validationModel = DynamicModel::validateData(['file' => $uploadedFile], $this->validationRules);
                 if (!$validationModel->hasErrors()) {
-                    $path = $this->getFileStorage()->save($uploadedFile, false, false, [], $this->uploadPath);
+                    $path = $this->getFileStorage()->save($uploadedFile, false, false, $this->saveConfig, $this->uploadPath);
 
                     if ($path) {
                         $output[$this->responsePathParam] = $path;
