@@ -22,6 +22,10 @@
   background-position: center center;
   background-origin: border-box;
   list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 .upload-kit .upload-kit-input .progress,
 .upload-kit .upload-kit-item .progress,
