@@ -3,6 +3,7 @@
   position: relative;
   padding: 0;
   margin: 0;
+  overflow: hidden;
 }
 .upload-kit .upload-kit-input {
   width: 150px;
@@ -106,9 +107,9 @@
   margin-top: -0.5em;
 }
 .upload-kit .upload-kit-item.image > img {
-  height: 100%;
   width: auto;
   border-radius: 7px;
+  max-width: 100%;
 }
 .upload-kit .upload-kit-item.not-image {
   background-image: url('../img/file.png');
