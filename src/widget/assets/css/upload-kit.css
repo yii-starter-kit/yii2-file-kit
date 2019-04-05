@@ -25,7 +25,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
 }
 .upload-kit .upload-kit-input .progress,
 .upload-kit .upload-kit-item .progress,
