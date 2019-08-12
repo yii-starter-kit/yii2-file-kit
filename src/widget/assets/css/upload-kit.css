@@ -3,6 +3,7 @@
   position: relative;
   padding: 0;
   margin: 0;
+  overflow: hidden;
 }
 .upload-kit .upload-kit-input {
   width: 150px;
@@ -21,6 +22,10 @@
   background-position: center center;
   background-origin: border-box;
   list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 146px;
 }
 .upload-kit .upload-kit-input .progress,
 .upload-kit .upload-kit-item .progress,
@@ -55,9 +60,12 @@
 .upload-kit .upload-kit-input .add {
   font-size: 3em;
   text-align: center;
-  top: 50%;
   width: 100%;
-  margin-top: -0.5em;
+  height: 42px;
+  top: 50%;
+  right: 0;
+  left: 0;
+  transform: translateY(-50%);
 }
 .upload-kit .upload-kit-input .progress {
   position: absolute;
@@ -106,9 +114,10 @@
   margin-top: -0.5em;
 }
 .upload-kit .upload-kit-item.image > img {
-  height: 100%;
   width: auto;
   border-radius: 7px;
+  max-width: 100%;
+  max-height: 100%;
 }
 .upload-kit .upload-kit-item.not-image {
   background-image: url('../img/file.png');
