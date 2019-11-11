@@ -11,7 +11,7 @@ Here you can see list of available [filesystem adapters](https://github.com/thep
 
 Demo
 ----
-Since file kit is a part of [yii2-starter-kit](https://github.com/yii2-starter-kit/yii2-starter-kit) it's demo can be found in starter kit demo [here](http://backend.yii2-starter-kit.terentev.net/article/create).
+Since file kit is a part of [yii2-starter-kit](https://github.com/yii2-starter-kit/yii2-starter-kit) it's demo can be found in starter kit demo [here](http://backend.yii2-starter-kit.terentev.net/content/article/create).
 
 # Installation
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
