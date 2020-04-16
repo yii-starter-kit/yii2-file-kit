@@ -138,7 +138,7 @@ class Storage extends Component
 
         $this->beforeSave($fileObj->getPath(), $this->getFilesystem());
 
-        $stream = fopen($fileObj->getPath(), 'rb+');
+        $stream = fopen($fileObj->getPath(), 'r+');
 
         $defaultConfig = $this->defaultSaveConfig;
 
