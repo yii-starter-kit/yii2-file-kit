@@ -1,4 +1,4 @@
-[![Packagist](https://img.shields.io/packagist/dt/yii2-starter-kit/yii2-file-kit.svg)]()
+![Tests](https://github.com/yii2-starter-kit/yii2-file-kit/workflows/Extension%20Test/badge.svg?branch=master) [![Packagist](https://img.shields.io/packagist/dt/yii2-starter-kit/yii2-file-kit.svg)]()
 
 This kit is designed to automate routine processes of uploading files, their saving and storage.
 It includes:
@@ -39,7 +39,7 @@ To work with the File Kit you need to configure FileStorage first. This componen
     'baseUrl' => '@web/uploads'
     'filesystem'=> ...
         // OR
-    'filesystemComponent' => ...    
+    'filesystemComponent' => ...
 ],
 ```
 There are several ways to configure `trntv\filekit\Storage` to work with `flysystem`.
@@ -54,7 +54,7 @@ There are several ways to configure `trntv\filekit\Storage` to work with `flysys
     }
 ]
 ```
-## Using filesystem builder 
+## Using filesystem builder
 - Create a builder class that implements `trntv\filekit\filesystem\FilesystemBuilderInterface` and implement method `build` which returns filesystem object. See ``examples/``
 - Add to your configuration:
 ```php
@@ -213,10 +213,10 @@ Upload widget trigger some of built-in blueimp events:
 - fail
 - done
 - always
-    
+
 You can use them directly or add your custom handlers in options:
 ```php
-'clientOptions' => [ 
+'clientOptions' => [
     'start' => new JsExpression('function(e, data) { ... do something ... }'),
     'done' => new JsExpression('function(e, data) { ... do something ... }'),
     'fail' => new JsExpression('function(e, data) { ... do something ... }'),
@@ -275,7 +275,7 @@ There are two ways you can perform validation over uploads.
 On the client side validation is performed by Blueimp File Upload.
 Here is [documentation](https://github.com/blueimp/jQuery-File-Upload/wiki/Options#validation-options) about available options.
 
-On the server side validation is performed by [[yii\web\UploadAction]], where you can configure validation rules for 
+On the server side validation is performed by [[yii\web\UploadAction]], where you can configure validation rules for
 [[yii\base\DynamicModel]] that will be used in validation process
 
 # Tips
@@ -294,13 +294,13 @@ public function actions(){
                'on afterSave' => function($event) {
                     /* @var $file \League\Flysystem\File */
                     $file = $event->file;
-                    
+
                     // create new Intervention Image
                     $img = Intervention\Image\ImageManager::make($file->read());
-                    
+
                     // insert watermark at bottom-right corner with 10px offset
                     $img->insert('public/watermark.png', 'bottom-right', 10, 10);
-                    
+
                     // save image
                     $file->put($img->encode());
                }
