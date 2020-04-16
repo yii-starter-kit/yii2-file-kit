@@ -12,7 +12,7 @@ gulp.task('js', function() {
         .pipe(gulp.dest('src/widget/assets/js'));
 });
 
-gulp.task('less', function () {
+gulp.task('less-min', function () {
     return gulp.src('./src/widget/assets/css/*.less')
         .pipe(less())
         .pipe(minifyCSS())
@@ -20,4 +20,10 @@ gulp.task('less', function () {
         .pipe(gulp.dest('./src/widget/assets/css'));
 });
 
-gulp.task('default', ['js', 'less']);
+gulp.task('less', function () {
+    return gulp.src('./src/widget/assets/css/*.less')
+        .pipe(less())
+        .pipe(gulp.dest('./src/widget/assets/css'));
+});
+
+gulp.task('default', ['js', 'less', 'less-min']);
