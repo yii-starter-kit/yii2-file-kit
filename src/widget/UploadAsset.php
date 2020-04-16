@@ -11,13 +11,12 @@ class UploadAsset extends AssetBundle
 {
 
     public $depends = [
-        'yii\web\JqueryAsset',
-        'yii\bootstrap\BootstrapAsset',
-        'trntv\filekit\widget\BlueimpFileuploadAsset'
+        \yii\web\JqueryAsset::class,
+        \trntv\filekit\widget\BlueimpFileuploadAsset::class
     ];
 
     public $sourcePath = __DIR__ . '/assets';
-    
+
     public $css = [
         YII_DEBUG ? 'css/upload-kit.css' : 'css/upload-kit.min.css'
     ];

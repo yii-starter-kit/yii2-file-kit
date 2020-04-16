@@ -5,7 +5,7 @@ use yii\web\AssetBundle;
 
 class BlueimpFileuploadAsset extends AssetBundle
 {
-    public $sourcePath = '@bower/blueimp-file-upload';
+    public $sourcePath = '@npm/blueimp-file-upload';
 
     public $css = [
         'css/jquery.fileupload.css'
@@ -21,7 +21,7 @@ class BlueimpFileuploadAsset extends AssetBundle
     ];
 
     public $depends = [
-        'yii\web\JqueryAsset',
-        'trntv\filekit\widget\BlueimpLoadImageAsset'
+        \yii\web\JqueryAsset::class,
+        \trntv\filekit\widget\BlueimpLoadImageAsset::class
     ];
 }
