@@ -1,4 +1,4 @@
-![Tests](https://github.com/yii2-starter-kit/yii2-file-kit/workflows/Extension%20Test/badge.svg?branch=master) [![Packagist](https://img.shields.io/packagist/dt/yii2-starter-kit/yii2-file-kit.svg)]()
+![Tests](https://github.com/yii2-starter-kit/yii2-file-kit/workflows/Tests/badge.svg?branch=master) [![Packagist](https://img.shields.io/packagist/dt/yii2-starter-kit/yii2-file-kit.svg)]()
 
 This kit is designed to automate routine processes of uploading files, their saving and storage.
 It includes:
