@@ -13,7 +13,7 @@ class UploadAsset extends AssetBundle
     public $depends = [
         \yii\web\JqueryAsset::class,
         \trntv\filekit\widget\BlueimpFileuploadAsset::class,
-        \trntv\filekit\widget\FontAwesomeAsset::class
+        \rmrevin\yii\fontawesome\NpmFreeAssetBundle::class
     ];
 
     public $sourcePath = __DIR__ . '/assets';
