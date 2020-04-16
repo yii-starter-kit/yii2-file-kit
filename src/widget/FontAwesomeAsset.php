@@ -8,6 +8,6 @@ class FontAwesomeAsset extends AssetBundle
     public $sourcePath = '@npm/fortawesome--fontawesome';
 
     public $css= [
-        'css/solid.min.css'
+        'css/fontawesome.min.css'
     ];
 }
