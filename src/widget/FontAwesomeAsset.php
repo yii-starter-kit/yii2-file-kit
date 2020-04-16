@@ -3,7 +3,7 @@ namespace trntv\filekit\widget;
 
 use yii\web\AssetBundle;
 
-class BlueimpCanvasToBlobAsset extends AssetBundle
+class FontAwesomeAsset extends AssetBundle
 {
     public $sourcePath = '@npm/fortawesome--fontawesome';
 
