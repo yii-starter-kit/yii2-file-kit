@@ -7,6 +7,10 @@
         {
             "name": "Eugene Terentev",
             "email": "eugene@terentev.net"
+        },
+        {
+            "name": "Victor Gonzalez",
+            "email": "victor@vgr.cl"
         }
     ],
     "minimum-stability": "dev",
