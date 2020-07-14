@@ -129,11 +129,11 @@ class Storage extends Component
                     Yii::$app->security->generateRandomString(),
                     $fileObj->getExtension()
                 ]);
-                $path = implode(DIRECTORY_SEPARATOR, [$pathPrefix, $dirIndex, $filename]);
+                $path = implode(DIRECTORY_SEPARATOR, array_filter([$pathPrefix, $dirIndex, $filename]));
             } while ($this->getFilesystem()->has($path));
         } else {
             $filename = $fileObj->getPathInfo('filename');
-            $path = implode(DIRECTORY_SEPARATOR, [$pathPrefix, $dirIndex, $filename]);
+            $path = implode(DIRECTORY_SEPARATOR, array_filter([$pathPrefix, $dirIndex, $filename]));
         }
 
         $this->beforeSave($fileObj->getPath(), $this->getFilesystem());
