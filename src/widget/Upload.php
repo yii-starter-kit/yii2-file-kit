@@ -52,6 +52,10 @@ class Upload extends InputWidget
     /**
      * @var bool
      */
+    public $editFilename = false;
+    /**
+     * @var bool
+     */
     public $multiple = false;
     /**
      * @var bool
@@ -146,6 +150,7 @@ class Upload extends InputWidget
                 'files' => $this->files,
                 'previewImage' => $this->previewImage,
                 'showPreviewFilename' => $this->showPreviewFilename,
+                'editFilename' => $this->editFilename,
                 'errorHandler' => $this->errorHandler,
                 'pathAttribute' => 'path',
                 'baseUrlAttribute' => 'base_url',

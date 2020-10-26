@@ -172,6 +172,7 @@ echo \trntv\filekit\widget\Upload::widget([
     'maxNumberOfFiles' => 3, // default 1,
     'acceptFileTypes' => new \yii\web\JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
     'showPreviewFilename' => false,
+    'editFilename' => false,
     'clientOptions' => [/* ...other blueimp options... */]
 ]);
 ```
@@ -189,6 +190,7 @@ echo \trntv\filekit\widget\Upload::widget([
     'maxNumberOfFiles' => 3, // default 1,
     'acceptFileTypes' => new \yii\web\JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
     'showPreviewFilename' => false,
+    'editFilename' => false,
     'clientOptions' => [/* ...other blueimp options... */]
 ]);
 ```
