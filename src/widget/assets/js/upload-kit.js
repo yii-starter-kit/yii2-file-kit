@@ -159,7 +159,7 @@
                 }
                 var item = $('<li>', {"class": "upload-kit-item done", value: index})
                     .append($('<input/>', {"name": name + '[' + options.pathAttributeName + ']', "value": file[options.pathAttribute], "type":"hidden"}))
-                    .append($('<input/>', {"name": name + '[name]', "value": file.name, "type":"hidden"}))
+                    .append($('<input/>', {"name": name + '[name]', "value": file.name, "type": (options.editFilename === true) ? "text" : "hidden"}))
                     .append($('<input/>', {"name": name + '[size]', "value": file.size, "type":"hidden"}))
                     .append($('<input/>', {"name": name + '[type]', "value": file.type, "type":"hidden"}))
                     .append($('<input/>', {"name": name + '[order]', "value": file.order, "type":"hidden", "data-role": "order"}))
