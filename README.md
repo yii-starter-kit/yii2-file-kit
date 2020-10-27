@@ -36,6 +36,7 @@ To work with the File Kit you need to configure FileStorage first. This componen
 ```php
 'fileStorage'=>[
     'class' => 'trntv\filekit\Storage',
+    'useDirindex' => true,
     'baseUrl' => '@web/uploads'
     'filesystem'=> ...
         // OR

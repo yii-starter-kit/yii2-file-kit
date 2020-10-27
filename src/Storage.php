@@ -66,6 +66,10 @@ class Storage extends Component
      */
     public $defaultSaveConfig = [];
     /**
+     * @var bool
+     */
+    public $useDirindex = true;
+    /**
      * @var int
      */
     private $dirindex = 1;
@@ -214,10 +218,14 @@ class Storage extends Component
     }
 
     /**
-     * @return false|int|string
+     * @param string $path
+     * @return false|int|string|null
      */
     protected function getDirIndex($path = '')
     {
+        if (!$this->useDirindex) {
+            return null;
+        }
         $normalizedPath = '.dirindex';
         if (isset($path)) {
             $normalizedPath = $path . DIRECTORY_SEPARATOR . '.dirindex';
