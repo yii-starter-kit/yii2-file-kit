@@ -157,6 +157,7 @@
                 if (options.multiple) {
                     name += '[' + index + ']';
                 }
+
                 var item = $('<li>', {"class": "upload-kit-item done", value: index})
                     .append($('<input/>', {"name": name + '[' + options.pathAttributeName + ']', "value": file[options.pathAttribute], "type":"hidden"}))
                     .append($('<input/>', {"name": name + '[name]', "value": file.name, "type": (options.editFilename === true) ? "text" : "hidden"}))
@@ -168,8 +169,24 @@
                         "class": "name",
                         "title": file.name,
                         "text": options.showPreviewFilename ? file.name : null
-                    }))
-                    .append($('<span/>', {"class": "fas fa-times-circle remove", "data-url": file.delete_url}));
+                    }));
+
+                if(typeof file.descriptions !== "undefined") {
+                    var descriptionsAttribute = file.descriptions;
+                    $.each(descriptionsAttribute, function (attribute, attributeVal) {
+                        var attributeDisplay = (options.editFiledescription === true) ? "block" : "none";
+                        item
+                            .append($('<textarea/>', {
+                                "name": name + '[' + attribute + ']',
+                                "val": attributeVal,
+                                "style":"display:" + attributeDisplay,
+                                "data-role": attribute
+                            }))
+                    });
+                }
+
+                item.append($('<span/>', {"class": "fas fa-times-circle remove", "data-url": file.delete_url}));
+
                 if ((!file.type || file.type.search(/image\/.*/g) !== -1) && options.previewImage) {
                     item.removeClass('not-image').addClass('image');
                     item.prepend($('<img/>', {src: file[options.baseUrlAttribute] + '/' +file[options.pathAttribute]}));

@@ -1,4 +1,5 @@
 <?php
+
 namespace trntv\filekit\behaviors;
 
 use trntv\filekit\Storage;
@@ -58,6 +59,10 @@ class UploadBehavior extends Behavior
      */
     public $nameAttribute;
     /**
+     * @var array
+     */
+    public $descriptionsAttribute = [];
+    /**
      * @var string
      */
     public $orderAttribute;
@@ -98,6 +103,7 @@ class UploadBehavior extends Behavior
      * @var \trntv\filekit\Storage
      */
     protected $storage;
+
     /**
      * @return array
      */
@@ -129,13 +135,17 @@ class UploadBehavior extends Behavior
     public function fields()
     {
         $fields = [
-            $this->attributePathName ? : 'path' => $this->pathAttribute,
-            $this->attributeBaseUrlName ? : 'base_url' => $this->baseUrlAttribute,
+            $this->attributePathName ?: 'path' => $this->pathAttribute,
+            $this->attributeBaseUrlName ?: 'base_url' => $this->baseUrlAttribute,
             'type' => $this->typeAttribute,
             'size' => $this->sizeAttribute,
             'name' => $this->nameAttribute,
             'order' => $this->orderAttribute
         ];
+
+        if (!empty($this->descriptionsAttribute)) {
+            $fields['descriptions'] = $this->descriptionsAttribute;
+        }
 
         if ($this->attributePrefix !== null) {
             $fields = array_map(function ($fieldName) {
@@ -246,9 +256,18 @@ class UploadBehavior extends Behavior
             /* @var $model \yii\db\BaseActiveRecord */
             $file = [];
             foreach ($fields as $dataField => $modelAttribute) {
-                $file[$dataField] = $model->hasAttribute($modelAttribute)
-                    ? ArrayHelper::getValue($model, $modelAttribute)
-                    : null;
+                if (is_string($modelAttribute)) {
+                    $file[$dataField] = $model->hasAttribute($modelAttribute)
+                        ? ArrayHelper::getValue($model, $modelAttribute)
+                        : null;
+                }
+                if (is_array($modelAttribute)) {
+                    foreach ($modelAttribute as $attribute) {
+                        $file[$dataField][$attribute] = $model->hasAttribute($attribute)
+                            ? ArrayHelper::getValue($model, $attribute)
+                            : null;
+                    }
+                }
             }
             if ($file['path']) {
                 $data[$k] = $this->enrichFileData($file);
@@ -266,7 +285,7 @@ class UploadBehavior extends Behavior
         $file = array_map(function ($attribute) {
             return $this->owner->getAttribute($attribute);
         }, $this->fields());
-        if ($file['path'] !== null && $file['base_url'] === null){
+        if ($file['path'] !== null && $file['base_url'] === null) {
             $file['base_url'] = $this->getStorage()->baseUrl;
         }
         if (array_key_exists('path', $file) && $file['path']) {
@@ -357,8 +376,17 @@ class UploadBehavior extends Behavior
     {
         $attributes = array_flip($model->attributes());
         foreach ($this->fields() as $dataField => $modelField) {
-            if ($modelField && array_key_exists($modelField, $attributes)) {
-                $model->{$modelField} =  ArrayHelper::getValue($data, $dataField);
+            if (is_string($modelField)) {
+                if ($modelField && array_key_exists($modelField, $attributes)) {
+                    $model->{$modelField} = ArrayHelper::getValue($data, $dataField);
+                }
+            }
+            if (is_array($modelField)) {
+                foreach ($modelField as $field) {
+                    if ($field && array_key_exists($field, $attributes)) {
+                        $model->{$field} = ArrayHelper::getValue($data, $field);
+                    }
+                }
             }
         }
         return $model;

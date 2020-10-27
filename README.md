@@ -174,6 +174,7 @@ echo \trntv\filekit\widget\Upload::widget([
     'acceptFileTypes' => new \yii\web\JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
     'showPreviewFilename' => false,
     'editFilename' => false,
+    'editFiledescription' => false,
     'clientOptions' => [/* ...other blueimp options... */]
 ]);
 ```
@@ -248,6 +249,10 @@ For multiple files
             'typeAttribute' => 'type',
             'sizeAttribute' => 'size',
             'nameAttribute' => 'name',
+            'descriptionsAttribute' => [
+                'description_ru',
+                'description_en'
+            ],
             'orderAttribute' => 'order'
         ],
     ];
