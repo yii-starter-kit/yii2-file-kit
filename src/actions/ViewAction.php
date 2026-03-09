@@ -30,14 +30,14 @@ class ViewAction extends BaseAction
     {
         $path = \Yii::$app->request->get($this->pathParam);
         $filesystem = $this->getFileStorage()->getFilesystem();
-        if ($filesystem->has($path) === false) {
+        if ($filesystem->fileExists($path) === false) {
             throw new HttpException(404);
         }
         return \Yii::$app->response->sendStreamAsFile(
             $filesystem->readStream($path),
             pathinfo($path, PATHINFO_BASENAME),
             [
-                'mimeType' => $filesystem->getMimetype($path),
+                'mimeType' => $filesystem->mimeType($path),
                 'inline' => $this->inline
             ]
         );

@@ -1,7 +1,7 @@
 <?php
 namespace trntv\filekit\tests\data;
 
-use League\Flysystem\Adapter\Local;
+use League\Flysystem\Local\LocalFilesystemAdapter;
 use League\Flysystem\Filesystem;
 use trntv\filekit\filesystem\FilesystemBuilderInterface;
 
@@ -16,6 +16,6 @@ class TmpFilesystemBuilder implements FilesystemBuilderInterface
      */
     public function build()
     {
-        return new Filesystem(new Local(sys_get_temp_dir()));
+        return new Filesystem(new LocalFilesystemAdapter(sys_get_temp_dir()));
     }
 }

@@ -26,6 +26,8 @@ index
 #phpunit
 phpunit.xml
 phpunit.phar
+.phpunit.result.cache
+.phpunit.cache
 
 # npm
 node_modules

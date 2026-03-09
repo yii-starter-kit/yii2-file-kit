@@ -9,9 +9,7 @@
 namespace trntv\filekit\actions;
 
 use yii\web\HttpException;
-use League\Flysystem\FilesystemInterface;
 use trntv\filekit\events\UploadEvent;
-use League\Flysystem\File as FlysystemFile;
 
 /**
  * public function actions(){
@@ -55,21 +53,16 @@ class DeleteAction extends BaseAction
             throw new HttpException(403);
         }
     }
-    
+
     /**
      * @param $path
      */
     public function afterDelete($path)
     {
-        $file = null;
         $fs = $this->getFileStorage()->getFilesystem();
-        if ($fs instanceof FilesystemInterface) {
-            $file = new FlysystemFile($fs, $path);
-        }
         $this->trigger(self::EVENT_AFTER_DELETE, new UploadEvent([
             'path' => $path,
             'filesystem' => $fs,
-            'file' => $file
         ]));
     }
 }

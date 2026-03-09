@@ -2,7 +2,9 @@
 namespace trntv\filekit;
 
 use Yii;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\Config;
+use League\Flysystem\FilesystemException;
+use League\Flysystem\FilesystemOperator;
 use trntv\filekit\events\StorageEvent;
 use trntv\filekit\filesystem\FilesystemBuilderInterface;
 use yii\base\Component;
@@ -94,10 +96,10 @@ class Storage extends Component
     }
 
     /**
-     * @return FilesystemInterface
+     * @return FilesystemOperator
      * @throws InvalidConfigException
      */
-    public function getFilesystem()
+    public function getFilesystem(): FilesystemOperator
     {
         return $this->filesystem;
     }
@@ -118,7 +120,6 @@ class Storage extends Component
      * @param string $pathPrefix string path to save current file
      *
      * @return bool|string
-     * @throws \League\Flysystem\FileExistsException
      * @throws \yii\base\Exception
      * @throws \yii\base\InvalidConfigException
      */
@@ -133,11 +134,11 @@ class Storage extends Component
                     Yii::$app->security->generateRandomString(),
                     $fileObj->getExtension()
                 ]);
-                $path = implode(DIRECTORY_SEPARATOR, array_filter([$pathPrefix, $dirIndex, $filename]));
-            } while ($this->getFilesystem()->has($path));
+                $path = implode('/', array_filter([$pathPrefix, $dirIndex, $filename]));
+            } while ($this->getFilesystem()->fileExists($path));
         } else {
             $filename = $fileObj->getPathInfo('filename');
-            $path = implode(DIRECTORY_SEPARATOR, array_filter([$pathPrefix, $dirIndex, $filename]));
+            $path = implode('/', array_filter([$pathPrefix, $dirIndex, $filename]));
         }
 
         $this->beforeSave($fileObj->getPath(), $this->getFilesystem());
@@ -156,10 +157,11 @@ class Storage extends Component
 
         $config = array_merge(['ContentType' => $fileObj->getMimeType()], $defaultConfig, $config);
 
-        if ($overwrite) {
-            $success = $this->getFilesystem()->putStream($path, $stream, $config);
-        } else {
-            $success = $this->getFilesystem()->writeStream($path, $stream, $config);
+        try {
+            $this->getFilesystem()->writeStream($path, $stream, new Config($config));
+            $success = true;
+        } catch (FilesystemException $e) {
+            $success = false;
         }
 
         if (is_resource($stream)) {
@@ -194,14 +196,17 @@ class Storage extends Component
      * @param $path
      * @return bool
      */
-    public function delete($path)
+    public function delete($path): bool
     {
-        if ($this->getFilesystem()->has($path)) {
+        if ($this->getFilesystem()->fileExists($path)) {
             $this->beforeDelete($path, $this->getFilesystem());
-            if ($this->getFilesystem()->delete($path)) {
+            try {
+                $this->getFilesystem()->delete($path);
                 $this->afterDelete($path, $this->getFilesystem());
                 return true;
-            };
+            } catch (FilesystemException $e) {
+                return false;
+            }
         }
         return false;
     }
@@ -227,19 +232,19 @@ class Storage extends Component
             return null;
         }
         $normalizedPath = '.dirindex';
-        if (isset($path)) {
-            $normalizedPath = $path . DIRECTORY_SEPARATOR . '.dirindex';
+        if (isset($path) && $path !== '') {
+            $normalizedPath = $path . '/' . '.dirindex';
         }
 
-        if (!$this->getFilesystem()->has($normalizedPath)) {
+        if (!$this->getFilesystem()->fileExists($normalizedPath)) {
             $this->getFilesystem()->write($normalizedPath, (string)$this->dirindex);
         } else {
             $this->dirindex = $this->getFilesystem()->read($normalizedPath);
             if ($this->maxDirFiles !== -1) {
-                $filesCount = count($this->getFilesystem()->listContents($this->dirindex));
+                $filesCount = count($this->getFilesystem()->listContents((string)$this->dirindex)->toArray());
                 if ($filesCount > $this->maxDirFiles) {
                     $this->dirindex++;
-                    $this->getFilesystem()->put($normalizedPath, (string)$this->dirindex);
+                    $this->getFilesystem()->write($normalizedPath, (string)$this->dirindex);
                 }
             }
         }

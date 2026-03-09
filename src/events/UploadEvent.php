@@ -17,8 +17,4 @@ class UploadEvent extends Event
      * @var string
      */
     public $path;
-    /**
-     * @var \League\Flysystem\File|null
-     */
-    public $file;
 }

@@ -9,7 +9,7 @@ use trntv\filekit\Storage;
  */
 class StorageTest extends TestCase
 {
-    public function testInitWithBuilder()
+    public function testInitWithBuilder(): void
     {
         $storage = new Storage([
             'filesystem' => [
@@ -18,25 +18,5 @@ class StorageTest extends TestCase
         ]);
 
         $this->assertNotNull($storage->getFilesystem());
-
-    }
-
-    public function testInitWithComponent()
-    {
-        $this->destroyApplication();
-        $this->mockApplication([
-            'components' => [
-                'fs' => [
-                    'class' => 'creocoder\flysystem\LocalFilesystem',
-                    'path' => sys_get_temp_dir()
-                ]
-            ]
-        ]);
-        $storage = new Storage([
-            'filesystemComponent' => 'fs'
-        ]);
-
-        $this->assertNotNull($storage->getFilesystem());
-        $this->assertInstanceOf("creocoder\\flysystem\\LocalFilesystem", $storage->getFilesystem());
     }
 }

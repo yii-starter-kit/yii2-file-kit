@@ -2,7 +2,7 @@
 namespace trntv\filekit;
 
 use yii\base\InvalidConfigException;
-use yii\base\InvalidParamException;
+use yii\base\InvalidArgumentException;
 use yii\base\BaseObject;
 use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
@@ -44,24 +44,24 @@ class File extends BaseObject
     public static function create($file)
     {
 
-        if (is_a($file, self::className())) {
+        if (is_a($file, self::class)) {
             return $file;
         }
 
         // UploadedFile
-        if (is_a($file, UploadedFile::className())) {
+        if (is_a($file, UploadedFile::class)) {
             if ($file->error) {
-                throw new InvalidParamException("File upload error \"{$file->error}\"");
+                throw new InvalidArgumentException("File upload error \"{$file->error}\"");
             }
             return \Yii::createObject([
-                'class'=>self::className(),
-                'path'=>$file->tempName,
-                'extension'=>$file->getExtension()
+                'class' => self::class,
+                'path' => $file->tempName,
+                'extension' => $file->getExtension()
             ]);
         } // Path
         else {
             return \Yii::createObject([
-                'class' => self::className(),
+                'class' => self::class,
                 'path' => FileHelper::normalizePath($file)
             ]);
         }

@@ -394,11 +394,11 @@ class UploadBehavior extends Behavior
     protected function enrichFileData($file)
     {
         $fs = $this->getStorage()->getFilesystem();
-        if ($file['path'] && $fs->has($file['path'])) {
+        if ($file['path'] && $fs->fileExists($file['path'])) {
             $data = [
-                'type' => $fs->getMimetype($file['path']),
-                'size' => $fs->getSize($file['path']),
-                'timestamp' => $fs->getTimestamp($file['path'])
+                'type' => $fs->mimeType($file['path']),
+                'size' => $fs->fileSize($file['path']),
+                'timestamp' => $fs->lastModified($file['path'])
             ];
             foreach ($data as $k => $v) {
                 if (!array_key_exists($k, $file) || !$file[$k]) {
